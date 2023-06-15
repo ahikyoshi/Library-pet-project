@@ -1,10 +1,12 @@
+import Book from "./pages/Book/Book"
+import "./index.css"
 
 function App() {
 
   return (
-    <>
-    Hello vite
-    </>
+    <main className="bg-slate-100 h-screen flex justify-center font-thin">
+      <Book />
+    </main>
   )
 }
 
