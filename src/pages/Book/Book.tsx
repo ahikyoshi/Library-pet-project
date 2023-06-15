@@ -3,7 +3,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 // Components
 import { Info } from "./parts/Info/Info"
-// import Cycle from "./Component/Cycle/Cycle"
+import { Cycle } from "./parts/Info/Cycle"
 // import Text from "./Component/Text/Text"
 // import Rate from "./Component/Rate/Rate"
 // import Feedback from "./Component/Feedback/Feedback"
@@ -26,7 +26,7 @@ const emptyData = {
         rate: 0,
         feedback: "Загружается..."
     },
-    id: 0
+    _id: "empty"
 }
 
 const Book = () => {
@@ -47,6 +47,7 @@ const Book = () => {
     return (
         <div className="w-screen mt-20 p-2 bg-white lg:w-10/12">
             <Info data={data}/>
+            <Cycle id={data._id} />
             {/* <Info book={book} amountRate={amountRate}/>
             <Cycle data={book} /> 
             <Text />

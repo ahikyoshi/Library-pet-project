@@ -2,7 +2,6 @@ import { FC, useState } from "react"
 import { infoProps } from "../../types"
 import { getAmountRate } from "../../utils"
 
-
 export const Info: FC<infoProps> = ({data: {title,author,image, cycle, discribe, user}}) => {
 
     const [toggleDescription, setToggleDescription] = useState("discribe")
