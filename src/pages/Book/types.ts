@@ -18,3 +18,8 @@ export interface infoProps{
         }
     }
 }
+
+export interface FeedbackProps{
+    feedback: string,
+    id: string
+}

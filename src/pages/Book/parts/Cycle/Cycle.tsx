@@ -7,35 +7,35 @@ interface cycleProps {
 }
 
 export const Cycle: FC<cycleProps> = (props) => {
-    useEffect(() => {
-        console.log(props)
-    }, [props])
 
     const [cycleList, setCyclelist] = useState([])
+    const HOST_IP_HOST = "192.168.0.105:4444"
 
     useEffect(() => {
         if (props.id != "empty") {
-            axios.get(`http://localhost:4444/library/${props.id}/cycle`)
+            axios.get(`http://${HOST_IP_HOST}/library/${props.id}/cycle`)
                 .then((res) => {
                     let newArr: any = []
                     res.data.forEach((item: any) => {
                         newArr[item.cycle.number] = item
                     })
                     setCyclelist(newArr.filter((n: any) => n))
-                 })
+                })
         }
     }, [props])
 
     return (
-        <div className="cycle" id="cycles">
-            <div className="cycle-title">Из той же серии:</div>
-            <div className="cycle-container">
-                <div className="cycle-content">
+        <div className="cycle">
+
+            <div className="text-lg mt-4 mb-2 font-bold">Из той же серии:</div>
+
+            <div className="w-full overflow-x-auto flex">
                     {
-                        cycleList.map((item) => { return <Card data={item} key={item.id} /> })
+                        cycleList.map((item) => {return <Card data={item} key={item.id} /> })
                     }
-                </div>
             </div>
+
+
         </div>
     )
 }

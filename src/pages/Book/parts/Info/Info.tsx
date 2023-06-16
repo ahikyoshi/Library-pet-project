@@ -13,7 +13,7 @@ export const Info: FC<infoProps> = ({data: {title,author,image, cycle, discribe,
 
             <div className="px-2 w-full flex flex-col items-center md:items-start">
 
-                <div className="text-2xl">{title}</div>
+                <div className="text-2xl font-bold">{title}</div>
 
                 <div className="text-xs mt-1">Автор: {author}</div>
 
@@ -26,16 +26,12 @@ export const Info: FC<infoProps> = ({data: {title,author,image, cycle, discribe,
                 <div className="text-xs mt-1">Оценка: {getAmountRate(user.rate)}</div>
 
                 <div className="mt-5 text-xs flex flex-col items-center md:items-start">
-                    <select className=" border border-slate-300 w-4/12 mb-2" onChange={(e) => setToggleDescription(e.target.value)}>
+                    <select className=" border border-slate-300 w-4/12 mb-2 self-start" onChange={(e) => setToggleDescription(e.target.value)}>
                         <option value="discribe">Описание</option>
                         <option value="feedback">Ваш комментарий</option>
                     </select>
-                    <div className="w-10/12 text-justify max-h-24 overflow-y-scroll">
-                        {toggleDescription === "discribe" ?
-                            <>{discribe}</>
-                            :
-                            <>{user.feedback}</>
-                        }
+                    <div className="w-full text-justify max-h-28 overflow-y-scroll">
+                        {toggleDescription === "discribe" ? <>{discribe}</> : <>{user.feedback}</>}
                     </div>
                 </div>
 
