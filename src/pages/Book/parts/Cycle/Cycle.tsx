@@ -9,7 +9,7 @@ interface cycleProps {
 export const Cycle: FC<cycleProps> = (props) => {
 
     const [cycleList, setCyclelist] = useState([])
-    const HOST_IP_HOST = "192.168.0.105:4444"
+    const HOST_IP_HOST = "192.168.0.110:4444"
 
     useEffect(() => {
         if (props.id != "empty") {
@@ -31,7 +31,7 @@ export const Cycle: FC<cycleProps> = (props) => {
 
             <div className="w-full overflow-x-auto flex">
                     {
-                        cycleList.map((item) => {return <Card data={item} key={item.id} /> })
+                        cycleList.map((item) => {return <Card data={item} key={item.id} setId={props.setId}/> })
                     }
             </div>
 

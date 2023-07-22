@@ -11,7 +11,7 @@ import { Feedback } from "./parts/Feedback/Feedback"
 // import "./styles.scss"
 // import { useParams } from "react-router-dom"
 const HOST_IP_LOCAL = "localhost:4444"
-const HOST_IP_HOST = "192.168.0.105:4444"
+const HOST_IP_HOST = "192.168.0.110:4444"
 
 const emptyData = {
     image: "https://cv3.litres.ru/pub/c/cover_415/37205232.webp",
@@ -32,9 +32,8 @@ const emptyData = {
 
 const Book = () => {
 
-    const id = "hBkFdTtUEbRcqLrg"
+    const [id, setId] = useState("hBkFdTtUEbRcqLrg")
     const [data, setData] = useState(emptyData)
-    const [amountRate, setAmountRate] = useState({ number: 0, color: "red" })
     
     useEffect(() => {
         axios.get(`http://${HOST_IP_HOST}/library/book/${id}`)
@@ -44,7 +43,7 @@ const Book = () => {
     return (
         <div className="w-screen mt-20 p-2 bg-white lg:w-10/12">
             <Info data={data} />
-            <Cycle id={data._id} />
+            <Cycle id={data._id} setId={setId}/>
             <Feedback feedback={data.user.feedback} id={data._id} />
             <Rate rate={data.user.rate}/>
             {/* <Info book={book} amountRate={amountRate}/>

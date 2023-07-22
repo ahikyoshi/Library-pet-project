@@ -40,7 +40,7 @@ export const Rate: FC<rateProps> = ({ rate }) => {
     return (
         <div className="">
 
-            <div className="text-lg mt-4 mb-7 font-bold">Ваша оценка:</div>
+            <div className="text-lg mt-4 mb-7 font-bold ">Ваша оценка:</div>
 
             <div className="flex flex-col">
 
@@ -48,10 +48,10 @@ export const Rate: FC<rateProps> = ({ rate }) => {
                     {
                         Object.keys(rateData).map((keyName) => {
                             return (
-                                <div className="w-full h-12 mb-4 flex outline outline-indigo-700 rounded-sm md:w-5/12 md:mr-5">
+                                <div className="w-full h-12 mb-4 flex outline outline-purple-400 rounded-sm md:w-5/12 md:mr-5">
                                     <div className="w-10/12 flex items-center px-2 ">{keyName}</div>
 
-                                    <div className="w-2/12 border-l-2 border-indigo-700 testSelect hover:cursor-pointer">
+                                    <div className="w-2/12 border-l-2 border-purple-700 testSelect hover:cursor-pointer">
 
                                         <div className="flex h-12 items-center justify-end ">
                                             <div className="w-full text-center text-lg">{rateData[keyName]}</div>
@@ -62,7 +62,7 @@ export const Rate: FC<rateProps> = ({ rate }) => {
                                             </div>
                                         </div>
 
-                                        <div className="testOption h-32 w-14 border border-indigo-700 rounded-sm  overflow-hidden overflow-y-auto absolute hidden bg-white">
+                                        <div className="testOption h-32 w-14 border border-purple-700 rounded-sm  overflow-hidden overflow-y-auto absolute hidden bg-white">
                                             <div className="text-center py-2 border-b-2 border-slate-300 hover:bg-slate-200" onClick={() => changeRate(keyName, 1)}>1</div>
                                             <div className="text-center py-2 border-b-2 border-slate-300 hover:bg-slate-200" onClick={() => changeRate(keyName, 2)}>2</div>
                                             <div className="text-center py-2 border-b-2 border-slate-300 hover:bg-slate-200" onClick={() => changeRate(keyName, 3)}>3</div>
