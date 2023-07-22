@@ -1,4 +1,4 @@
-import Book from './pages/Book/Book';
+import { Book } from './pages/Book/Book';
 import './index.css';
 
 export const App = () => {
