@@ -8,8 +8,7 @@
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "format": "prettier --write ./src",
-    "preview": "vite preview",
-    "prepare": "husky install"
+    "preview": "vite preview"
   },
   "dependencies": {
     "check-types": "^11.2.2",
