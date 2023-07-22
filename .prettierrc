@@ -1,8 +1,5 @@
 {
   "arrowParens": "always",
-  "importOrder": ["^@src"],
-  "importOrderSeparation": true,
-  "importOrderSortSpecifiers": true,
   "printWidth": 100,
   "singleQuote": true,
   "semi": true,
