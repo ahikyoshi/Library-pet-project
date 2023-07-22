@@ -1,11 +1,11 @@
-import { FC, useState, useEffect } from "react";
-import "./help.css";
+import { FC, useState, useEffect } from 'react';
+import './help.css';
 
-interface rateProps {
+interface IRateProps {
   rate: {};
 }
 
-export const Rate: FC<rateProps> = ({ rate }) => {
+export const Rate: FC<IRateProps> = ({ rate }) => {
   const [rateData, setRateData] = useState(rate);
   const [isBtnShow, setIsBtnShow] = useState(true);
   const [amount, setAmount] = useState(0);
@@ -50,9 +50,7 @@ export const Rate: FC<rateProps> = ({ rate }) => {
 
                 <div className="w-2/12 border-l-2 border-purple-700 testSelect hover:cursor-pointer">
                   <div className="flex h-12 items-center justify-end ">
-                    <div className="w-full text-center text-lg">
-                      {rateData[keyName]}
-                    </div>
+                    <div className="w-full text-center text-lg">{rateData[keyName]}</div>
                     <div className="px-2">
                       <svg
                         className="h-5 w-5 text-gray-400"

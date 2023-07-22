@@ -1,26 +1,24 @@
-import { FC, useEffect, useState } from "react";
-import axios from "axios";
-import { Card } from "../../../../components/Card/Card";
+import { FC, useEffect, useState } from 'react';
+import axios from 'axios';
+import { Card } from '../../../../components/Card/Card';
 
-interface cycleProps {
+interface ICycleProps {
   id: string;
 }
 
-export const Cycle: FC<cycleProps> = (props) => {
+export const Cycle: FC<ICycleProps> = (props) => {
   const [cycleList, setCyclelist] = useState([]);
-  const HOST_IP_HOST = "192.168.0.110:4444";
+  const HOST_IP_HOST = '192.168.0.110:4444';
 
   useEffect(() => {
-    if (props.id != "empty") {
-      axios
-        .get(`http://${HOST_IP_HOST}/library/${props.id}/cycle`)
-        .then((res) => {
-          let newArr: any = [];
-          res.data.forEach((item: any) => {
-            newArr[item.cycle.number] = item;
-          });
-          setCyclelist(newArr.filter((n: any) => n));
+    if (props.id != 'empty') {
+      axios.get(`http://${HOST_IP_HOST}/library/${props.id}/cycle`).then((res) => {
+        const newArr: any = [];
+        res.data.forEach((item: any) => {
+          newArr[item.cycle.number] = item;
         });
+        setCyclelist(newArr.filter((n: any) => n));
+      });
     }
   }, [props]);
 

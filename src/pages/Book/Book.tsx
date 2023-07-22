@@ -1,37 +1,37 @@
 // Core
-import axios from "axios";
-import { useEffect, useState } from "react";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 // Components
-import { Info } from "./parts/Info/Info";
-import { Cycle } from "./parts/Cycle/Cycle";
+import { Info } from './parts/Info/Info';
+import { Cycle } from './parts/Cycle/Cycle';
 // import Text from "./Component/Text/Text"
-import { Rate } from "./parts/Rate/Rate";
-import { Feedback } from "./parts/Feedback/Feedback";
+import { Rate } from './parts/Rate/Rate';
+import { Feedback } from './parts/Feedback/Feedback';
 // Styles
 // import "./styles.scss"
 // import { useParams } from "react-router-dom"
-const HOST_IP_LOCAL = "localhost:4444";
-const HOST_IP_HOST = "192.168.0.110:4444";
+const HOST_IP_LOCAL = 'localhost:4444';
+const HOST_IP_HOST = '192.168.0.110:4444';
 
 const emptyData = {
-  image: "https://cv3.litres.ru/pub/c/cover_415/37205232.webp",
-  title: "Загружаеться...",
-  author: "Загружаеться...",
+  image: 'https://cv3.litres.ru/pub/c/cover_415/37205232.webp',
+  title: 'Загружаеться...',
+  author: 'Загружаеться...',
   cycle: {
-    title: "Загружаеться...",
-    number: "",
+    title: 'Загружаеться...',
+    number: '',
   },
-  discribe: "Загружается...",
-  files_status: ["text", "audio"],
+  discribe: 'Загружается...',
+  files_status: ['text', 'audio'],
   user: {
     rate: 0,
-    feedback: "Загружается...",
+    feedback: 'Загружается...',
   },
-  _id: "empty",
+  _id: 'empty',
 };
 
-const Book = () => {
-  const [id, setId] = useState("hBkFdTtUEbRcqLrg");
+export const Book = () => {
+  const [id, setId] = useState('hBkFdTtUEbRcqLrg');
   const [data, setData] = useState(emptyData);
 
   useEffect(() => {
@@ -55,5 +55,3 @@ const Book = () => {
     </div>
   );
 };
-
-export default Book;

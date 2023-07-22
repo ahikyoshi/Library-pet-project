@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios from 'axios';
 
-const HOST_IP_HOST = "192.168.0.105:4444";
+const HOST_IP_HOST = '192.168.0.105:4444';
 
 export const getAmountRate = (rate: any): number => {
   let amount: number = 0;

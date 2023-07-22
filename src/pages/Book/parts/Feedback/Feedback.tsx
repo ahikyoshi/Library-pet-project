@@ -1,6 +1,6 @@
-import { FC, useEffect, useState } from "react";
-import { FeedbackProps } from "../../types";
-import { sendFeedback } from "../../utils";
+import { FC, useEffect, useState } from 'react';
+import { FeedbackProps } from '../../types';
+import { sendFeedback } from '../../utils';
 
 export const Feedback: FC<FeedbackProps> = ({ feedback, id }) => {
   const [feedbackValue, setFeedbackValue] = useState(feedback);

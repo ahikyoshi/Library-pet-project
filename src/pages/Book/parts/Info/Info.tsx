@@ -1,19 +1,13 @@
-import { FC, useState } from "react";
-import { infoProps } from "../../types";
-import { getAmountRate } from "../../utils";
+import { FC, useState } from 'react';
+import { infoProps } from '../../types';
+import { getAmountRate } from '../../utils';
 
-export const Info: FC<infoProps> = ({
-  data: { title, author, image, cycle, discribe, user },
-}) => {
-  const [toggleDescription, setToggleDescription] = useState("discribe");
+export const Info: FC<infoProps> = ({ data: { title, author, image, cycle, discribe, user } }) => {
+  const [toggleDescription, setToggleDescription] = useState('discribe');
 
   return (
     <div className="flex flex-col items-center md:flex-row md:items-start">
-      <img
-        src={image}
-        alt={`Обложка книги ${title} ${author}`}
-        className="w-40"
-      />
+      <img src={image} alt={`Обложка книги ${title} ${author}`} className="w-40" />
 
       <div className="px-2 w-full flex flex-col items-center md:items-start">
         <div className="text-2xl font-bold">{title}</div>
@@ -37,11 +31,7 @@ export const Info: FC<infoProps> = ({
             <option value="feedback">Ваш комментарий</option>
           </select>
           <div className="w-full text-justify max-h-28 overflow-y-scroll">
-            {toggleDescription === "discribe" ? (
-              <>{discribe}</>
-            ) : (
-              <>{user.feedback}</>
-            )}
+            {toggleDescription === 'discribe' ? <>{discribe}</> : <>{user.feedback}</>}
           </div>
         </div>
       </div>
