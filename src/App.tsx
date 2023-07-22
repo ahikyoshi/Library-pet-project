@@ -10,7 +10,7 @@ function App() {
       <Book />
       <footer className="bg-white mt-20 w-screen h-16 border-t-2 border-indigo-700">
         Футер
-      </footer>s
+      </footer>
     </main>
   );
 }
