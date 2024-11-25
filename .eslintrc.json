@@ -1,0 +1,96 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2020": true,
+    "node": true
+  },
+  "extends": [
+    "next",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-type-checked"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "prettier",
+    "@typescript-eslint"
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.json",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "tabWidth": 4,
+        "singleQuote": false,
+        "trailingComma": "none",
+        "endOfLine": "auto",
+        "parser": "flow"
+      }
+    ],
+    "react-hooks/exhaustive-deps": "off",
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "variable",
+        "format": [
+          "StrictPascalCase"
+        ],
+        "prefix": [
+          "are",
+          "can",
+          "did",
+          "does",
+          "has",
+          "have",
+          "is",
+          "should",
+          "will"
+        ],
+        "types": [
+          "boolean"
+        ]
+      },
+      {
+        "selector": "typeAlias",
+        "format": [
+          "StrictPascalCase"
+        ],
+        "prefix": [
+          "T"
+        ]
+      },
+      {
+        "selector": "interface",
+        "format": [
+          "StrictPascalCase"
+        ],
+        "prefix": [
+          "I"
+        ]
+      }
+    ],
+    "@typescript-eslint/ban-types": "warn",
+    "@typescript-eslint/ban-ts-comment": 1,
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-empty-interface": "error",
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-var-requires": "error",
+    "arrow-parens": 1,
+    "max-params": [
+      "error",
+      3
+    ],
+    "no-duplicate-imports": 1,
+    "no-tabs": 1
+  }
+}
