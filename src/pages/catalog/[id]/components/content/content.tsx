@@ -22,7 +22,7 @@ export const Content = ({
             <div className="w-full flex items-center flex-col lg:w-48">
                 {content.assets.image ? (
                     <Image
-                        src={`./data/library/files/${content.id}/${content.id}.webp`}
+                        src={`/data/library/files/${content.id}/${content.id}.webp`}
                         className="w-48 h-72"
                         width={192}
                         height={288}

@@ -134,7 +134,7 @@ export default async function handler(
             }
         }
         const searchedBookIndex = DB.findIndex((book) => {
-            return book.id === message[0];
+            return book.id === message;
         });
         if (searchedBookIndex === -1) {
             res.status(404).json({

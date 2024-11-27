@@ -32,6 +32,13 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             return user.login === decoded.login;
         });
 
+        if (!searchedUser) {
+            res.status(401).json({
+                success: false,
+                message: "Пользователя нет в базе данных"
+            });
+        }
+
         return res.status(200).json({
             success: true,
             user: {
