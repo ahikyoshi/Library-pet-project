@@ -43,9 +43,6 @@ export default function Layout({
         );
     }
 
-    if (!user) {
-        return <div>Loading</div>;
-    }
     return (
         <main className="w-full min-h-screen text-text absolute bg-main ">
             <header className="w-screen flex justify-between items-center h-12 px-3 bg-slate-600">
@@ -86,7 +83,7 @@ export default function Layout({
                         </div>
                         <div onClick={() => setIsMenuOpen(false)}>Назад</div>
                     </div>
-                    {isAuth && (
+                    {isAuth && user && (
                         <div className="flex flex-col items-center">
                             <div
                                 className="w-24 h-24 rounded-full border border-white"
