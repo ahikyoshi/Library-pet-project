@@ -79,7 +79,7 @@ async function handler(req: INewBookRequest, res: NextApiResponse) {
 
         await writeFile("./public/data/library/books.json", JSON.stringify(DB));
 
-        await mkdir(`./public/data/library/files/${newBook.id}`);
+        await mkdir(`./public/assets/library/${newBook.id}`);
 
         return res.status(200).json({
             success: true,

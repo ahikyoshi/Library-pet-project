@@ -1,3 +1,5 @@
+// types
+import { IBook } from "@/globalTypes";
 import { IHandleChangeFilesProps, IHandleUploadAudio } from "./types";
 
 export const handleChangeFiles = ({
@@ -22,7 +24,8 @@ export const handleUploadAudio = ({
     event,
     content,
     setIsLoading,
-    setIsAudioOpen
+    setIsAudioOpen,
+    setContent
 }: IHandleUploadAudio) => {
     event.preventDefault();
     setIsLoading(true);
@@ -49,14 +52,25 @@ export const handleUploadAudio = ({
         body: formData
     })
         .then((res) => res.json())
-        .then(({ success, message }: { success: boolean, message: string }) => {
-            setIsLoading(false);
-            if (success) {
-                setIsAudioOpen(false);
-            } else {
-                console.log(message);
+        .then(
+            ({
+                success,
+                message,
+                newBook
+            }: {
+                success: boolean,
+                message: string,
+                newBook: IBook
+            }) => {
+                setIsLoading(false);
+                if (success) {
+                    setIsAudioOpen(false);
+                    setContent(newBook);
+                } else {
+                    console.log(message);
+                }
             }
-        })
+        )
         .catch((e) => {
             console.error(e);
         });

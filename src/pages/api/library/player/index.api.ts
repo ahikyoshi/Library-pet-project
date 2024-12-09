@@ -20,7 +20,7 @@ async function handler(req: IPlayerRequest, res: NextApiResponse) {
                 message: "Данные запроса не верны"
             });
         }
-        const path = `./public/data/library/files/${id}/audio`;
+        const path = `./public/assets/library/${id}/audio`;
 
         const tracksList = await readdir(path);
 

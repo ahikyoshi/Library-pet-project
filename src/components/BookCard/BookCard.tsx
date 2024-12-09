@@ -1,11 +1,14 @@
-import { IBookCard } from "@/globalTypes";
+// libs
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+// types
+import { IBookCard } from "@/globalTypes";
 
 const BookCard = ({ id }: { id: string }) => {
     const [content, setContent] = useState<IBookCard | null>(null);
     const [isContentHide, setIsContentHide] = useState<boolean>(false);
+
     useEffect(() => {
         fetch("/api/library/book/get", {
             method: "POST",
@@ -36,7 +39,7 @@ const BookCard = ({ id }: { id: string }) => {
             style={
                 content.assets.image
                     ? {
-                          background: `center/cover no-repeat url(/data/library/files/${id}/${id}.webp)`
+                          background: `center/cover no-repeat url("/api/image?id=${id}")`
                       }
                     : { background: "gray" }
             }
