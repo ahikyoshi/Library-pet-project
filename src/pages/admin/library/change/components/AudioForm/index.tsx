@@ -8,7 +8,8 @@ import { IAudioFormComponentProps } from "./types";
 
 export const AudioForm = ({
     content,
-    setIsAudioOpen
+    setIsAudioOpen,
+    setContent
 }: IAudioFormComponentProps) => {
     const [isLoading, setIsLoading] = useState(false);
     const [isFileUpload, setIsFileUpload] = useState(false);
@@ -25,7 +26,8 @@ export const AudioForm = ({
                         event,
                         content,
                         setIsLoading,
-                        setIsAudioOpen
+                        setIsAudioOpen,
+                        setContent
                     })
                 }
                 className="bg-slate-800 rounded-sm p-4 w-10/12"
