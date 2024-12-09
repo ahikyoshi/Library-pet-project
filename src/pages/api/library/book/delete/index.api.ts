@@ -59,7 +59,7 @@ async function handler(req: IDeleteBookRequest, res: NextApiResponse) {
 
         await writeFile("./public/data/library/books.json", JSON.stringify(DB));
 
-        const directoryPath = `./public/data/library/files/${id}`;
+        const directoryPath = `./public/assets/library/${id}`;
         try {
             await rm(directoryPath, { recursive: true, force: true });
         } catch (error) {

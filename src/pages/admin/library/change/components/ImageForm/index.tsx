@@ -5,6 +5,7 @@ import { useState } from "react";
 import { handleChangeFiles, handleUploadImage } from "./utils";
 // types
 import { IImageFormComponentProps } from "./types";
+import { LocalImage } from "@/components/LocalImage";
 
 export const ImageForm = ({
     content,
@@ -38,12 +39,7 @@ export const ImageForm = ({
                     </h1>
                 ) : (
                     <div className="w-full flex justify-center">
-                        <div
-                            className="w-44 h-72 mt-2"
-                            style={{
-                                background: `center/cover no-repeat url("/data/library/files/${content.id}/${content.id}.webp")`
-                            }}
-                        />
+                        <LocalImage id={content.id} />
                     </div>
                 )}
                 <div>

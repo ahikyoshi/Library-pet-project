@@ -138,7 +138,11 @@ const Page = () => {
                 <FB2Form content={content} setIsFB2Open={setIsFB2Open} />
             )}
             {isAudioOpen && (
-                <AudioForm content={content} setIsAudioOpen={setIsAudioOpen} />
+                <AudioForm
+                    content={content}
+                    setIsAudioOpen={setIsAudioOpen}
+                    setContent={setContent}
+                />
             )}
         </div>
     );

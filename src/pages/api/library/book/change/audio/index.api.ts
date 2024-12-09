@@ -34,7 +34,7 @@ export default async function handler(
             .json({ success: false, message: "Пользователь не авторизован" });
     }
 
-    const targetDirectory = `${process.cwd()}/public/data/library/files`;
+    const targetDirectory = `${process.cwd()}/public/assets/library`;
 
     try {
         const decoded = jwt.verify(token, JWT_SECRET) as {
@@ -145,14 +145,12 @@ export default async function handler(
 
         DB[searchedBookIndex].assets.audio = true;
 
-        await writeFile(
-            "./public/data/library/books.json",
-            JSON.stringify(DB, null, 2)
-        );
+        await writeFile("./public/data/library/books.json", JSON.stringify(DB));
 
         return res.status(200).json({
             success: true,
-            message: "Файлы успешно загружены"
+            message: "Файлы успешно загружены",
+            newBook: DB[searchedBookIndex]
         });
     } catch (err) {
         console.error("Ошибка при обработке файла:", err);

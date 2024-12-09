@@ -1,14 +1,12 @@
 "use client";
 
-// libs
-import Image from "next/image";
 // utils
 import { timeTransform } from "../player/utils";
 // components
-
 // types
 import { IContentComponentProps } from "./types";
 import { Status } from "./componetns/status";
+import { LocalImage } from "@/components/LocalImage";
 
 export const Content = ({
     content,
@@ -21,13 +19,7 @@ export const Content = ({
         <div className="flex flex-col lg:flex-row">
             <div className="w-full flex items-center flex-col lg:w-48">
                 {content.assets.image ? (
-                    <Image
-                        src={`/data/library/files/${content.id}/${content.id}.webp`}
-                        className="w-48 h-72"
-                        width={192}
-                        height={288}
-                        alt={content.title}
-                    />
+                    <LocalImage id={content.id} />
                 ) : (
                     <div className="w-48 h-72 bg-slate-500" />
                 )}

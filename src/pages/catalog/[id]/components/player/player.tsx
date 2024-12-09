@@ -1,13 +1,17 @@
+// libs
 import React, { useRef, useState, useEffect, useReducer } from "react";
-import { IUserBook } from "@/globalTypes";
-import { getTracks, nextTrack, playerReducer } from "./utils";
-import { IPlayerComponentProps, IPlayerState } from "./types";
+// components
 import { Slider } from "./components/Slider";
 import { Controls } from "./components/Controlls";
 import { Volume } from "./components/Volume";
 import { Speed } from "./components/Speed";
 import { Timer } from "./components/Timer";
 import { Tracks } from "./components/Tracks";
+// utils
+import { getTracks, nextTrack, playerReducer } from "./utils";
+// types
+import { IUserBook } from "@/globalTypes";
+import { IPlayerComponentProps, IPlayerState } from "./types";
 
 export const Player = ({ id, userMeta, setContent }: IPlayerComponentProps) => {
     const initialState: IPlayerState = {
@@ -23,6 +27,35 @@ export const Player = ({ id, userMeta, setContent }: IPlayerComponentProps) => {
     const [player, playerDispatch] = useReducer(playerReducer, initialState);
     const [isLoading] = useState(false);
     const audioRef = useRef<HTMLAudioElement>(null);
+    const abortController = useRef<AbortController | null>(null);
+
+    useEffect(() => {
+        abortController.current = new AbortController();
+
+        return () => {
+            if (abortController.current) {
+                abortController.current.abort();
+            }
+        };
+    }, []);
+
+    const getDuration = () => {
+        fetch(
+            `/api/audio/meta?id=${id}&fileName=${player.tracks.list[player.tracks.current]}`
+        )
+            .then((res) => res.json())
+            .then((data: { success: boolean, message: string }) => {
+                if (data.success) {
+                    playerDispatch({
+                        type: "CHANGE_DURATION",
+                        payload: Number(data.message)
+                    });
+                } else {
+                    console.log(data.message);
+                }
+            })
+            .catch((e) => console.log(e));
+    };
 
     useEffect(() => {
         if (player.time.current % 10 === 0 && player.time.current != 0) {
@@ -102,22 +135,17 @@ export const Player = ({ id, userMeta, setContent }: IPlayerComponentProps) => {
             </div>
             {/* Audio */}
             <audio
-                src={`/data/library/files/${id}/audio/${player.tracks.list[player.tracks.current]}`}
+                src={`/api/audio/file?id=${id}&fileName=${player.tracks.list[player.tracks.current]}`}
                 ref={audioRef}
-                onTimeUpdate={() =>
+                onTimeUpdate={() => {
                     playerDispatch({
                         type: "CHANGE_TIME",
                         payload: Math.floor(
                             Number(audioRef.current?.currentTime)
                         )
-                    })
-                }
-                onLoadedMetadata={() => {
-                    playerDispatch({
-                        type: "CHANGE_DURATION",
-                        payload: Number(audioRef.current?.duration)
                     });
                 }}
+                onLoadedMetadata={getDuration}
                 onEnded={() => nextTrack(player, playerDispatch)}
                 autoPlay
                 hidden
