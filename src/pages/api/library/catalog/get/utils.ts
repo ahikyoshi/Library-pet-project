@@ -1,5 +1,13 @@
 import { IBook } from "@/globalTypes";
 
+export function catalogSearch(arr: IBook[], searchedValue: string): IBook[] {
+    return arr.filter(
+        (book) =>
+            book.title.includes(searchedValue) ||
+            book.cycle.title.includes(searchedValue) ||
+            book.author.includes(searchedValue)
+    );
+}
 export function catalogSort(arr: IBook[]): IBook[] {
     return arr.sort((a: IBook, b: IBook) => {
         const authorA = a.author.toLowerCase();

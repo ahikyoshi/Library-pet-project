@@ -4,7 +4,8 @@ export interface ICatalogRequest extends NextApiRequest {
     body: {
         settings: {
             currentPage: number,
-            limit: number
+            limit: number,
+            searchedValue: string
         }
     };
 }
