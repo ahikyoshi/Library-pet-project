@@ -3,6 +3,7 @@ import { IGetCatalogProps, IServerResponse } from "./types";
 export const getCatalog = ({
     limit,
     currentPage,
+    searchedValue,
     setBooks,
     setPages
 }: IGetCatalogProps) => {
@@ -15,7 +16,8 @@ export const getCatalog = ({
         body: JSON.stringify({
             settings: {
                 limit: limit,
-                currentPage: currentPage
+                currentPage: currentPage,
+                searchedValue: searchedValue
             }
         })
     })

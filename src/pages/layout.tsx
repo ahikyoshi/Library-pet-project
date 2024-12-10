@@ -44,7 +44,7 @@ export default function Layout({
     }
 
     return (
-        <main className="w-full min-h-screen text-text absolute bg-main ">
+        <div className="w-full min-h-screen text-text absolute bg-main ">
             <header className="w-screen flex justify-between items-center h-12 px-3 bg-slate-600">
                 <div className="flex font-mono font-bold text-xl">
                     <Image
@@ -121,6 +121,6 @@ export default function Layout({
             )}
 
             {children}
-        </main>
+        </div>
     );
 }
