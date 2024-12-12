@@ -16,16 +16,16 @@ export const Content = ({
     setIsPlayerOpen
 }: IContentComponentProps) => {
     return (
-        <div className="flex flex-col lg:flex-row">
-            <div className="w-full flex items-center flex-col lg:w-48">
+        <div className="flex flex-col">
+            <div className="w-full flex flex-col items-center">
                 {content.assets.image ? (
                     <LocalImage id={content.id} />
                 ) : (
-                    <div className="w-48 h-72 bg-slate-500" />
+                    <div className="w-48 h-72 bg-background-dark" />
                 )}
                 {content.assets.text && (
                     <button
-                        className="w-48 bg-orange-400 py-2 mt-2"
+                        className="w-48 border border-primary py-2 mt-2"
                         onClick={() => {
                             if (isAuth) {
                                 alert(
@@ -41,7 +41,7 @@ export const Content = ({
                 )}
                 {content.assets.audio && (
                     <button
-                        className="w-48 bg-indigo-500 py-2 mt-2"
+                        className="w-48 bg-primary text-text-dark py-2 mt-2"
                         onClick={() => {
                             if (isAuth) {
                                 setIsPlayerOpen(!isPlayerOpen);
@@ -64,7 +64,7 @@ export const Content = ({
                 )}
             </div>
             <div className="w-full items-start mt-5 lg:w-4/6 lg:mt-0 lg:ml-5">
-                <div className="text-2xl mb-2 flex justify-between items-start">
+                <div className="mb-2 text-2xl font-bold flex justify-between items-start">
                     {content.title}
                 </div>
                 {isAuth && userMeta && <Status userMeta={userMeta} />}
@@ -73,8 +73,8 @@ export const Content = ({
                     <div className="ml-2">{content.cycle.number}</div>
                 </div>
                 <div className="mb-2">{content.author}</div>
-                <div className="text-xl mt-5">Описание</div>
-                <div className="w-full mt-2">{content.description}</div>
+                <div className="mt-5 text-xl font-bold">Описание</div>
+                <div className="mt-2 w-full">{content.description}</div>
             </div>
         </div>
     );

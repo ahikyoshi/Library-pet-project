@@ -30,7 +30,7 @@ export const AudioForm = ({
                         setContent
                     })
                 }
-                className="bg-slate-800 rounded-sm p-4 w-10/12"
+                className="rounded p-4 w-10/12 bg-background"
             >
                 {!content.assets.audio ? (
                     <h1 className="w-full text-center text-2xl">
@@ -45,10 +45,7 @@ export const AudioForm = ({
                     <ul className="flex flex-col h-28 overflow-y-scroll my-2">
                         {filesName.map((item) => {
                             return (
-                                <li
-                                    key={item}
-                                    className="w-full odd:bg-gray-600 py-2"
-                                >
+                                <li key={item} className="w-full py-2">
                                     {item}
                                 </li>
                             );
@@ -58,7 +55,7 @@ export const AudioForm = ({
                 <div>
                     <label htmlFor="audio" className="flex items-center my-4">
                         <Image
-                            src={"/assets/icons/admin/file.svg"}
+                            src={"/assets/icons/admin/light/file.svg"}
                             width={24}
                             height={24}
                             alt="file"
@@ -85,19 +82,19 @@ export const AudioForm = ({
                 </div>
                 <div className="flex justify-between mt-2">
                     <button
-                        onClick={() => setIsAudioOpen(false)}
-                        type="button"
-                        className="bg-rose-800 py-1 px-2 rounded-sm"
-                        disabled={isLoading}
-                    >
-                        Выйти
-                    </button>
-                    <button
                         type="submit"
-                        className="bg-blue-800 py-1 px-2 rounded-sm"
+                        className="my-2 py-1 px-2 bg-primary text-text-contrast rounded"
                         disabled={isLoading}
                     >
                         {isLoading ? "Загрузка" : "Изменить аудио файлы"}
+                    </button>
+                    <button
+                        onClick={() => setIsAudioOpen(false)}
+                        type="button"
+                        className=""
+                        disabled={isLoading}
+                    >
+                        Выйти
                     </button>
                 </div>
             </form>

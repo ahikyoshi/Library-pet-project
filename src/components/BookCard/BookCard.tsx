@@ -48,11 +48,11 @@ const BookCard = ({ id }: { id: string }) => {
             onClick={() => setIsContentHide((prev) => !prev)}
         >
             {isContentHide && (
-                <div className="w-full h-full bg-black/80 p-2 flex flex-col items-center  justify-between">
+                <div className="w-full h-full bg-black/80 p-2 flex flex-col items-center justify-between">
                     <div className="flex flex-col w-full">
                         <div className="flex justify-end w-full">
                             {content.assets.audio && (
-                                <div className="p-1 bg-blue-900 rounded">
+                                <div className="p-1 bg-primary rounded">
                                     <Image
                                         src={"/assets/icons/books/audio.svg"}
                                         width={18}
@@ -62,7 +62,7 @@ const BookCard = ({ id }: { id: string }) => {
                                 </div>
                             )}
                             {content.assets.text && (
-                                <div className="p-1 bg-orange-900 rounded ml-1">
+                                <div className="p-1 bg-primary rounded ml-1">
                                     <Image
                                         src={"/assets/icons/books/book.svg"}
                                         width={18}
@@ -85,7 +85,7 @@ const BookCard = ({ id }: { id: string }) => {
                         </div>
                         <Link
                             href={`/catalog/${content.id}`}
-                            className="bg-indigo-700 py-1 px-2 text-center mt-2 rounded-md"
+                            className="mt-2 py-1 px-2 bg-primary text-text-contrast text-center font-bold rounded-md"
                         >
                             Читать
                         </Link>

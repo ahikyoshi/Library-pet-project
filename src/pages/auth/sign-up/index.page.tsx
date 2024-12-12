@@ -16,47 +16,50 @@ const Page = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     return (
-        <main className="w-screen h-screen flex items-center justify-center">
+        <main className="w-full h-[calc(100vh-48px)] flex items-center justify-center">
             <form
                 onSubmit={(event) =>
                     handleSubmit({ event, setStatus, setIsLoading })
                 }
-                className="bg-slate-800 w-4/6 p-4 rounded flex flex-col"
+                className="w-4/6 p-4 rounded text-text-light flex flex-col"
             >
+                <h1 className="mb-4 text-2xl text-center font-bold">
+                    Регистрация
+                </h1>
                 <input
-                    className="mb-4 border-b border-slate-600"
+                    className="py-2 border border-secondary rounded indent-2"
                     type="text"
                     name="login"
                     placeholder="Логин"
                     required
                 />
                 <input
-                    className="mb-4 border-b border-slate-600"
+                    className="my-2 py-2 border border-secondary rounded indent-2"
                     type="password"
                     name="password"
                     placeholder="Пароль"
                     required
                 />
                 <input
-                    className="mb-4 border-b border-slate-600"
+                    className="py-2 border border-secondary rounded indent-2"
                     type="text"
                     name="display_name"
                     placeholder="Отображаемое имя"
                 />
                 <button
-                    className="w-full bg-slate-600 p-2 rounded"
+                    className="my-2 py-2 bg-primary text-text-dark rounded"
                     type="submit"
                     disabled={isLoading}
                 >
                     {isLoading ? "Загрузка..." : "Зарегистрироваться"}
                 </button>
-                <div className="mt-2 w-full text-center text-rose-600">
+                <div className="w-full mt-2 text-center text-notification underline">
                     {!Status?.success && Status?.message}
                 </div>
 
                 <Link
                     href={"/auth/sign-in"}
-                    className="w-full mt-2 text-center"
+                    className="w-full mt-2 text-center text-text-secondaryLight"
                 >
                     Уже есть аккаунт?
                 </Link>

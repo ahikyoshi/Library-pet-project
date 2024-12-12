@@ -31,7 +31,7 @@ export const Status = ({ userMeta }: IStatusProps) => {
         <div>
             <select
                 defaultValue={currentStatus}
-                className="bg-main"
+                className="bg-background"
                 onChange={(e) =>
                     changeStatus(e.target.value as IUserBook["status"])
                 }

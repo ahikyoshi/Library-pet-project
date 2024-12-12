@@ -36,20 +36,18 @@ const Page = () => {
         return <div>Loading</div>;
     }
     return (
-        <div>
+        <main className="w-full h-[calc(100vh-48px)] flex items-center justify-center">
             <form
                 onSubmit={(event) =>
                     handleSubmit({ event, content, setIsStatus, setIsLoading })
                 }
-                className="w-screen xl:w-[1280px] mx-auto px-2 flex flex-col items-center py-2"
+                className="w-full px-2 text-text-light flex flex-col"
             >
-                <div className="w-full flex bg">
-                    <Link href={"/admin/library"} className="">
-                        &larr; обратно
-                    </Link>
-                </div>
+                <h1 className="mb-4 text-2xl text-center font-bold">
+                    Редактирование книги
+                </h1>
                 <input
-                    className="mb-4 w-full py-2 border-b border-slate-600"
+                    className="mb-2 py-2 border border-secondary rounded indent-2"
                     type="text"
                     name="title"
                     placeholder="Название произведения"
@@ -57,7 +55,7 @@ const Page = () => {
                     required
                 />
                 <input
-                    className="mb-4 w-full py-2 border-b border-slate-600"
+                    className="mb-2 py-2 border border-secondary rounded indent-2"
                     type="text"
                     name="author"
                     placeholder="Автор произведения"
@@ -65,7 +63,7 @@ const Page = () => {
                     required
                 />
                 <input
-                    className="mb-4 w-full py-2 border-b border-slate-600"
+                    className="mb-2 py-2 border border-secondary rounded indent-2"
                     type="text"
                     name="cycle_name"
                     placeholder="Название цикла"
@@ -73,7 +71,7 @@ const Page = () => {
                     required
                 />
                 <input
-                    className="mb-4 w-full py-2 border-b border-slate-600"
+                    className="mb-2 py-2 border border-secondary rounded indent-2"
                     type="number"
                     name="cycle_number"
                     placeholder="Номер"
@@ -81,7 +79,7 @@ const Page = () => {
                     required
                 />
                 <input
-                    className="mb-4 w-full py-2 border-b border-slate-600"
+                    className="mb-2 py-2 border border-secondary rounded indent-2"
                     type="text"
                     name="description"
                     placeholder="Описание"
@@ -89,7 +87,7 @@ const Page = () => {
                     required
                 />
                 <input
-                    className="mb-4 w-full py-2 border-b border-slate-600"
+                    className="mb-2 py-2 border border-secondary rounded indent-2"
                     type="text"
                     name="writtingDate"
                     placeholder="Дата написания (Указывать только цифры)"
@@ -101,31 +99,37 @@ const Page = () => {
                 </div>
 
                 <Button
-                    color="bg-blue-800"
+                    color="light"
                     text="изображение"
                     isActive={content.assets.image}
                     setStateOpen={setIsImageOpen}
                 />
                 <Button
-                    color="bg-green-800"
+                    color="light"
                     text="аудио"
                     isActive={content.assets.audio}
                     setStateOpen={setIsAudioOpen}
                 />
                 <Button
-                    color="bg-orange-800"
+                    color="light"
                     text="текстовый файл"
                     isActive={content.assets.text}
                     setStateOpen={setIsFB2Open}
                 />
 
                 <button
-                    className="w-full bg-slate-600 mt-2 p-2 rounded"
+                    className="w-full mt-2 p-2 bg-primary text-text-contrast rounded"
                     type="submit"
                     disabled={isLoading}
                 >
                     {isLoading ? "Загрузка..." : "Сохранить"}
                 </button>
+                <Link
+                    href={"/admin/library"}
+                    className="w-full mt-2 text-center text-text-secondaryLight"
+                >
+                    Назад
+                </Link>
             </form>
             {isImageOpen && (
                 <ImageForm
@@ -144,7 +148,7 @@ const Page = () => {
                     setContent={setContent}
                 />
             )}
-        </div>
+        </main>
     );
 };
 
