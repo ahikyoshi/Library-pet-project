@@ -6,11 +6,13 @@ import { IBook } from "@/globalTypes";
 import { Delete } from "./components/delete";
 import { Card } from "./components/card";
 import { Pages } from "@/components/Pages";
+import { Search } from "@/components/search";
 
 const Page = () => {
     const [list, setList] = useState<IBook[]>([]);
     const [pages, setPages] = useState<number>(0);
     const [currentPage, setCurrentPage] = useState(1);
+    const [searchedValue, setSearchedValue] = useState("");
 
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
     const [currentDelete, setCurrentDelete] = useState<IBook | null>(null);
@@ -18,7 +20,8 @@ const Page = () => {
     useEffect(() => {
         const settings = {
             currentPage: currentPage,
-            limit: 20
+            limit: 20,
+            searchedValue: searchedValue
         };
         fetch("/api/library/catalog/get", {
             method: "POST",
@@ -50,17 +53,18 @@ const Page = () => {
                 }
             )
             .catch(() => console.log("Something went wrong"));
-    }, [currentPage]);
+    }, [currentPage, searchedValue]);
 
     return (
-        <div className="px-2 min-h-[calc(100vh-48px)] md:px-5 flex flex-col justify-between xl:w-[1280px] xl:mx-auto">
-            <div>
-                <h1 className="py-2 text-xl md:text-2xl">
-                    Управление базой данных библиотеки
-                </h1>
+        <main className="px-2 w-full min-h-[calc(100vh-48px)] flex flex-col">
+            <div className="w-full">
+                <nav className=" py-2 flex items-center justify-between">
+                    <h1 className="text-2xl font-bold">Каталог</h1>
+                </nav>
+                <Search setSearchedValue={setSearchedValue} />
             </div>
 
-            <ul className="flex flex-col max-h-[calc(100vh-172px)] overflow-y-scroll">
+            <div className="w-full mt-2 flex flex-col flex-1 flex-wrap">
                 {list.map((book: IBook, index) => (
                     <Card
                         key={book.id}
@@ -71,10 +75,10 @@ const Page = () => {
                         currentPage={currentPage}
                     />
                 ))}
-            </ul>
-            <div className="flex flex-col justify-between w-full py-1">
-                <div className="flex items-center py-1 md:text-xl">
-                    <div className="mr-2">страницы:</div>
+            </div>
+            <div className="w-full my-2 flex flex-col">
+                <div className="flex w-full">
+                    <div>Страницы: </div>
                     <ul className="flex">
                         {Array.from({ length: pages }, (_, i) => i + 1).map(
                             (number) => (
@@ -90,7 +94,7 @@ const Page = () => {
                 </div>
                 <Link
                     href={"/admin/library/new"}
-                    className="bg-blue-800 py-2 text-center md:text-xl"
+                    className="py-2 bg-primary text-text-contrast text-center rounded font-bold"
                 >
                     Добавить новую книгу
                 </Link>
@@ -103,7 +107,7 @@ const Page = () => {
                     setCurrentPage={setCurrentPage}
                 />
             )}
-        </div>
+        </main>
     );
 };
 export default Page;

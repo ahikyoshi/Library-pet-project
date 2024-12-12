@@ -5,7 +5,7 @@ export default function Document(): ReactElement {
     return (
         <Html>
             <Head />
-            <body>
+            <body id="body" className="dark">
                 <Main />
                 <NextScript />
             </body>

@@ -17,7 +17,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const token = req.cookies.auth;
 
     if (!token) {
-        return res.status(401).json({ success: false });
+        return res
+            .status(401)
+            .json({ success: false, message: "Пользователь не авторизован" });
     }
 
     try {
@@ -43,13 +45,18 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             success: true,
             user: {
                 login: searchedUser?.login,
+                role: decoded.role,
                 display_name: searchedUser?.display_name,
                 avatar: searchedUser?.avatar,
                 library: searchedUser?.library
             }
         });
-    } catch {
-        return res.status(401).json({ success: false });
+    } catch (error) {
+        console.log("Ошибка сервера:", error);
+        return res.status(500).json({
+            success: false,
+            message: "Ошибка сервера"
+        });
     }
 }
 

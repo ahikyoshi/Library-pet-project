@@ -4,16 +4,23 @@ const config: Config = {
     content: [
         "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
         "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-        "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+        "./src/app/**/*.{js,ts,jsx,tsx,mdx}"
     ],
     theme: {
         extend: {
             colors: {
-                main: "#1b1b1b",
-                text: "white",
-            },
-        },
+                primary: "rgb(var(--primary))",
+                background: "rgb(var(--background))",
+                border: "rgb(var(--border))",
+                text: {
+                    primary: "rgb(var(--text_primary))",
+                    secondary: "rgb(var(--text_secondary))",
+                    contrast: "rgb(var(--text_contrast))"
+                },
+                notification: "rgb(var(--notification))"
+            }
+        }
     },
-    plugins: [],
+    plugins: []
 };
 export default config;

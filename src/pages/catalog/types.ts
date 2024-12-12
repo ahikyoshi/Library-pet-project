@@ -10,6 +10,7 @@ export interface IServerResponse {
 export interface IGetCatalogProps {
     limit: 10 | 25 | 50;
     currentPage: number;
+    searchedValue: string;
     setBooks: Dispatch<SetStateAction<IBook[]>>;
     setPages: Dispatch<SetStateAction<number>>;
 }

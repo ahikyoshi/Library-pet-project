@@ -1,5 +1,5 @@
 // utils
-import { catalogPagination, catalogSort } from "./utils";
+import { catalogPagination, catalogSearch, catalogSort } from "./utils";
 import { loadDB } from "../../utils";
 // types
 import { NextApiResponse } from "next";
@@ -24,6 +24,10 @@ async function handler(req: ICatalogRequest, res: NextApiResponse) {
         let DB = await loadDB();
 
         const pages = Math.floor(DB.length / settings.limit) + 1;
+
+        if (settings.searchedValue != "") {
+            DB = catalogSearch(DB, settings.searchedValue);
+        }
 
         DB = catalogSort(DB);
         const catalog = catalogPagination(settings, DB);

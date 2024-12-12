@@ -10,9 +10,12 @@ import BookCard from "@/components/BookCard/BookCard";
 import { Pages } from "@/components/Pages";
 // types
 import { IBook } from "@/globalTypes";
+import { Search } from "@/components/search";
 
 export default function Catalog() {
     const [books, setBooks] = useState<IBook[]>([]);
+    const [isEmpty, setIsEmpty] = useState(false);
+    const [searchedValue, setSearchedValue] = useState<string>("");
     const [limit, setLimit] = useState<10 | 25 | 50>(10);
     const [currentPage, setCurrentPage] = useState(1);
     const [pages, setPages] = useState<number>(0);
@@ -20,30 +23,40 @@ export default function Catalog() {
     useEffect(() => {
         document.title = "Aurora: Каталог";
 
-        getCatalog({ limit, currentPage, setBooks, setPages });
-    }, [limit, currentPage]);
+        getCatalog({ limit, currentPage, searchedValue, setBooks, setPages });
+    }, [limit, currentPage, searchedValue]);
+
+    useEffect(() => {
+        setIsEmpty(books.length === 0);
+    }, [books]);
 
     return (
-        <main>
-            <div style={{ maxWidth: "1250px" }} className="mx-auto">
-                <nav className="mx-2 py-2 flex items-center justify-between">
+        <main className="px-2 w-full min-h-[calc(100vh-48px)] flex flex-col">
+            <div className="w-full">
+                <nav className=" py-2 flex items-center justify-between">
                     <h1 className="text-2xl font-bold">Каталог</h1>
                 </nav>
+                <Search setSearchedValue={setSearchedValue} />
             </div>
-            <div
-                className="flex flex-wrap justify-between items-center px-2"
-                style={{ maxWidth: "1250px" }}
-            >
-                {books.map(({ id }: { id: string }) => {
-                    return (
-                        <div key={id}>
-                            <BookCard id={id} />
-                        </div>
-                    );
-                })}
+            <div className="w-full flex flex-1 flex-wrap justify-between items-center">
+                {isEmpty ? (
+                    <div className="w-full text-center text-xl">
+                        К сожалению мы ничего не нашли
+                    </div>
+                ) : (
+                    <>
+                        {books.map(({ id }: { id: string }) => {
+                            return (
+                                <div key={id}>
+                                    <BookCard id={id} />
+                                </div>
+                            );
+                        })}
+                    </>
+                )}
             </div>
             {/* Books on Page limit and pages */}
-            <div className="wrapper px-2 mx-auto my-4 flex flex-col items-center justify-between">
+            <div className="my-4 flex flex-col items-center justify-between">
                 <div className="flex w-full">
                     <div>Страницы: </div>
                     <ul className="flex">
