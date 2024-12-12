@@ -1,8 +1,8 @@
 // libs
-import Image from "next/image";
 import Link from "next/link";
 // types
 import { ICardComponentProps } from "./types";
+import { Svg } from "@/components/Svg";
 
 export const Card = ({
     book,
@@ -13,9 +13,9 @@ export const Card = ({
 }: ICardComponentProps) => {
     const query = { id: book.id };
     return (
-        <li
+        <div
             key={book.id}
-            className="flex items-center justify-between text-xs md:text-base"
+            className="flex items-center justify-between text-xs md:text-base text-text-light"
         >
             <div className="w-1/12">{index + (currentPage - 1) * 20 + 1}</div>
             <div className="flex items-center w-8/12 overflow-hidden">
@@ -29,38 +29,38 @@ export const Card = ({
                 </div>
             </div>
             <div className="flex">
-                <Image
-                    src={"/assets/icons/admin/delete.svg"}
-                    width={24}
-                    height={24}
-                    alt="delete"
+                <div
                     onClick={() => {
                         setIsDeleteOpen(true);
                         setCurrentDelete(book);
                     }}
-                />
+                >
+                    <Svg
+                        src="/assets/icons/admin/theme/delete.svg"
+                        size={24}
+                        alt="delete"
+                    />
+                </div>
                 <Link
                     href={{
                         pathname: "/admin/library/change",
                         query
                     }}
                 >
-                    <Image
-                        src={"/assets/icons/admin/edit.svg"}
-                        width={24}
-                        height={24}
+                    <Svg
+                        src="/assets/icons/admin/theme/edit.svg"
+                        size={24}
                         alt="edit"
                     />
                 </Link>
                 <Link href={`/catalog/${book.id}`}>
-                    <Image
-                        src={"/assets/icons/admin/open.svg"}
-                        width={24}
-                        height={24}
+                    <Svg
+                        src={"/assets/icons/admin/theme/open.svg"}
+                        size={24}
                         alt="open"
                     />
                 </Link>
             </div>
-        </li>
+        </div>
     );
 };

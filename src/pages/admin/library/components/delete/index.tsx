@@ -12,7 +12,7 @@ export const Delete = ({
 }: IDeleteComponentsProps) => {
     return (
         <div className="fixed top-0 left-0 w-screen h-screen bg-black/70 flex items-center justify-center">
-            <div className="rounded bg-slate-700 w-5/6 p-4">
+            <div className="rounded bg-background-light w-5/6 p-4">
                 <div>
                     <div className="text-lg font-bold">
                         Вы точно хотите удалить книгу?
@@ -25,7 +25,7 @@ export const Delete = ({
                 </div>
                 <div className="flex justify-between items-center mt-4">
                     <button
-                        className="bg-rose-600 rounded-sm px-2 py-1"
+                        className=" text-text-secondaryLight"
                         onClick={() => {
                             setIsOpen(false);
                             setCurrentTarget(null);
@@ -34,7 +34,7 @@ export const Delete = ({
                         отменить
                     </button>
                     <button
-                        className="bg-blue-800 px-2 py-1 rounded-sm"
+                        className="bg-primary px-2 py-1 text-text-dark rounded"
                         onClick={() =>
                             handleDelete({
                                 currentTarget,

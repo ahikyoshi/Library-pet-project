@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { IButtonComponentProps } from "./types";
 
 export const Button = ({
@@ -8,7 +9,10 @@ export const Button = ({
 }: IButtonComponentProps) => {
     return (
         <button
-            className={`w-full ${color} mt-2 py-2 rounded`}
+            className={clsx(
+                `w-full mt-2 py-2 rounded border border-border`,
+                color === "light" && "text-text-dark"
+            )}
             onClick={() => setStateOpen(true)}
             type="button"
         >

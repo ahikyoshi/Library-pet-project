@@ -31,7 +31,7 @@ export const ImageForm = ({
                         setServerResponse
                     })
                 }
-                className="bg-slate-800 rounded-sm p-4 w-10/12"
+                className="bg-background rounded p-4 w-10/12"
             >
                 {!content.assets.image ? (
                     <h1 className="w-full text-center text-2xl">
@@ -50,7 +50,7 @@ export const ImageForm = ({
                         <div className="flex items-center">
                             {isFileUpload ? "Изменить файл" : "Добавить файл"}
                             <Image
-                                src={"/assets/icons/admin/file.svg"}
+                                src={"/assets/icons/admin/light/file.svg"}
                                 width={24}
                                 height={24}
                                 alt="file"
@@ -82,17 +82,17 @@ export const ImageForm = ({
                 )}
                 <div className="flex flex-col justify-between mt-2">
                     <button
-                        onClick={() => setIsImageOpen(false)}
-                        type="button"
-                        className="bg-rose-800 py-1 px-2 rounded-sm"
-                    >
-                        Выйти
-                    </button>
-                    <button
                         type="submit"
-                        className="bg-blue-800 mt-2 py-1 px-2 rounded-sm"
+                        className="bg-primary my-2 py-1 px-2 text-text-contrast rounded"
                     >
                         Изменить изображение
+                    </button>
+                    <button
+                        onClick={() => setIsImageOpen(false)}
+                        type="button"
+                        className="text-text-secondaryLight"
+                    >
+                        Выйти
                     </button>
                 </div>
             </form>

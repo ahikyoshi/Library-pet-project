@@ -37,7 +37,7 @@ export const Review = ({
             />
             <div className="ml-2 w-3/4">
                 <div className="font-bold text-xl">{user.display_name}</div>
-                <div className=" whitespace-break-spaces">{review.content}</div>
+                <div className="whitespace-break-spaces">{review.content}</div>
             </div>
         </div>
     );

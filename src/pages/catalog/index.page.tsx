@@ -10,7 +10,7 @@ import BookCard from "@/components/BookCard/BookCard";
 import { Pages } from "@/components/Pages";
 // types
 import { IBook } from "@/globalTypes";
-import { Search } from "./components/search";
+import { Search } from "@/components/search";
 
 export default function Catalog() {
     const [books, setBooks] = useState<IBook[]>([]);
@@ -31,17 +31,14 @@ export default function Catalog() {
     }, [books]);
 
     return (
-        <main className="flex flex-col w-screen min-h-[calc(100vh-48px)] px-2">
-            <div style={{ maxWidth: "1250px" }} className="w-full">
+        <main className="px-2 w-full min-h-[calc(100vh-48px)] flex flex-col">
+            <div className="w-full">
                 <nav className=" py-2 flex items-center justify-between">
                     <h1 className="text-2xl font-bold">Каталог</h1>
                 </nav>
                 <Search setSearchedValue={setSearchedValue} />
             </div>
-            <div
-                className="w-full flex flex-1 flex-wrap justify-between items-center"
-                style={{ maxWidth: "1250px" }}
-            >
+            <div className="w-full flex flex-1 flex-wrap justify-between items-center">
                 {isEmpty ? (
                     <div className="w-full text-center text-xl">
                         К сожалению мы ничего не нашли

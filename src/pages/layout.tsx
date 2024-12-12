@@ -1,8 +1,14 @@
-import { IUser } from "@/globalTypes";
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/router";
+"use client";
+
+// libs
 import { ReactElement, ReactNode, useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import Link from "next/link";
+// types
+import { IUser } from "@/globalTypes";
+import clsx from "clsx";
+import { ThemeToggle } from "./profile/components/theme";
+import { Svg } from "@/components/Svg";
 
 export default function Layout({
     children
@@ -12,6 +18,7 @@ export default function Layout({
     const router = useRouter();
 
     const [isAuth, setIsAuth] = useState(false);
+    const [currentPage, setCurrentPage] = useState("");
     const [user, setUser] = useState<IUser | null>(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isUnauthorizedPage, setIsUnauthorizedPage] = useState(false);
@@ -25,70 +32,89 @@ export default function Layout({
                     setIsAuth(true);
                 }
             })
-            .catch(() => {
-                // router.push("/auth/sign-in");
+            .catch((error) => {
+                console.log(error);
             });
     }, []);
 
     useEffect(() => {
-        if (router.pathname === "/reader") {
-            setIsUnauthorizedPage(true);
+        const path = router.pathname;
+
+        switch (path) {
+            case "/reader":
+                setIsUnauthorizedPage(true);
+                break;
+            case "/profile":
+                setCurrentPage("profile");
+                break;
+            case "/catalog":
+                setCurrentPage("catalog");
+                break;
+            case "/admin/library":
+                setCurrentPage("admin");
+                break;
+            default:
+                setCurrentPage("");
+                break;
         }
     }, [router]);
+
+    const logout = () => {
+        fetch("/api/auth/logout")
+            .then(() => {
+                window.location.reload();
+            })
+            .catch((error) => console.log(error));
+    };
     if (isUnauthorizedPage) {
         return (
-            <main className="w-full min-h-screen text-text absolute bg-main ">
+            <main className="w-screen min-h-screen text-text absolute bg-background-light">
                 {children}
             </main>
         );
     }
 
     return (
-        <div className="w-full min-h-screen text-text absolute bg-main ">
-            <header className="w-screen flex justify-between items-center h-12 px-3 bg-slate-600">
+        <div className="w-screen min-h-screen bg-background text-text-primary overflow-hidden">
+            <header
+                className={clsx(
+                    "w-full h-12 px-2 bg-background-primary flex justify-between items-center",
+                    isMenuOpen ? "fixed" : "absolute"
+                )}
+            >
                 <div className="flex font-mono font-bold text-xl">
-                    <Image
-                        src={"/assets/icons/books/book.svg"}
-                        width={24}
-                        height={24}
-                        alt="logotype"
+                    <Svg
+                        src="/assets/icons/books/theme/book.svg"
+                        size={24}
+                        alt={"logotype"}
                     />
-                    <div className="mr-2">
-                        Aurora.<span className="text-green-400">lib</span>
+                    <div className="mr-2 text-text-light">
+                        Aurora.<span className="text-primary">lib</span>
                     </div>
                 </div>
-                <div onClick={() => setIsMenuOpen(true)}>
-                    <Image
-                        src={"/assets/icons/header/menu.svg"}
-                        width={24}
-                        height={24}
-                        alt="menu"
-                    />
+                <div className="flex">
+                    <ThemeToggle />
+                    <div
+                        className="ml-2"
+                        onClick={() => setIsMenuOpen((prev) => !prev)}
+                    >
+                        <Svg
+                            src={"/assets/icons/header/theme/menu.svg"}
+                            size={24}
+                            alt="menu"
+                        />
+                    </div>
                 </div>
             </header>
+
             {isMenuOpen && (
-                <div className="w-screen h-screen bg-gray-900 flex flex-col items-center justify-between py-20 fixed top-0">
-                    <div className=" absolute left-0 top-0 px-2 py-1 text-xl w-full justify-between flex">
-                        <div className="flex font-mono font-bold">
-                            <Image
-                                src={"/assets/icons/books/book.svg"}
-                                width={24}
-                                height={24}
-                                alt="logotype"
-                            />
-                            <div className="mr-2">
-                                Aurora.
-                                <span className="text-green-400">lib</span>
-                            </div>
-                        </div>
-                        <div onClick={() => setIsMenuOpen(false)}>Назад</div>
-                    </div>
+                <div className="w-screen h-screen py-20 bg-background flex flex-col items-center justify-between fixed top-12">
                     {isAuth && user && (
                         <div className="flex flex-col items-center">
                             <div
-                                className="w-24 h-24 rounded-full border border-white"
+                                className="w-24 h-24 rounded-full border border-primary"
                                 style={{
-                                    background: `center/cover no-repeat  url(${user.avatar})`
+                                    background: `center/cover no-repeat url(${user.avatar})`
                                 }}
                             />
                             <div className="font-bold text-2xl mt-2">
@@ -96,31 +122,95 @@ export default function Layout({
                             </div>
                         </div>
                     )}
-                    <ul className="text-xl w-screen text-center">
+                    <ul className="text-xl mt-4 w-screen h-full text-center flex flex-col">
                         <li
-                            className="py-4 bg-gray-600"
+                            className={clsx(
+                                "py-4 cursor-pointer hover:bg-primary hover:text-text-dark",
+                                currentPage === "catalog" &&
+                                    "bg-primary text-text-contrast"
+                            )}
                             onClick={() => setIsMenuOpen(false)}
                         >
                             <Link href={"/catalog"}>Каталог</Link>
                         </li>
-                        <li
-                            className="py-4"
+                        {isAuth && user && (
+                            <li
+                                className={clsx(
+                                    "py-4 cursor-pointer hover:bg-primary hover:text-text-contrast",
+                                    currentPage === "profile" &&
+                                        "bg-primary text-text-contrast"
+                                )}
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                <Link href={"/profile"}>Профиль</Link>
+                            </li>
+                        )}
+                        {user?.role === "admin" && (
+                            <li
+                                className={clsx(
+                                    "py-4 cursor-pointer hover:bg-primary hover:text-text-contrast",
+                                    currentPage === "admin" &&
+                                        "bg-primary text-text-contrast"
+                                )}
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                <Link href={"/admin/library"}>
+                                    Админ панель
+                                </Link>
+                            </li>
+                        )}
+                        {isAuth && (
+                            <li
+                                className={"py-4 cursor-pointer text-base"}
+                                onClick={logout}
+                            >
+                                Выйти
+                            </li>
+                        )}
+                    </ul>
+                    {!user && (
+                        <div
+                            className="mb-4 text-base flex flex-col items-center"
                             onClick={() => setIsMenuOpen(false)}
                         >
-                            <Link href={"/profile"}>Профиль</Link>
-                        </li>
-                    </ul>
-                    <div className="text-center text-xs">
+                            <Link
+                                href={"/auth/sign-up"}
+                                className="bg-primary text-text-dark px-2 py-2 rounded"
+                            >
+                                Зарегистрироваться
+                            </Link>
+                            <Link href={"/auth/sign-in"} className="mt-4">
+                                Войти
+                            </Link>
+                        </div>
+                    )}
+                    <div className="text-center text-xs text-text-secondary">
                         <p>
                             Приложение разработано в целях самообучения, с
                             использованием личных наработок
                         </p>
-                        <p className="mt-2">ahikyoshi@gmail.com</p>
+                        <p className="my-1">
+                            <span>Связаться со мной можно почтой: </span>
+                            <Link
+                                href={"mailto:ahikyoshi@gmail.com"}
+                                className="mt-2 underline"
+                            >
+                                ahikyoshi@gmail.com
+                            </Link>
+                        </p>
+                        <p>
+                            <span>Или telegram: </span>
+                            <Link
+                                href={"https://t.me/ahikyoshi"}
+                                className="mt-2 underline"
+                            >
+                                @ahikyoshi
+                            </Link>
+                        </p>
                     </div>
                 </div>
             )}
-
-            {children}
+            <div className="pt-12">{children}</div>
         </div>
     );
 }

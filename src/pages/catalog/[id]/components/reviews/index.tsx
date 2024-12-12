@@ -57,21 +57,24 @@ export const Reviews = ({
 
     return (
         <div className="mt-4">
-            <h1 className="text-2xl mb-2 flex items-center">
+            <h1 className="text-2xl font-bold flex items-center">
                 Отзывы:
                 <div className="text-xl ml-2 -mb-1">{book.reviews.length}</div>
             </h1>
-            <div className="mb-2 px-2 py-4  rounded-md">
+            <div className="mb-2 py-2  rounded-md">
                 <h2 className="text-lg mb-2">Оставить отзыв</h2>
-                <form className="flex items-center" onSubmit={handleSubmit}>
+                <form
+                    className="flex items-center border border-secondary rounded"
+                    onSubmit={handleSubmit}
+                >
                     <textarea
                         name="review"
                         placeholder="Вы можете оставить отзыв"
-                        className="border p-1 w-full border-slate-300 rounded"
+                        className="p-1 w-full"
                     />
                     <button
                         type="submit"
-                        className="bg-slate-800 ml-2 py-2 rounded"
+                        className="py-4 px-2 bg-primary text-text-contrast rounded-r w-1/4"
                     >
                         Отправить
                     </button>
