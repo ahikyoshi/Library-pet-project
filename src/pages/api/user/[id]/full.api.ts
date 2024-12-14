@@ -21,8 +21,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         return res.status(200).json({
             success: true,
             user: {
+                avatar: searchedUser?.avatar,
                 display_name: searchedUser?.display_name,
-                avatar: searchedUser?.avatar
+                library: searchedUser?.library
             }
         });
     } catch (error) {
