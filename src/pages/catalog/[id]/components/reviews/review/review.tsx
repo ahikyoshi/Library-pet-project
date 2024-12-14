@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export const Review = ({
@@ -20,7 +21,9 @@ export const Review = ({
                         display_name: string,
                         avatar: string
                     }
-                }) => setUser(data.user)
+                }) => {
+                    setUser(data.user);
+                }
             )
             .catch((e) => console.log(e));
     }, [review.userID]);
@@ -28,17 +31,24 @@ export const Review = ({
         return <div>load</div>;
     }
     return (
-        <div key={review.userID} className="flex flex-grow-0">
-            <div
-                className="w-12 h-12 rounded-full border border-white"
-                style={{
-                    background: `center/cover no-repeat  url(${user.avatar}) gray`
-                }}
-            />
-            <div className="ml-2 w-3/4">
-                <div className="font-bold text-xl">{user.display_name}</div>
-                <div className="whitespace-break-spaces">{review.content}</div>
-            </div>
+        <div key={review.userID}>
+            <Link
+                href={`/profile/${review.userID}`}
+                className="flex flex-grow-0"
+            >
+                <div
+                    className="w-12 h-12 rounded-full border border-white"
+                    style={{
+                        background: `center/cover no-repeat  url(${user.avatar}) gray`
+                    }}
+                />
+                <div className="ml-2 w-3/4">
+                    <div className="font-bold text-xl">{user.display_name}</div>
+                    <div className="whitespace-break-spaces">
+                        {review.content}
+                    </div>
+                </div>
+            </Link>
         </div>
     );
 };
