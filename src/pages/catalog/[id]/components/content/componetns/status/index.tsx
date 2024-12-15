@@ -30,7 +30,7 @@ export const Status = ({ userMeta }: IStatusProps) => {
     return (
         <div>
             <select
-                defaultValue={currentStatus}
+                value={currentStatus}
                 className="bg-background"
                 onChange={(e) =>
                     changeStatus(e.target.value as IUserBook["status"])
@@ -39,7 +39,7 @@ export const Status = ({ userMeta }: IStatusProps) => {
                 <option value="in progress">В процессе</option>
                 <option value="finished">Прочитана</option>
                 <option value="soon">Отложено</option>
-                <option value="new">Новая</option>
+                {currentStatus === "new" && <option value="new">Новая</option>}
             </select>
         </div>
     );

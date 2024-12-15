@@ -26,9 +26,9 @@ export const Slider = ({
     }, [current, isDragging]);
 
     return (
-        <div className="relative w-full h-4 bg-slate-600">
+        <div className="relative w-full h-4 bg-border">
             <div
-                className="h-4 bg-slate-400"
+                className="h-4 bg-primary"
                 style={{
                     width: `${((visualTime / duration) * 100).toFixed(2)}%`
                 }}

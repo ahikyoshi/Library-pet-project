@@ -54,13 +54,13 @@ export const Tracks = ({
                 </div>
             </div>
             {isListOpen && (
-                <div className="w-screen  max-h-[calc(50vh-112px)] overflow-y-scroll  bg-slate-600 absolute left-0 bottom-28 md:left-auto">
+                <div className="w-screen  max-h-[calc(50vh-112px)] overflow-y-scroll  bg-background absolute left-0 bottom-28 md:left-auto">
                     <ul>
                         {tracks.list.map(
                             (trackTitle: string, index: number) => {
                                 return (
                                     <li
-                                        className="w-full  odd:bg-slate-700 py-2 px-1 md:first:rounded-t-md md:last:rounded-b-md"
+                                        className="w-full odd:bg-border py-2 px-1 md:first:rounded-t-md md:last:rounded-b-md"
                                         onClick={() => {
                                             playerDispatch({
                                                 type: "CHANGE_TRACK",

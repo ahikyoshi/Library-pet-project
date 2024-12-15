@@ -7,12 +7,11 @@ import { IDeleteComponentsProps } from "./types";
 export const Delete = ({
     currentTarget,
     setCurrentTarget,
-    setIsOpen,
-    setCurrentPage
+    setIsOpen
 }: IDeleteComponentsProps) => {
     return (
         <div className="fixed top-0 left-0 w-screen h-screen bg-black/70 flex items-center justify-center">
-            <div className="rounded bg-background-light w-5/6 p-4">
+            <div className="rounded bg-background w-5/6 p-4">
                 <div>
                     <div className="text-lg font-bold">
                         Вы точно хотите удалить книгу?
@@ -39,8 +38,7 @@ export const Delete = ({
                             handleDelete({
                                 currentTarget,
                                 setCurrentTarget,
-                                setIsOpen,
-                                setCurrentPage
+                                setIsOpen
                             })
                         }
                     >

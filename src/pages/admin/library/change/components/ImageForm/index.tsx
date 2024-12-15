@@ -1,11 +1,12 @@
 // libs
-import Image from "next/image";
 import { useState } from "react";
+// components
+import { Svg } from "@/components/Svg";
+import { LocalImage } from "@/components/LocalImage";
 // utils
 import { handleChangeFiles, handleUploadImage } from "./utils";
 // types
 import { IImageFormComponentProps } from "./types";
-import { LocalImage } from "@/components/LocalImage";
 
 export const ImageForm = ({
     content,
@@ -49,11 +50,9 @@ export const ImageForm = ({
                     >
                         <div className="flex items-center">
                             {isFileUpload ? "Изменить файл" : "Добавить файл"}
-                            <Image
-                                src={"/assets/icons/admin/light/file.svg"}
-                                width={24}
-                                height={24}
-                                alt="file"
+                            <Svg
+                                src="/assets/icons/admin/theme/file.svg"
+                                size={24}
                             />
                         </div>
                         <div>
@@ -76,7 +75,7 @@ export const ImageForm = ({
                     />
                 </div>
                 {serverResponse && (
-                    <div className="text-rose-700 w-full text-center">
+                    <div className="text-notification w-full text-center">
                         {serverResponse}
                     </div>
                 )}

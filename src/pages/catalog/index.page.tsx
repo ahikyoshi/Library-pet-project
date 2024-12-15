@@ -23,12 +23,22 @@ export default function Catalog() {
     useEffect(() => {
         document.title = "Aurora: Каталог";
 
-        getCatalog({ limit, currentPage, searchedValue, setBooks, setPages });
+        getCatalog({
+            limit,
+            currentPage,
+            searchedValue,
+            setBooks,
+            setPages
+        });
     }, [limit, currentPage, searchedValue]);
 
     useEffect(() => {
         setIsEmpty(books.length === 0);
     }, [books]);
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [limit]);
 
     return (
         <main className="px-2 w-full min-h-[calc(100vh-48px)] flex flex-col">
