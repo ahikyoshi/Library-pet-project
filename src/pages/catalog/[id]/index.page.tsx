@@ -2,6 +2,7 @@
 
 // libs
 import { useEffect, useState } from "react";
+import clsx from "clsx";
 import { useRouter } from "next/router";
 // Components
 import { Player } from "./components/player/player";
@@ -38,7 +39,12 @@ export default function Page() {
     if (!content) return <div>Загрузка...</div>;
 
     return (
-        <main className="py-4 px-2 container mx-auto">
+        <main
+            className={clsx(
+                "py-4 px-2 container mx-auto",
+                isPlayerOpen && "pb-28"
+            )}
+        >
             <Content
                 content={content?.book}
                 isAuth={content.isAuth}

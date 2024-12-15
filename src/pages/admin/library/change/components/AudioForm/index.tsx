@@ -1,10 +1,10 @@
 // libs
 import { useState } from "react";
-import Image from "next/image";
 // utils
 import { handleChangeFiles, handleUploadAudio } from "./utils";
 // types
 import { IAudioFormComponentProps } from "./types";
+import { Svg } from "@/components/Svg";
 
 export const AudioForm = ({
     content,
@@ -54,11 +54,9 @@ export const AudioForm = ({
                 )}
                 <div>
                     <label htmlFor="audio" className="flex items-center my-4">
-                        <Image
-                            src={"/assets/icons/admin/light/file.svg"}
-                            width={24}
-                            height={24}
-                            alt="file"
+                        <Svg
+                            src="/assets/icons/admin/theme/file.svg"
+                            size={24}
                         />
                         <div>
                             {isFileUpload ? "Изменить файлы" : "Добавить файл"}
@@ -91,7 +89,6 @@ export const AudioForm = ({
                     <button
                         onClick={() => setIsAudioOpen(false)}
                         type="button"
-                        className=""
                         disabled={isLoading}
                     >
                         Выйти

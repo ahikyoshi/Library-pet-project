@@ -87,7 +87,7 @@ export const Timer = ({
             ref={listRef}
         >
             {isOpen && (
-                <ul className="absolute z-20 bottom-14 left-0 bg-slate-700 flex flex-col items-center">
+                <ul className="absolute z-20 bottom-14 left-0 bg-border flex flex-col items-center">
                     {timerList.map((time) => (
                         <li
                             key={time}

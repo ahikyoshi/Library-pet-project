@@ -2,17 +2,8 @@
 
 // libs
 import { useEffect, useState } from "react";
-import Image from "next/image";
 
-export const Svg = ({
-    src,
-    size,
-    alt
-}: {
-    src: string,
-    size: number,
-    alt: string
-}) => {
+export const Svg = ({ src, size }: { src: string, size: number }) => {
     const [href, setHref] = useState<string>("");
 
     useEffect(() => {
@@ -21,5 +12,13 @@ export const Svg = ({
             setHref(src.replace("theme", theme));
         }
     }, [src]);
-    return <Image src={href} width={size} height={size} alt={alt} />;
+    return (
+        <div
+            style={{
+                background: `url(${href}) no-repeat center/100% 100%`,
+                width: size,
+                height: size
+            }}
+        />
+    );
 };

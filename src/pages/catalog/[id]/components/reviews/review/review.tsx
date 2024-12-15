@@ -1,5 +1,6 @@
-import Link from "next/link";
+// libs
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export const Review = ({
     review

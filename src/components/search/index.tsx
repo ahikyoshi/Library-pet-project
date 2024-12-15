@@ -30,11 +30,7 @@ export const Search = ({
                 placeholder="Поиск"
             />
             <button className="px-2 py-2 rounded-r" type="submit">
-                <Svg
-                    src="/assets/icons/all/theme/search.svg"
-                    size={24}
-                    alt="search"
-                />
+                <Svg src="/assets/icons/all/theme/search.svg" size={24} />
             </button>
         </form>
     );

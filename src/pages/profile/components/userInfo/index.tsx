@@ -56,11 +56,7 @@ export const UserInfo = ({
                 <div>@</div>
                 <span className="mr-2">{user.display_name}</span>
                 <div onClick={() => setIsEditOpen(true)}>
-                    <Svg
-                        src="/assets/icons/admin/theme/edit.svg"
-                        size={17}
-                        alt="edit"
-                    />
+                    <Svg src="/assets/icons/admin/theme/edit.svg" size={17} />
                 </div>
             </p>
             {isEditOpen && (

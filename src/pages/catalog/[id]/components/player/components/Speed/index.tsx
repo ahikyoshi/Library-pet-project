@@ -57,7 +57,7 @@ export const Speed = ({
             ref={listRef}
         >
             {isOpen && (
-                <ul className="absolute z-20 bottom-12 bg-slate-700 flex flex-col items-center">
+                <ul className="absolute z-20 bottom-12 bg-border flex flex-col items-center">
                     {speedList.map((rate) => {
                         return (
                             <li
