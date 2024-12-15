@@ -58,7 +58,7 @@ export const Volume = ({
         >
             {isOpen && (
                 <div
-                    className="bg-slate-700 w-24 h-6 absolute z-20 -top-12 rounded-md flex items-center justify-center"
+                    className="bg-border w-24 h-6 absolute z-20 -top-12 rounded-md flex items-center justify-center"
                     style={{
                         transform: "rotate(-90deg)",
                         transformOrigin: "center"

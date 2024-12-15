@@ -1,12 +1,13 @@
 // libs
 import { useEffect, useState } from "react";
 import Link from "next/link";
-// types
-import { IBook } from "@/globalTypes";
+// components
 import { Delete } from "./components/delete";
 import { Card } from "./components/card";
 import { Pages } from "@/components/Pages";
 import { Search } from "@/components/search";
+// types
+import { IBook } from "@/globalTypes";
 
 const Page = () => {
     const [list, setList] = useState<IBook[]>([]);
@@ -18,11 +19,16 @@ const Page = () => {
     const [currentDelete, setCurrentDelete] = useState<IBook | null>(null);
 
     useEffect(() => {
+        if (isDeleteOpen) {
+            return;
+        }
+
         const settings = {
             currentPage: currentPage,
             limit: 20,
             searchedValue: searchedValue
         };
+
         fetch("/api/library/catalog/get", {
             method: "POST",
             headers: {
@@ -53,7 +59,7 @@ const Page = () => {
                 }
             )
             .catch(() => console.log("Something went wrong"));
-    }, [currentPage, searchedValue]);
+    }, [currentPage, searchedValue, isDeleteOpen]);
 
     return (
         <main className="px-2 w-full min-h-[calc(100vh-48px)] flex flex-col">
@@ -104,7 +110,6 @@ const Page = () => {
                     currentTarget={currentDelete}
                     setCurrentTarget={setCurrentDelete}
                     setIsOpen={setIsDeleteOpen}
-                    setCurrentPage={setCurrentPage}
                 />
             )}
         </main>

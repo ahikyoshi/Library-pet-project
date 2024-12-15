@@ -35,11 +35,7 @@ export const Card = ({
                         setCurrentDelete(book);
                     }}
                 >
-                    <Svg
-                        src="/assets/icons/admin/theme/delete.svg"
-                        size={24}
-                        alt="delete"
-                    />
+                    <Svg src="/assets/icons/admin/theme/delete.svg" size={24} />
                 </div>
                 <Link
                     href={{
@@ -47,18 +43,10 @@ export const Card = ({
                         query
                     }}
                 >
-                    <Svg
-                        src="/assets/icons/admin/theme/edit.svg"
-                        size={24}
-                        alt="edit"
-                    />
+                    <Svg src="/assets/icons/admin/theme/edit.svg" size={24} />
                 </Link>
                 <Link href={`/catalog/${book.id}`}>
-                    <Svg
-                        src={"/assets/icons/admin/theme/open.svg"}
-                        size={24}
-                        alt="open"
-                    />
+                    <Svg src={"/assets/icons/admin/theme/open.svg"} size={24} />
                 </Link>
             </div>
         </div>

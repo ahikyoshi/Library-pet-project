@@ -110,7 +110,7 @@ export const Player = ({ id, userMeta, setContent }: IPlayerComponentProps) => {
     }
 
     return (
-        <div className="w-screen  bg-slate-800 fixed bottom-0 left-0">
+        <div className="w-screen bg-background fixed bottom-0 left-0">
             <div className="w-full flex flex-col">
                 <Slider
                     current={player.time.current}

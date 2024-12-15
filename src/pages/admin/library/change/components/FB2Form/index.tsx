@@ -1,6 +1,7 @@
 // libs
 import { useState } from "react";
-import Image from "next/image";
+// components
+import { Svg } from "@/components/Svg";
 // utils
 import { handleChangeFiles, handleUploadText } from "./utils";
 // types
@@ -38,11 +39,9 @@ export const FB2Form = ({ content, setIsFB2Open }: ITextFormComponentProps) => {
                     >
                         <div className="flex items-center">
                             {isFileUpload ? "Изменить файл" : "Добавить файл"}
-                            <Image
-                                src={"/assets/icons/admin/light/file.svg"}
-                                width={24}
-                                height={24}
-                                alt="file"
+                            <Svg
+                                src="/assets/icons/admin/theme/file.svg"
+                                size={24}
                             />
                         </div>
                         <div>
@@ -71,11 +70,7 @@ export const FB2Form = ({ content, setIsFB2Open }: ITextFormComponentProps) => {
                     >
                         Изменить текстовый файл
                     </button>
-                    <button
-                        onClick={() => setIsFB2Open(false)}
-                        type="button"
-                        className="text-text-secondaryLight"
-                    >
+                    <button onClick={() => setIsFB2Open(false)} type="button">
                         Выйти
                     </button>
                 </div>

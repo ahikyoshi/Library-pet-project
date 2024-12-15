@@ -4,8 +4,7 @@ import { IDeleteComponentsProps } from "./types";
 export const handleDelete = ({
     currentTarget,
     setCurrentTarget,
-    setIsOpen,
-    setCurrentPage
+    setIsOpen
 }: IDeleteComponentsProps) => {
     if (!currentTarget) {
         return;
@@ -23,7 +22,6 @@ export const handleDelete = ({
             if (success) {
                 setCurrentTarget(null);
                 setIsOpen(false);
-                setCurrentPage(2);
             } else {
                 alert(message);
             }

@@ -78,16 +78,12 @@ export default function Layout({
         <div className="w-screen min-h-screen bg-background text-text-primary overflow-hidden">
             <header
                 className={clsx(
-                    "w-full h-12 px-2 bg-background-primary flex justify-between items-center",
+                    "w-full h-12 px-2 bg-background flex justify-between items-center",
                     isMenuOpen ? "fixed" : "absolute"
                 )}
             >
                 <div className="flex font-mono font-bold text-xl">
-                    <Svg
-                        src="/assets/icons/books/theme/book.svg"
-                        size={24}
-                        alt={"logotype"}
-                    />
+                    <Svg src="/assets/icons/books/theme/book.svg" size={24} />
                     <div className="mr-2 text-text-light">
                         Aurora.<span className="text-primary">lib</span>
                     </div>
@@ -101,14 +97,13 @@ export default function Layout({
                         <Svg
                             src={"/assets/icons/header/theme/menu.svg"}
                             size={24}
-                            alt="menu"
                         />
                     </div>
                 </div>
             </header>
 
             {isMenuOpen && (
-                <div className="w-screen h-screen py-20 bg-background flex flex-col items-center justify-between fixed top-12">
+                <div className="w-screen h-screen py-20 bg-background flex flex-col items-center justify-between fixed z-30 top-12">
                     {isAuth && user && (
                         <div className="flex flex-col items-center">
                             <div
