@@ -28,7 +28,7 @@ export const Reviews = ({
         event.preventDefault();
 
         const formData = new FormData(event.currentTarget);
-        const review = formData.get("review") as string;
+        const review = String(formData.get("review")).trim();
 
         fetch("/api/library/book/review", {
             method: "POST",

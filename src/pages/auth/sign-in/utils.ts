@@ -1,3 +1,4 @@
+// types
 import { IHandleSubmitProps, IServerResponse } from "./types";
 
 export const handleSubmit = ({
@@ -8,8 +9,8 @@ export const handleSubmit = ({
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-    const login = formData.get("login");
-    const password = formData.get("password");
+    const login = String(formData.get("login")).trim();
+    const password = String(formData.get("password")).trim();
 
     fetch("/api/auth/login", {
         method: "POST",

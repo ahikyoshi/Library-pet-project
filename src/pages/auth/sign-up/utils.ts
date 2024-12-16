@@ -9,9 +9,9 @@ export const handleSubmit = ({
 
     setIsLoading(true);
     const formData = new FormData(event.currentTarget);
-    const login = formData.get("login") as string;
-    const password = formData.get("password") as string;
-    const display_name = formData.get("display_name") as string;
+    const login = String(formData.get("login")).trim();
+    const password = String(formData.get("password")).trim();
+    const display_name = String(formData.get("display_name")).trim();
 
     if (login.trim().length < 4) {
         setStatus({
