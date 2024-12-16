@@ -1,6 +1,7 @@
 // libs
 import { useEffect, useState } from "react";
-import Image from "next/image";
+// component
+import { Svg } from "@/components/Svg";
 
 export const ThemeToggle = () => {
     const [isLight, setIsLight] = useState<boolean | null>(null);
@@ -20,21 +21,7 @@ export const ThemeToggle = () => {
     }, [isLight]);
     return (
         <div onClick={() => setIsLight((prev) => !prev)} className="w-6 h-6">
-            {isLight ? (
-                <Image
-                    src={"/assets/icons/profile/light_mode.svg"}
-                    width={24}
-                    height={24}
-                    alt="light_mode"
-                />
-            ) : (
-                <Image
-                    src={"/assets/icons/profile/dark_mode.svg"}
-                    width={24}
-                    height={24}
-                    alt="dark_mode"
-                />
-            )}
+            <Svg src={"/assets/icons/profile/theme/mode.svg"} size={24} />
         </div>
     );
 };
