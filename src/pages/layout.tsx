@@ -106,12 +106,21 @@ export default function Layout({
                 <div className="w-screen h-screen py-20 bg-background flex flex-col items-center justify-between fixed z-30 top-12">
                     {isAuth && user && (
                         <div className="flex flex-col items-center">
-                            <div
-                                className="w-24 h-24 rounded-full border border-primary"
-                                style={{
-                                    background: `center/cover no-repeat url(${user.avatar})`
-                                }}
-                            />
+                            {user.avatar != "" ? (
+                                <div
+                                    className="w-24 h-24 rounded-full border-2 border-primary"
+                                    style={{
+                                        background: `center/cover no-repeat  url(${user.avatar})`
+                                    }}
+                                />
+                            ) : (
+                                <div className="w-24 h-24 rounded-full border-2 border-primary flex items-center justify-center">
+                                    <Svg
+                                        src="/assets/icons/profile/theme/person.svg"
+                                        size={80}
+                                    />
+                                </div>
+                            )}
                             <div className="font-bold text-2xl mt-2">
                                 {user.display_name}
                             </div>

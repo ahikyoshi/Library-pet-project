@@ -21,7 +21,14 @@ export const Content = ({
                 {content.assets.image ? (
                     <LocalImage id={content.id} />
                 ) : (
-                    <div className="w-48 h-72 bg-background-dark" />
+                    <div className="w-44 h-72  bg-border text-center flex flex-col items-center justify-center">
+                        <div className="whitespace-pre-wrap font-bold">
+                            {content.title}
+                        </div>
+                        <div className="whitespace-pre-wrap">
+                            Изображение скоро будет ;3
+                        </div>
+                    </div>
                 )}
                 {content.assets.text && (
                     <button

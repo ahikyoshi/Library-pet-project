@@ -46,12 +46,21 @@ export const UserInfo = ({
     };
     return (
         <div className="w-full py-4 flex flex-col items-center">
-            <div
-                className="w-24 h-24 rounded-full border-2 border-primary"
-                style={{
-                    background: `center/cover no-repeat  url(${user.avatar})`
-                }}
-            />
+            {user.avatar != "" ? (
+                <div
+                    className="w-24 h-24 rounded-full border-2 border-primary"
+                    style={{
+                        background: `center/cover no-repeat  url(${user.avatar})`
+                    }}
+                />
+            ) : (
+                <div className="w-24 h-24 rounded-full border-2 border-primary flex items-center justify-center">
+                    <Svg
+                        src="/assets/icons/profile/theme/person.svg"
+                        size={80}
+                    />
+                </div>
+            )}
             <p className="mt-2 text-xl font-bold flex items-center">
                 <div>@</div>
                 <span className="mr-2">{user.display_name}</span>

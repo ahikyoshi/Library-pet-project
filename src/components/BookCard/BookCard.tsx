@@ -41,12 +41,22 @@ const BookCard = ({ id }: { id: string }) => {
                     ? {
                           background: `center/cover no-repeat url("/api/image?id=${id}")`
                       }
-                    : { background: "gray" }
+                    : { background: "black" }
             }
             onMouseEnter={() => setIsContentHide(false)}
             onMouseLeave={() => setIsContentHide(true)}
             onClick={() => setIsContentHide((prev) => !prev)}
         >
+            {!content.assets.image && !isContentHide && (
+                <div className="bg-border h-full text-center flex flex-col items-center justify-center">
+                    <div className="whitespace-pre-wrap font-bold">
+                        {content.title}
+                    </div>
+                    <div className="whitespace-pre-wrap">
+                        Изображение скоро будет ;3
+                    </div>
+                </div>
+            )}
             {isContentHide && (
                 <div className="w-full h-full bg-black/80 p-2 flex flex-col items-center justify-between">
                     <div className="flex flex-col w-full">

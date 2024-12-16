@@ -1,6 +1,7 @@
 // libs
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { Svg } from "@/components/Svg";
 
 export const Review = ({
     review
@@ -37,12 +38,21 @@ export const Review = ({
                 href={`/profile/${review.userID}`}
                 className="flex flex-grow-0"
             >
-                <div
-                    className="w-12 h-12 rounded-full border border-white"
-                    style={{
-                        background: `center/cover no-repeat  url(${user.avatar}) gray`
-                    }}
-                />
+                {user.avatar === "" ? (
+                    <div className="w-12 h-12">
+                        <Svg
+                            size={24}
+                            src="/assets/icons/profile/theme/person.svg"
+                        />
+                    </div>
+                ) : (
+                    <div
+                        className="w-12 h-12 rounded-full border border-white"
+                        style={{
+                            background: `center/cover no-repeat  url(${user.avatar}) gray`
+                        }}
+                    />
+                )}
                 <div className="ml-2 w-3/4">
                     <div className="font-bold text-xl">{user.display_name}</div>
                     <div className="whitespace-break-spaces">
