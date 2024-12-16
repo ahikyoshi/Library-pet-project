@@ -1,3 +1,4 @@
+// types
 import { IBook } from "@/globalTypes";
 import { IGetContentProps, IHandleSubmitProps } from "./types";
 
@@ -10,15 +11,15 @@ export const handleSubmit = ({
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-    const title = String(formData.get("title"));
-    const author = String(formData.get("author"));
+    const title = String(formData.get("title")).trim();
+    const author = String(formData.get("author")).trim();
     const cycle = {
-        title: String(formData.get("cycle_name")),
+        title: String(formData.get("cycle_name")).trim(),
         number: Number(formData.get("cycle_number"))
     };
-    const description = String(formData.get("description"));
+    const description = String(formData.get("description")).trim();
     const meta = {
-        writtingDate: String(formData.get("writtingDate"))
+        writtingDate: String(formData.get("writtingDate")).trim()
     };
 
     if (!content) {

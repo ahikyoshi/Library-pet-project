@@ -13,3 +13,6 @@ export function debounce<T extends (...args: unknown[]) => void>(
         }, delay);
     } as T;
 }
+export const trim = (string: string) => {
+    return string.replace(/^\s+|\s+$/g, "");
+};

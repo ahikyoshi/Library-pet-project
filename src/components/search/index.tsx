@@ -15,8 +15,7 @@ export const Search = ({
 
         const formData = new FormData(event.currentTarget);
         const searchedValue = formData.get("searchedValue") as string;
-
-        setSearchedValue(searchedValue);
+        setSearchedValue(searchedValue.trim());
     };
     return (
         <form

@@ -30,7 +30,7 @@ export const Review = ({
             .catch((e) => console.log(e));
     }, [review.userID]);
     if (!user) {
-        return <div>load</div>;
+        return <div>loading</div>;
     }
     return (
         <div key={review.userID}>
