@@ -2,7 +2,7 @@
 
 // libs
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // utils
 import { handleSubmit } from "./utils";
 
@@ -14,6 +14,10 @@ interface IServerResponse {
 const Page = () => {
     const [Status, setStatus] = useState<null | IServerResponse>(null);
     const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        document.title = "Aurora: Регистрация";
+    }, []);
 
     return (
         <main className="w-full h-[calc(100vh-48px)] flex items-center justify-center">
