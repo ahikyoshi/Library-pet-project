@@ -78,20 +78,82 @@ export default function Layout({
         <div className="w-screen min-h-screen bg-background text-text-primary overflow-hidden">
             <header
                 className={clsx(
-                    "w-full h-12 px-2 bg-background flex justify-between items-center",
+                    "w-full h-12 px-2 bg-background flex justify-between items-center sm:h-26",
                     isMenuOpen ? "fixed" : "absolute"
                 )}
             >
-                <div className="flex font-mono font-bold text-xl">
-                    <Svg src="/assets/icons/books/theme/book.svg" size={24} />
-                    <div className="mr-2 text-text-light">
-                        Aurora.<span className="text-primary">lib</span>
+                <Link href={"/catalog"}>
+                    <div className="flex font-mono font-bold text-xl">
+                        <Svg
+                            src="/assets/icons/books/theme/book.svg"
+                            size={24}
+                        />
+                        <div className="mr-2 text-text-light">
+                            Aurora.<span className="text-primary">lib</span>
+                        </div>
                     </div>
-                </div>
-                <div className="flex">
+                </Link>
+                <ul className="w-full h-full ml-2 text-xl hidden sm:flex">
+                    <li
+                        className={clsx(
+                            "px-2 cursor-pointer flex items-center",
+                            currentPage === "catalog" &&
+                                "border-b-2 border-primary"
+                        )}
+                    >
+                        <Link href={"/catalog"}>Каталог</Link>
+                    </li>
+                    {isAuth && user && (
+                        <li
+                            className={clsx(
+                                "px-2 cursor-pointer flex items-center",
+                                currentPage === "profile" &&
+                                    "border-b-2 border-primary"
+                            )}
+                        >
+                            <Link href={"/profile"}>Профиль</Link>
+                        </li>
+                    )}
+                    {user?.role === "admin" && (
+                        <li
+                            className={clsx(
+                                "px-2 cursor-pointer flex items-center",
+                                currentPage === "admin" &&
+                                    "border-b-2 border-primary"
+                            )}
+                        >
+                            <Link href={"/admin/library"}>Админ панель</Link>
+                        </li>
+                    )}
+                </ul>
+                <div className="h-full flex items-center">
+                    {!user && (
+                        <div
+                            className="mr-2 text-sm hidden items-center sm:flex"
+                            onClick={() => setIsMenuOpen(false)}
+                        >
+                            <Link
+                                href={"/auth/sign-up"}
+                                className="mr-1 p-1 bg-primary text-text-dark rounded"
+                            >
+                                Зарегистрироваться
+                            </Link>
+                            <Link href={"/auth/sign-in"}>Войти</Link>
+                        </div>
+                    )}
+                    {isAuth && (
+                        <li
+                            className={
+                                "h-full flex items-center cursor-pointer text-base"
+                            }
+                            onClick={logout}
+                        >
+                            Выйти
+                        </li>
+                    )}
                     <ThemeToggle />
                     <div
-                        className="ml-2"
+                        className="ml-2 block sm:hidden"
                         onClick={() => setIsMenuOpen((prev) => !prev)}
                     >
                         <Svg
