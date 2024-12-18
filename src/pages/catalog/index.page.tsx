@@ -30,6 +30,8 @@ export default function Catalog() {
             setBooks,
             setPages
         });
+
+        window.scrollBy(0, -100);
     }, [limit, currentPage, searchedValue]);
 
     useEffect(() => {
