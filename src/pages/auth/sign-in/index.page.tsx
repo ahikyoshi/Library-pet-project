@@ -2,7 +2,7 @@
 
 // libs
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // utils
 import { handleSubmit } from "./utils";
 // types
@@ -11,6 +11,10 @@ import { IServerResponse } from "./types";
 const Page = () => {
     const [status, setStatus] = useState<null | IServerResponse>(null);
     const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        document.title = "Aurora: Авторизация";
+    }, []);
 
     return (
         <main className="w-full h-[calc(100vh-48px)] flex items-center justify-center">
