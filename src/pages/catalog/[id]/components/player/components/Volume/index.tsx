@@ -9,7 +9,7 @@ export const Volume = ({
 }: {
     audioRef: React.RefObject<HTMLAudioElement> | null
 }) => {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(true);
     const [volume, setVolume] = useState(10);
     const volumeRef = useRef<HTMLDivElement>(null);
 
@@ -54,31 +54,34 @@ export const Volume = ({
     return (
         <div
             ref={volumeRef}
-            className="px-2 ml-2  flex flex-col items-center cursor-pointer shrink-0"
+            className="mr-2 w-6 flex flex-col items-center cursor-pointer shrink-0"
         >
             {isOpen && (
-                <div
-                    className="bg-border w-24 h-6 absolute z-20 -top-12 rounded-md flex items-center justify-center"
-                    style={{
-                        transform: "rotate(-90deg)",
-                        transformOrigin: "center"
-                    }}
-                >
-                    <input
-                        type="range"
-                        min="0"
-                        value={volume}
-                        max="100"
-                        className="h-1 w-20 cursor-pointer bg-gray-200 rounded-full"
-                        onChange={(e) => setVolume(Number(e.target.value))}
+                <div className="w-6 py-2 bg-background border border-border rounded-md flex items-end justify-center absolute z-20 -top-28">
+                    <div
+                        className="w-1"
+                        onClick={(event) => {
+                            const slider =
+                                event.currentTarget.getBoundingClientRect();
+
+                            let volume = event.clientY - slider.bottom;
+
+                            volume = -volume < 5 ? 0 : -volume;
+
+                            setVolume(volume);
+                        }}
+                        style={{
+                            height: 100,
+                            background: `linear-gradient(180deg, rgb(50, 50, 50) 0%, rgb(50,50,50) ${100 - volume}%, rgb(255,0,0) ${100 - volume}%)`
+                        }}
                     />
                 </div>
             )}
             <Image
                 src={`/assets/icons/volume_${VolumeSrc(volume)}.svg`}
                 className="w-6 h-6"
-                width={25}
-                height={25}
+                width={24}
+                height={24}
                 onClick={() => setIsOpen(!isOpen)}
                 alt="volume"
             />
