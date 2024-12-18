@@ -144,7 +144,7 @@ export default function Layout({
                     {isAuth && (
                         <li
                             className={
-                                "h-full flex items-center cursor-pointer text-base"
+                                "h-full mr-2 hidden items-center cursor-pointer text-base sm:flex"
                             }
                             onClick={logout}
                         >

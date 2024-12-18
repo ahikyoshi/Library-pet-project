@@ -11,7 +11,17 @@ export const handleSubmit = ({
     const formData = new FormData(event.currentTarget);
     const login = String(formData.get("login")).trim();
     const password = String(formData.get("password")).trim();
+    const password_confirm = String(formData.get("password_confirm")).trim();
     const display_name = String(formData.get("display_name")).trim();
+
+    if (password_confirm != password) {
+        setStatus({
+            success: false,
+            message: "Пароли не совпадают"
+        });
+        setIsLoading(false);
+        return;
+    }
 
     if (login.trim().length < 4) {
         setStatus({

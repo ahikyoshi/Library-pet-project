@@ -19,7 +19,14 @@ export const Status = ({ userMeta }: IStatusProps) => {
     const changeStatus = (status: IUserBook["status"]) => {
         if (status !== "new") {
             setCurrentStatus(status);
-            const updatedUserMeta = { ...userMeta, status };
+            const audio = {
+                currentTime: 0,
+                currentChapter: 0
+            };
+            const updatedUserMeta =
+                status === "finished"
+                    ? { ...userMeta, status, audio }
+                    : { ...userMeta, status };
             updateBook(updatedUserMeta);
         }
         setIsOpen(false);

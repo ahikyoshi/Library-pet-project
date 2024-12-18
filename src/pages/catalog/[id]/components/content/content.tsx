@@ -15,6 +15,24 @@ export const Content = ({
     isPlayerOpen,
     setIsPlayerOpen
 }: IContentComponentProps) => {
+    const showTime = () => {
+        if (!isAuth || !userMeta) {
+            return;
+        }
+        if (
+            userMeta?.audio.currentTime === 0 &&
+            userMeta.audio.currentChapter === 0
+        ) {
+            return;
+        }
+
+        return (
+            <div className="flex justify-between w-48 py-2">
+                <div>{`Глава ${userMeta.audio.currentChapter + 1}`}</div>
+                <div>{`Время ${timeTransform(userMeta.audio.currentTime)}`}</div>
+            </div>
+        );
+    };
     return (
         <div className="flex flex-col">
             <div className="w-full flex flex-col items-center">
@@ -63,12 +81,7 @@ export const Content = ({
                         {!isPlayerOpen ? "Слушать аудио" : "Скрыть плеер"}
                     </button>
                 )}
-                {isAuth && userMeta && content.assets.audio && (
-                    <div className="flex justify-between w-48 py-2">
-                        <div>{`Глава ${userMeta.audio.currentChapter + 1}`}</div>
-                        <div>{`Время ${timeTransform(userMeta.audio.currentTime)}`}</div>
-                    </div>
-                )}
+                {showTime()}
             </div>
             <div className="w-full items-start mt-5 lg:w-4/6 lg:mt-0 lg:ml-5">
                 <div className="mb-2 text-2xl font-bold flex justify-between items-start">

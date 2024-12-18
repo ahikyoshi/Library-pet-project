@@ -69,10 +69,14 @@ export const UserInfo = ({
                 </div>
             </p>
             {isEditOpen && (
-                <div className="bg-black/80 w-screen h-screen fixed top-0 flex items-center justify-center">
+                <div className="w-screen h-screen flex items-center justify-center fixed top-0">
+                    <div
+                        className="bg-black/80 w-screen h-screen"
+                        onClick={() => setIsEditOpen(false)}
+                    />
                     <form
                         onSubmit={handleChangeNickName}
-                        className="p-2 bg-background rounded flex flex-col items-center"
+                        className="p-2 bg-background rounded flex flex-col items-center fixed"
                     >
                         <h1 className="font-bold text-xl">
                             Изменение имени пользователя
