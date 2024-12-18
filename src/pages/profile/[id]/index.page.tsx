@@ -46,6 +46,10 @@ const Page = () => {
             .catch((error) => console.log(error));
     }, [id]);
 
+    useEffect(() => {
+        document.title = `Aurora: ${user?.display_name}`;
+    }, [user]);
+
     if (!user) {
         return <div>Загрузка</div>;
     }

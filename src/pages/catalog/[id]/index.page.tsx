@@ -36,6 +36,10 @@ export default function Page() {
         }
     }, [id]);
 
+    useEffect(() => {
+        document.title = `Aurora: ${content?.book.title}`;
+    }, [content]);
+
     if (!content) return <div>Загрузка...</div>;
 
     return (
