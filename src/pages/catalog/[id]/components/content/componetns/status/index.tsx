@@ -10,6 +10,7 @@ export const Status = ({ userMeta }: IStatusProps) => {
     const [currentStatus, setCurrentStatus] = useState<IUserBook["status"]>(
         userMeta?.status
     );
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         setCurrentStatus(userMeta.status);
@@ -21,6 +22,22 @@ export const Status = ({ userMeta }: IStatusProps) => {
             const updatedUserMeta = { ...userMeta, status };
             updateBook(updatedUserMeta);
         }
+        setIsOpen(false);
+    };
+
+    const getName = (status: string) => {
+        switch (status) {
+            case "in progress":
+                return "В процессе";
+            case "finished":
+                return "Прочитена";
+            case "soon":
+                return "Отложена";
+            case "new":
+                return "Новая для вас";
+            default:
+                return "Ошибка";
+        }
     };
 
     if (!userMeta) {
@@ -29,18 +46,28 @@ export const Status = ({ userMeta }: IStatusProps) => {
 
     return (
         <div>
-            <select
-                value={currentStatus}
-                className="bg-background"
-                onChange={(e) =>
-                    changeStatus(e.target.value as IUserBook["status"])
-                }
-            >
-                <option value="in progress">В процессе</option>
-                <option value="finished">Прочитана</option>
-                <option value="soon">Отложено</option>
-                {currentStatus === "new" && <option value="new">Новая</option>}
-            </select>
+            <h1 onClick={() => setIsOpen(true)}>
+                Статус: {getName(currentStatus)}
+            </h1>
+            {isOpen && (
+                <ul className="absolute flex flex-col bg-background border border-border rounded">
+                    <li
+                        className="p-2"
+                        onClick={() => changeStatus("in progress")}
+                    >
+                        В процессе
+                    </li>
+                    <li
+                        className="p-2"
+                        onClick={() => changeStatus("finished")}
+                    >
+                        Прочитана
+                    </li>
+                    <li className="p-2" onClick={() => changeStatus("soon")}>
+                        Отложена
+                    </li>
+                </ul>
+            )}
         </div>
     );
 };
