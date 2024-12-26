@@ -20,6 +20,7 @@ export interface INewBook {
 
 export interface IHandleSubmit {
     event: FormEvent<HTMLFormElement>;
+    mode: "back" | "continue" | "continue-author";
     setIsStatus: Dispatch<SetStateAction<IResponse | null>>;
     setIsLoading: Dispatch<SetStateAction<boolean>>;
 }
