@@ -19,6 +19,8 @@ const Page = () => {
     const [currentDelete, setCurrentDelete] = useState<IBook | null>(null);
 
     useEffect(() => {
+        document.title = "Aurora: Админ панель";
+
         if (isDeleteOpen) {
             return;
         }

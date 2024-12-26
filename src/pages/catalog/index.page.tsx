@@ -11,6 +11,7 @@ import { Pages } from "@/components/Pages";
 // types
 import { IBook } from "@/globalTypes";
 import { Search } from "@/components/search";
+import Link from "next/link";
 
 export default function Catalog() {
     const [books, setBooks] = useState<IBook[]>([]);
@@ -30,6 +31,8 @@ export default function Catalog() {
             setBooks,
             setPages
         });
+
+        window.scrollBy(0, -100);
     }, [limit, currentPage, searchedValue]);
 
     useEffect(() => {
@@ -43,8 +46,13 @@ export default function Catalog() {
     return (
         <main className="px-2 w-full min-h-[calc(100vh-48px)] flex flex-col">
             <div className="w-full">
-                <nav className=" py-2 flex items-center justify-between">
+                <nav className="py-2 flex items-center justify-between">
                     <h1 className="text-2xl font-bold">Каталог</h1>
+                    <Link href={"/catalog/offer"}>
+                        <div className="bg-primary px-1 py-2 rounded">
+                            Преложить книгу
+                        </div>
+                    </Link>
                 </nav>
                 <Search setSearchedValue={setSearchedValue} />
             </div>

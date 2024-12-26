@@ -13,6 +13,8 @@ const Page = () => {
     const [user, setUser] = useState<IUser | null>(null);
 
     useEffect(() => {
+        document.title = "Aurora: Профиль";
+
         fetch("/api/user/get")
             .then((res) => {
                 if (res.status === 401) {

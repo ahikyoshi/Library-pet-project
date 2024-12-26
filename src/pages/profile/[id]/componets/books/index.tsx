@@ -56,40 +56,40 @@ export const Books = ({ user }: { user: IViewUser }) => {
                     className={clsx(
                         currentTab === "in progress" &&
                             "bg-primary text-text-contrast",
-                        "w-1/3 flex items-center justify-evenly text-center py-2"
+                        "w-1/3 flex items-center justify-evenly text-center py-2 sm:justify-center"
                     )}
                     onClick={() => {
                         setCurrentTab("in progress");
                     }}
                 >
                     <div>В процессе</div>
-                    <div>{countOfBook.inProgress}</div>
+                    <div className="sm:ml-2">{countOfBook.inProgress}</div>
                 </li>
                 <li
                     className={clsx(
                         currentTab === "finished" &&
                             "bg-primary text-text-contrast",
-                        "w-1/3 flex items-center justify-evenly text-center py-2"
+                        "w-1/3 flex items-center justify-evenly text-center py-2 sm:justify-center"
                     )}
                     onClick={() => {
                         setCurrentTab("finished");
                     }}
                 >
                     <div>Завершены</div>
-                    <div>{countOfBook.finished}</div>
+                    <div className="sm:ml-2">{countOfBook.finished}</div>
                 </li>
                 <li
                     className={clsx(
                         currentTab === "soon" &&
                             "bg-primary text-text-contrast",
-                        "w-1/3 flex items-center justify-evenly text-center py-2"
+                        "w-1/3 flex items-center justify-evenly text-center py-2 sm:justify-center"
                     )}
                     onClick={() => {
                         setCurrentTab("soon");
                     }}
                 >
                     <div>Отложено</div>
-                    <div>{countOfBook.soon}</div>
+                    <div className="sm:ml-2">{countOfBook.soon}</div>
                 </li>
             </ul>
             <ul className="w-screen px-2 flex flex-wrap items-start justify-between">
