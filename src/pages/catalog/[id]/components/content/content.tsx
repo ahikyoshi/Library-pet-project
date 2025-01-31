@@ -1,12 +1,14 @@
 "use client";
 
+// libs
+import { useRouter } from "next/navigation";
 // utils
 import { timeTransform } from "../player/utils";
 // components
+import { LocalImage } from "@/components/LocalImage";
+import { Status } from "./componetns/status";
 // types
 import { IContentComponentProps } from "./types";
-import { Status } from "./componetns/status";
-import { LocalImage } from "@/components/LocalImage";
 
 export const Content = ({
     content,
@@ -15,6 +17,8 @@ export const Content = ({
     isPlayerOpen,
     setIsPlayerOpen
 }: IContentComponentProps) => {
+    const router = useRouter();
+
     const showTime = () => {
         if (!isAuth || !userMeta) {
             return;
@@ -53,9 +57,7 @@ export const Content = ({
                         className="w-48 border border-primary py-2 mt-2"
                         onClick={() => {
                             if (isAuth) {
-                                alert(
-                                    "Прочтение в разработке, авторизованные пользователи могут прослушать книгу"
-                                );
+                                router.push(`/reader/${content.id}`);
                             } else {
                                 alert("Для прочтения требуется авторизация");
                             }

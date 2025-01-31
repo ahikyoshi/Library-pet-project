@@ -54,3 +54,20 @@ textarea{
     --text_contrast: 255, 255, 255;
     --notification: 255, 69, 0;
 }
+
+/* Reader */
+.reader{
+    padding: 0 8px;
+}
+
+.reader h1{
+    margin-bottom: 12px;
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.reader p{
+    margin-bottom: 8px;
+    text-indent: 14px;
+    text-align: justify;
+}

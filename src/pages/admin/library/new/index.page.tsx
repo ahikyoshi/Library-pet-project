@@ -1,7 +1,7 @@
 "use client";
 
 // libs
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 // utils
 import { handleSubmit } from "./utils";
@@ -14,6 +14,14 @@ const Page = () => {
         "back"
     );
     const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        if (mode === "back") {
+            if (isStatus?.success) {
+                window.location.href = "/admin/library";
+            }
+        }
+    }, [isStatus]);
 
     return (
         <main className="w-full h-[calc(100vh-48px)] flex items-center justify-center">
