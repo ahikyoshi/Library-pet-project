@@ -34,7 +34,7 @@ export default async function handler(
             .json({ success: false, message: "Пользователь не авторизован" });
     }
 
-    const targetDirectory = `${process.cwd()}/public/data/library/files`;
+    const targetDirectory = `${process.cwd()}/public/assets/library`;
 
     try {
         const decoded = jwt.verify(token, JWT_SECRET) as {
@@ -108,9 +108,10 @@ export default async function handler(
                     newBook: DB[searchedBookIndex]
                 });
             } catch (fileError) {
+                console.log(fileError);
                 return res.status(500).json({
                     success: false,
-                    message: "Ошибка при работе с файлом"
+                    message: "Ошибка при работе с файлом s"
                 });
             }
         }
