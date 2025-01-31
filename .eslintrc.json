@@ -39,26 +39,6 @@
     "@typescript-eslint/naming-convention": [
       "error",
       {
-        "selector": "variable",
-        "format": [
-          "StrictPascalCase"
-        ],
-        "prefix": [
-          "are",
-          "can",
-          "did",
-          "does",
-          "has",
-          "have",
-          "is",
-          "should",
-          "will"
-        ],
-        "types": [
-          "boolean"
-        ]
-      },
-      {
         "selector": "typeAlias",
         "format": [
           "StrictPascalCase"

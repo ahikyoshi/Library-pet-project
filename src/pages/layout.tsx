@@ -21,7 +21,7 @@ export default function Layout({
     const [currentPage, setCurrentPage] = useState("");
     const [user, setUser] = useState<IUser | null>(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isUnauthorizedPage, setIsUnauthorizedPage] = useState(false);
+    const [isHidden, setIsHidden] = useState(false);
 
     useEffect(() => {
         fetch("/api/user/get")
@@ -40,9 +40,11 @@ export default function Layout({
     useEffect(() => {
         const path = router.pathname;
 
+        setIsHidden(false);
+
         switch (path) {
-            case "/reader":
-                setIsUnauthorizedPage(true);
+            case "/reader/[id]":
+                setIsHidden(true);
                 break;
             case "/profile":
                 setCurrentPage("profile");
@@ -66,11 +68,12 @@ export default function Layout({
             })
             .catch((error) => console.log(error));
     };
-    if (isUnauthorizedPage) {
+
+    if (isHidden) {
         return (
-            <main className="w-screen min-h-screen text-text absolute bg-background-light">
+            <div className="w-screen min-h-screen bg-background text-text-primary overflow-hidden">
                 {children}
-            </main>
+            </div>
         );
     }
 

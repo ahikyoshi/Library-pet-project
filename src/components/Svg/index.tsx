@@ -3,7 +3,15 @@
 // libs
 import { useEffect, useState } from "react";
 
-export const Svg = ({ src, size }: { src: string, size: number }) => {
+export const Svg = ({
+    src,
+    size,
+    styles
+}: {
+    src: string,
+    size: number,
+    styles?: string
+}) => {
     const [href, setHref] = useState<string>("");
 
     useEffect(() => {
@@ -14,6 +22,7 @@ export const Svg = ({ src, size }: { src: string, size: number }) => {
     }, [src]);
     return (
         <div
+            className={styles}
             style={{
                 background: `url(${href}) no-repeat center/100% 100%`,
                 width: size,
