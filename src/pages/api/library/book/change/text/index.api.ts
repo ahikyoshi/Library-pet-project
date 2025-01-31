@@ -81,7 +81,6 @@ export default async function handler(
             try {
                 const fileData: Buffer = await readFile(uploadedFile.filepath);
                 await writeFile(newFilePath, Buffer.from(fileData));
-
                 const DB: IBook[] = await loadDB();
 
                 const searchedBookIndex = DB.findIndex(
@@ -108,7 +107,7 @@ export default async function handler(
                     newBook: DB[searchedBookIndex]
                 });
             } catch (fileError) {
-                console.log(fileError);
+                console.log("Track: ", fileError);
                 return res.status(500).json({
                     success: false,
                     message: "Ошибка при работе с файлом s"
