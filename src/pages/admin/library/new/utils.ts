@@ -85,4 +85,6 @@ export const handleSubmit = ({
             }
         });
     }
+
+    window.location.href = "/admin/library";
 };
