@@ -2,11 +2,11 @@
 
 // libs
 import { useEffect, useState } from "react";
-import Image from "next/image";
 // utils
 import { changeTime } from "./utils";
 // types
 import { IControlsComponentProps } from "./types";
+import { Svg } from "@/components/Svg";
 
 export const Controls = ({ current, audioRef }: IControlsComponentProps) => {
     const [isPlay, setIsPlay] = useState<boolean>(false);
@@ -35,55 +35,51 @@ export const Controls = ({ current, audioRef }: IControlsComponentProps) => {
     }
     return (
         <div className="flex items-center flex-shrink-0 mx-2">
-            <Image
-                src={"/assets/icons/replay.svg"}
-                className="cursor-pointer"
+            <div
                 onClick={() => {
                     if (current > 10) {
                         const isNext = false;
                         changeTime({ audioRef, isNext });
                     }
                 }}
-                width={28}
-                height={28}
-                alt="replay"
-            />
-            <div className="mx-3 border border-white cursor-pointer">
+            >
+                <Svg src="/assets/icons/player/theme/replay.svg" size={28} />
+            </div>
+            <div className="mx-3 border border-text-primary cursor-pointer">
                 {isPlay ? (
-                    <Image
-                        src="/assets/icons/player_play.svg"
+                    <div
                         onClick={() => {
                             audioRef?.current
                                 ?.play()
                                 .catch((e) => console.log(e));
                         }}
-                        width={32}
-                        height={32}
-                        alt="play"
-                    />
+                    >
+                        <Svg
+                            src="/assets/icons/player/theme/play.svg"
+                            size={32}
+                        />
+                    </div>
                 ) : (
-                    <Image
-                        src={"/assets/icons/player_pause.svg"}
+                    <div
                         onClick={() => {
                             audioRef?.current?.pause();
                         }}
-                        width={32}
-                        height={32}
-                        alt="pause"
-                    />
+                    >
+                        <Svg
+                            src="/assets/icons/player/theme/pause.svg"
+                            size={32}
+                        />
+                    </div>
                 )}
             </div>
-            <Image
-                src={"/assets/icons/forward.svg"}
-                className="cursor-pointer"
+            <div
                 onClick={() => {
                     const isNext = true;
                     changeTime({ audioRef, isNext });
                 }}
-                width={28}
-                height={28}
-                alt="forward"
-            />
+            >
+                <Svg src="/assets/icons/player/theme/forward.svg" size={28} />
+            </div>
         </div>
     );
 };

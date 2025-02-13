@@ -16,47 +16,35 @@ export const Slider = ({
     duration: number,
     playerDispatch: React.Dispatch<TPlayerAction>
 }) => {
-    const [visualTime, setVisualTime] = useState(current);
-    const [isDragging, setIsDragging] = useState(false);
+    const [progress, setProgress] = useState("0");
+
+    const changeTime = (event: React.MouseEvent<HTMLDivElement>) => {
+        const clickX = event.clientX;
+        const windowX = window.innerWidth;
+
+        const newProgress = (clickX / windowX) * 100;
+        setProgress(newProgress.toFixed(2));
+
+        playerDispatch({
+            type: "CHANGE_TIME",
+            payload: Math.floor(duration * (newProgress / 100))
+        });
+    };
 
     useEffect(() => {
-        if (!isDragging) {
-            setVisualTime(current);
-        }
-    }, [current, isDragging]);
+        setProgress(((current / duration) * 100).toFixed(2));
+    }, [current]);
 
     return (
-        <div className="relative w-full h-4 bg-border">
-            <div
-                className="h-4 bg-primary"
-                style={{
-                    width: `${((visualTime / duration) * 100).toFixed(2)}%`
-                }}
-            />
-            <input
-                type="range"
-                className="absolute w-full top-0 z-10 opacity-0 cursor-pointer"
-                min={0}
-                value={visualTime}
-                max={duration}
-                onChange={(e) => {
-                    setVisualTime(Number(e.target.value));
-                }}
-                onMouseDown={() => setIsDragging(true)}
-                onMouseUp={() => {
-                    setIsDragging(false);
-                    playerDispatch({
-                        type: "CHANGE_TIME",
-                        payload: visualTime
-                    });
-                }}
-                onBlur={() => {
-                    setIsDragging(false);
-                    setVisualTime(current);
-                }}
-            />
-            <div className="text-xs absolute top-0 ml-2">
-                {`${timeTransform(visualTime)} / ${timeTransform(duration)}`}
+        <div
+            className="relative w-full h-4 px-2"
+            onClick={changeTime}
+            style={{
+                background: `linear-gradient(90deg, rgb(255, 0, 0) 0%, rgb(255,0,0) ${progress}%, rgb(50,50,50) ${progress}%)`
+            }}
+        >
+            <div className="text-xs text-text-contrast">
+                {timeTransform(current) + " / " + timeTransform(duration)}
             </div>
         </div>
     );

@@ -15,7 +15,7 @@ export const Card = ({
     return (
         <div
             key={book.id}
-            className="flex items-center justify-between text-xs md:text-base text-text-light"
+            className="w-full flex items-center justify-between text-xs md:text-base text-text-light"
         >
             <div className="w-1/12">{index + (currentPage - 1) * 20 + 1}</div>
             <div className="flex items-center w-8/12 overflow-hidden">

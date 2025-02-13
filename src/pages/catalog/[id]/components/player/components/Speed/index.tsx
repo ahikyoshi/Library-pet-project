@@ -3,7 +3,7 @@
 // livs
 import { useCallback, useEffect, useRef, useState } from "react";
 import clsx from "clsx";
-import Image from "next/image";
+import { Svg } from "@/components/Svg";
 
 export const Speed = ({
     audioRef
@@ -52,10 +52,7 @@ export const Speed = ({
         setIsOpen((prevIsOpen) => !prevIsOpen);
     }, []);
     return (
-        <div
-            className="w-14 relative flex flex-col items-center shrink-0"
-            ref={listRef}
-        >
+        <div className="flex flex-col items-center" ref={listRef}>
             {isOpen && (
                 <ul className="absolute z-20 bottom-12 bg-border flex flex-col items-center">
                     {speedList.map((rate) => {
@@ -79,13 +76,9 @@ export const Speed = ({
                     })}
                 </ul>
             )}
-            <Image
-                src={"/assets/icons/speed.svg"}
-                onClick={toggleList}
-                width={32}
-                height={32}
-                alt="speed control"
-            />
+            <div onClick={toggleList}>
+                <Svg src="/assets/icons/player/theme/speed.svg" size={32} />
+            </div>
             <div className="text-center text-xs">{playSpeed}X</div>
         </div>
     );

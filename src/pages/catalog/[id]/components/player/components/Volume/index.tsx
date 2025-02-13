@@ -2,14 +2,14 @@
 
 // libs
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import { Svg } from "@/components/Svg";
 
 export const Volume = ({
     audioRef
 }: {
     audioRef: React.RefObject<HTMLAudioElement> | null
 }) => {
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
     const [volume, setVolume] = useState(10);
     const volumeRef = useRef<HTMLDivElement>(null);
 
@@ -54,7 +54,7 @@ export const Volume = ({
     return (
         <div
             ref={volumeRef}
-            className="mr-2 w-6 flex flex-col items-center cursor-pointer shrink-0"
+            className="w-6 flex flex-col items-center cursor-pointer shrink-0"
         >
             {isOpen && (
                 <div className="w-6 py-2 bg-background border border-border rounded-md flex items-end justify-center absolute z-20 -top-28">
@@ -77,14 +77,12 @@ export const Volume = ({
                     />
                 </div>
             )}
-            <Image
-                src={`/assets/icons/volume_${VolumeSrc(volume)}.svg`}
-                className="w-6 h-6"
-                width={24}
-                height={24}
-                onClick={() => setIsOpen(!isOpen)}
-                alt="volume"
-            />
+            <div onClick={() => setIsOpen(!isOpen)}>
+                <Svg
+                    src={`/assets/icons/player/theme/volume_${VolumeSrc(volume)}.svg`}
+                    size={24}
+                />
+            </div>
             <span className="text-xs">{volume}%</span>
         </div>
     );

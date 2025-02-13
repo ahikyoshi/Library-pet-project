@@ -50,7 +50,7 @@ export default function Catalog() {
                     <h1 className="text-2xl font-bold">Каталог</h1>
                     <Link href={"/catalog/offer"}>
                         <div className="bg-primary px-1 py-2 rounded">
-                            Преложить книгу
+                            Предложить книгу
                         </div>
                     </Link>
                 </nav>

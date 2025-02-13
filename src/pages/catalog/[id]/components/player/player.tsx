@@ -117,14 +117,14 @@ export const Player = ({ id, userMeta, setContent }: IPlayerComponentProps) => {
                     duration={player.time.duration}
                     playerDispatch={playerDispatch}
                 />
-                <div className="flex py-1">
+                <div className="flex px-1">
                     <Tracks
                         tracks={player.tracks}
                         playerDispatch={playerDispatch}
                     />
                     <Volume audioRef={audioRef} />
                 </div>
-                <div className="w-full flex justify-between items-center">
+                <div className="w-full p-1 flex justify-between items-center">
                     <Timer audioRef={audioRef} />
                     <Controls
                         current={player.time.current}
