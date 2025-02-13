@@ -68,7 +68,7 @@ export const Content = ({
                 )}
                 {content.assets.audio && (
                     <button
-                        className="w-48 bg-primary text-text-dark py-2 mt-2"
+                        className="w-48 bg-primary text-text-contrast py-2 mt-2"
                         onClick={() => {
                             if (isAuth) {
                                 setIsPlayerOpen(!isPlayerOpen);

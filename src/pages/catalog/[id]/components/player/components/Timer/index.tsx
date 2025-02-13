@@ -3,9 +3,9 @@
 // libs
 import { useCallback, useEffect, useRef, useState } from "react";
 import clsx from "clsx";
-import Image from "next/image";
 // utils
 import { timeTransform } from "../../utils";
+import { Svg } from "@/components/Svg";
 
 export const Timer = ({
     audioRef
@@ -82,12 +82,9 @@ export const Timer = ({
     };
 
     return (
-        <div
-            className="w-14 relative flex flex-col items-center shrink-0"
-            ref={listRef}
-        >
+        <div className="flex flex-col items-center" ref={listRef}>
             {isOpen && (
-                <ul className="absolute z-20 bottom-14 left-0 bg-border flex flex-col items-center">
+                <ul className="bg-border flex flex-col items-center absolute z-20 bottom-14 left-0">
                     {timerList.map((time) => (
                         <li
                             key={time}
@@ -124,13 +121,9 @@ export const Timer = ({
                     </li>
                 </ul>
             )}
-            <Image
-                src={"/assets/icons/timer.svg"}
-                width={32}
-                height={32}
-                onClick={toggleList}
-                alt="timer"
-            />
+            <div onClick={toggleList}>
+                <Svg src="/assets/icons/player/theme/timer.svg" size={32} />
+            </div>
             <div className="text-center text-xs">
                 {timeTransform(timeSwamp)}
             </div>
