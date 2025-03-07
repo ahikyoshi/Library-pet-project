@@ -25,9 +25,12 @@ const Page = () => {
             return;
         }
 
+        const adminListHeight =
+            document.getElementById("admin_list")?.offsetHeight;
+
         const settings = {
             currentPage: currentPage,
-            limit: 20,
+            limit: adminListHeight ? adminListHeight / 24 : 10,
             searchedValue: searchedValue
         };
 
@@ -72,7 +75,10 @@ const Page = () => {
                 <Search setSearchedValue={setSearchedValue} />
             </div>
 
-            <div className="w-full mt-2 flex flex-col flex-1 flex-wrap">
+            <div
+                className="w-full mt-2 flex flex-col flex-1 flex-wrap"
+                id="admin_list"
+            >
                 {list.map((book: IBook, index) => (
                     <Card
                         key={book.id}

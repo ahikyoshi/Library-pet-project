@@ -3,6 +3,7 @@ import Link from "next/link";
 // types
 import { ICardComponentProps } from "./types";
 import { Svg } from "@/components/Svg";
+import { useEffect, useState } from "react";
 
 export const Card = ({
     book,
@@ -12,12 +13,21 @@ export const Card = ({
     currentPage
 }: ICardComponentProps) => {
     const query = { id: book.id };
+    const [pageLimit, setPageLimit] = useState(10);
+
+    useEffect(() => {
+        const adminListHeight =
+            document.getElementById("admin_list")?.offsetHeight;
+        setPageLimit(Math.floor(adminListHeight ? adminListHeight / 24 : 10));
+    }, []);
     return (
         <div
             key={book.id}
-            className="w-full flex items-center justify-between text-xs md:text-base text-text-light"
+            className="w-full flex items-center justify-between text-xs md:text-base text-text-light odd:bg-border"
         >
-            <div className="w-1/12">{index + (currentPage - 1) * 20 + 1}</div>
+            <div className="w-1/12">
+                {index + (currentPage - 1) * pageLimit + 1}
+            </div>
             <div className="flex items-center w-8/12 overflow-hidden">
                 <div className="whitespace-nowrap">{book.author}</div>
                 <div className="mx-1">-</div>

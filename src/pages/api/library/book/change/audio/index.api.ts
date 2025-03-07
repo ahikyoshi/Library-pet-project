@@ -2,6 +2,7 @@
 import { IncomingForm, File, Fields, Files } from "formidable";
 import { writeFile, readFile, mkdir } from "fs/promises";
 import jwt from "jsonwebtoken";
+import { parseBuffer } from "music-metadata";
 // utils
 import { loadDB } from "../../../utils";
 // vars
@@ -107,14 +108,30 @@ export default async function handler(
                 });
             }
 
-            const originalFilename = uploadedFile.originalFilename;
+            const fileBuffer = await readFile(uploadedFile.filepath);
 
-            if (!originalFilename) {
-                return res.status(500).json({
-                    success: false,
-                    message: "Оригинальное имя файла отсутствует"
+            const meta = await parseBuffer(fileBuffer);
+
+            if (meta.format.duration === undefined) {
+                res.status(500).json({
+                    status: false,
+                    message: "Файл не содержить длительности"
                 });
+                return;
             }
+            const duration = Math.round(meta.format.duration);
+
+            if ((uploadedFile.originalFilename ?? "").length > 8) {
+                res.status(400).json({
+                    success: false,
+                    message: "Не правильный формат имени файла"
+                });
+
+                return;
+            }
+
+            const originalFilename = `${uploadedFile.originalFilename?.replace(/\.[^/.]+$/, "")}[${duration}].mp3`;
+
             const newDirectory = `${targetDirectory}/${message}/audio`;
             const newFilePath = `${newDirectory}/${originalFilename}`;
 
