@@ -37,8 +37,10 @@ export default function Page() {
     }, [id]);
 
     useEffect(() => {
-        document.title = `Aurora: ${content?.book.title}`;
-    }, [content]);
+        if (!isPlayerOpen) {
+            document.title = `Aurora: ${content?.book.title}`;
+        }
+    }, [content, isPlayerOpen]);
 
     if (!content) return <div>Загрузка...</div>;
 
@@ -64,7 +66,9 @@ export default function Page() {
                 <Player
                     id={String(id)}
                     userMeta={content.user}
+                    title={content.book.title}
                     setContent={setContent}
+                    setIsOpen={setIsPlayerOpen}
                 />
             )}
         </main>

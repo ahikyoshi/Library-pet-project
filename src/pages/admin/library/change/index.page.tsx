@@ -5,22 +5,23 @@ import Link from "next/link";
 // utils
 import { getContent, handleSubmit } from "./utils";
 // components
-import { ImageForm } from "./components/ImageForm";
 import { AudioForm } from "./components/AudioForm";
 import { FB2Form } from "./components/FB2Form";
 import { Button } from "./components/Button";
 // types
 import { IBook } from "@/globalTypes";
 import { IResponse } from "./types";
+import { Svg } from "@/components/Svg";
+import { ImageForm } from "./components/ImageForm";
+import { Input } from "./components/Input";
+import { GetServerSideProps } from "next";
+
+// Нужно сделать еще формы аудио фб2
+// Декомпонизировать все и почистить и можно выпускать обнову
 
 const Page = () => {
     const router = useRouter();
     const { id } = router.query;
-
-    const [isImageOpen, setIsImageOpen] = useState(false);
-    const [isAudioOpen, setIsAudioOpen] = useState(false);
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    const [isFB2Open, setIsFB2Open] = useState(false);
 
     const [content, setContent] = useState<IBook | null>(null);
     const [isStatus, setIsStatus] = useState<null | IResponse>(null);
@@ -36,118 +37,75 @@ const Page = () => {
         return <div>Loading</div>;
     }
     return (
-        <main className="w-full h-[calc(100vh-48px)] flex items-center justify-center">
+        <main className="w-3/4 mx-auto h-[calc(100vh-48px)] flex items-center justify-center">
             <form
                 onSubmit={(event) =>
                     handleSubmit({ event, content, setIsStatus, setIsLoading })
                 }
                 className="w-full px-2 text-text-light flex flex-col"
             >
-                <h1 className="mb-4 text-2xl text-center font-bold">
+                {/* Title */}
+                <h1 className="text-4xl text-center font-bold">
                     Редактирование книги
                 </h1>
-                <input
-                    className="mb-2 py-2 border border-secondary rounded indent-2"
-                    type="text"
-                    name="title"
-                    placeholder="Название произведения"
-                    defaultValue={content.title}
-                    required
-                />
-                <input
-                    className="mb-2 py-2 border border-secondary rounded indent-2"
-                    type="text"
-                    name="author"
-                    placeholder="Автор произведения"
-                    defaultValue={content.author}
-                    required
-                />
-                <input
-                    className="mb-2 py-2 border border-secondary rounded indent-2"
-                    type="text"
-                    name="cycle_name"
-                    placeholder="Название цикла"
-                    defaultValue={content.cycle.title}
-                    required
-                />
-                <input
-                    className="mb-2 py-2 border border-secondary rounded indent-2"
-                    type="number"
-                    name="cycle_number"
-                    placeholder="Номер"
-                    defaultValue={content.cycle.number}
-                    required
-                />
-                <input
-                    className="mb-2 py-2 border border-secondary rounded indent-2"
-                    type="text"
-                    name="description"
-                    placeholder="Описание"
-                    defaultValue={content.description}
-                    required
-                />
-                <input
-                    className="mb-2 py-2 border border-secondary rounded indent-2"
-                    type="text"
-                    name="writtingDate"
-                    placeholder="Дата написания (Указывать только цифры)"
-                    defaultValue={content.meta.writtingDate}
-                    required
-                />
-                <div className="mt-2 w-full text-center text-rose-600">
-                    {!isStatus?.success && isStatus?.message}
+                {/* Text change */}
+                <div className="flex flex-col mt-6">
+                    <Input
+                        name="title"
+                        placeholder="Название произведения"
+                        defaultValue={content.title}
+                    />
+                    <Input
+                        name="author"
+                        placeholder="Автор произведения"
+                        defaultValue={content.author}
+                    />
+                    <Input
+                        name="cycle_name"
+                        placeholder="Название цикла"
+                        defaultValue={content.cycle.title}
+                    />
+                    <input
+                        className="mb-3 py-2 border border-secondary rounded indent-2"
+                        type="number"
+                        name="cycle_number"
+                        placeholder="Номер"
+                        defaultValue={content.cycle.number}
+                        required
+                    />
+                    <Input
+                        name="description"
+                        placeholder="Описание"
+                        defaultValue={content.description}
+                    />
+                    <Input
+                        name="writtingDate"
+                        placeholder="Дата написания (Указывать только цифры)"
+                        defaultValue={content.meta.writtingDate}
+                    />
                 </div>
-
-                <Button
-                    color="light"
-                    text="изображение"
-                    isActive={content.assets.image}
-                    setStateOpen={setIsImageOpen}
-                />
-                <Button
-                    color="light"
-                    text="аудио"
-                    isActive={content.assets.audio}
-                    setStateOpen={setIsAudioOpen}
-                />
-                <Button
-                    color="light"
-                    text="текстовый файл"
-                    isActive={content.assets.text}
-                    setStateOpen={setIsFB2Open}
-                />
-
-                <button
-                    className="w-full mt-2 p-2 bg-primary text-text-contrast rounded"
-                    type="submit"
-                    disabled={isLoading}
-                >
-                    {isLoading ? "Загрузка..." : "Сохранить"}
-                </button>
-                <Link
-                    href={"/admin/library"}
-                    className="w-full mt-2 text-center text-text-secondaryLight"
-                >
-                    Назад
-                </Link>
+                {/* Files change */}
+                <div className="mt-4">
+                    <ImageForm isAdded={content.assets.image} id={id} />
+                    <FB2Form isAdded={content.assets.text} id={id} />
+                </div>
+                {/* Buttons */}
+                <div className="mt-4 flex flex-col items-center">
+                    <button
+                        className="w-full mt-2 p-2 bg-primary text-text-contrast rounded"
+                        type="submit"
+                        disabled={isLoading}
+                    >
+                        {isLoading ? "Загрузка..." : "Сохранить"}
+                    </button>
+                    <Link
+                        href={"/admin/library"}
+                        className="w-full mt-2 text-center text-text-secondaryLight"
+                    >
+                        Назад
+                    </Link>
+                </div>
             </form>
-            {isImageOpen && (
-                <ImageForm
-                    content={content}
-                    setContent={setContent}
-                    setIsImageOpen={setIsImageOpen}
-                />
-            )}
-            {isFB2Open && (
-                <FB2Form content={content} setIsFB2Open={setIsFB2Open} />
-            )}
-            {isAudioOpen && (
-                <AudioForm
-                    content={content}
-                    setIsAudioOpen={setIsAudioOpen}
-                    setContent={setContent}
-                />
-            )}
         </main>
     );
 };

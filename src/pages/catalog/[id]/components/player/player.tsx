@@ -8,12 +8,24 @@ import { Speed } from "./components/Speed";
 import { Timer } from "./components/Timer";
 import { Tracks } from "./components/Tracks";
 // utils
-import { getTracks, nextTrack, playerReducer } from "./utils";
+import {
+    bookEnded,
+    getTracks,
+    nextTrack,
+    playerReducer,
+    updateUserBook
+} from "./utils";
 // types
 import { IUserBook } from "@/globalTypes";
 import { IPlayerComponentProps, IPlayerState } from "./types";
 
-export const Player = ({ id, userMeta, setContent }: IPlayerComponentProps) => {
+export const Player = ({
+    id,
+    userMeta,
+    title,
+    setContent,
+    setIsOpen
+}: IPlayerComponentProps) => {
     const initialState: IPlayerState = {
         tracks: {
             current: userMeta.audio.currentChapter,
@@ -68,16 +80,7 @@ export const Player = ({ id, userMeta, setContent }: IPlayerComponentProps) => {
                 }
             };
 
-            fetch("/api/user/book/change", {
-                method: "POST",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    newBook: newUserMeta
-                })
-            }).catch((e) => console.log(e));
+            updateUserBook(newUserMeta);
 
             setContent((prev) => {
                 if (!prev) {
@@ -120,6 +123,7 @@ export const Player = ({ id, userMeta, setContent }: IPlayerComponentProps) => {
                 <div className="flex px-1">
                     <Tracks
                         tracks={player.tracks}
+                        title={title}
                         playerDispatch={playerDispatch}
                     />
                     <Volume audioRef={audioRef} />
@@ -146,7 +150,11 @@ export const Player = ({ id, userMeta, setContent }: IPlayerComponentProps) => {
                     });
                 }}
                 onLoadedMetadata={getDuration}
-                onEnded={() => nextTrack(player, playerDispatch)}
+                onEnded={() => {
+                    if (nextTrack(player, playerDispatch)) {
+                        bookEnded(setIsOpen, setContent, userMeta);
+                    }
+                }}
                 autoPlay
                 hidden
             />

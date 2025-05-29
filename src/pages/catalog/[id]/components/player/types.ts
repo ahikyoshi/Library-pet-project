@@ -5,7 +5,9 @@ import { Dispatch, SetStateAction } from "react";
 export interface IPlayerComponentProps {
     id: string;
     userMeta: IUserBook;
+    title: string;
     setContent: Dispatch<SetStateAction<IBookPageContent | null>>;
+    setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 export interface IPlayerState {

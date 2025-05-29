@@ -50,6 +50,7 @@ export const handleSubmit = ({
         .then((res) => res.json())
         .then(({ success, message }: { success: boolean, message: string }) => {
             setIsStatus({ success, message: message });
+            console.log("send");
             setIsLoading(false);
         })
         .catch(() => {
@@ -85,6 +86,4 @@ export const handleSubmit = ({
             }
         });
     }
-
-    window.location.href = "/admin/library";
 };

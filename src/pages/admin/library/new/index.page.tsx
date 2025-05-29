@@ -83,6 +83,9 @@ const Page = () => {
                 <button
                     className="py-2 bg-primary text-text-dark rounded"
                     type="submit"
+                    onClick={() => {
+                        setMode("back");
+                    }}
                     disabled={isLoading}
                 >
                     {isLoading ? "Загрузка..." : "Добавить книгу"}
@@ -93,6 +96,7 @@ const Page = () => {
                     onClick={() => {
                         setMode("continue");
                     }}
+                    disabled={isLoading}
                 >
                     Продолжить с той же серии
                 </button>
@@ -102,6 +106,7 @@ const Page = () => {
                     onClick={() => {
                         setMode("continue-author");
                     }}
+                    disabled={isLoading}
                 >
                     Продолжить с автора
                 </button>
