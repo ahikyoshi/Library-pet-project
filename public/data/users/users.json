@@ -1,1 +1,1 @@
-[{"login":"admin","password":"$argon2id$v=19$m=65536,t=3,p=4$R3OvsR/sXdzUNitNzS0qJA$DjBlAzCL+edCaS3tPZnuf22sz8ij+WJnUlMxmiPdb7Y","display_name":"admin","role":"admin","avatar":"","library":[],"id":"bfc7fa3c-9557-4d2b-bac4-1e4c1d4087f0"}]
+[{"login":"admin","password":"$argon2id$v=19$m=65536,t=3,p=4$O0/NWsY3vm29qfMOjYkfsA$kKmSZbbHWHaueZkc1/76hbVFb0LKMYkgrgxUTUwb3+M","display_name":"Admin","role":"admin","avatar":"","library":[],"id":"3081aa86-d505-421d-8d93-84869a1fc4ed"}]
