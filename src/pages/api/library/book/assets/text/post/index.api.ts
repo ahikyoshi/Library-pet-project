@@ -1,9 +1,9 @@
 // libs
 import { IncomingForm, File } from "formidable";
 import jwt from "jsonwebtoken";
-import { writeFile, readFile } from "fs/promises";
+import { writeFile, readFile, mkdir } from "fs/promises";
 // utils
-import { loadDB } from "../../../utils";
+import { loadDB } from "../../../../utils";
 // vars
 import { JWT_SECRET } from "@/globalVariables";
 // types
@@ -76,18 +76,21 @@ export default async function handler(
                 ""
             );
 
-            if (fileExtension != "webp") {
+            if (fileExtension != "fb2") {
                 res.status(502).json({
                     success: false,
-                    message: "Неправильный формат изображения"
+                    message: "Неправильный формат текстового файла"
                 });
                 return;
             }
 
-            const newFilePath = `${targetDirectory}/${baseName}/${baseName}.${fileExtension}`;
+            const newFilePath = `${targetDirectory}/${baseName}/text/${baseName}.${fileExtension}`;
 
             try {
                 const fileData: Buffer = await readFile(uploadedFile.filepath);
+                await mkdir(`${targetDirectory}/${baseName}/text`, {
+                    recursive: true
+                });
                 await writeFile(newFilePath, Buffer.from(fileData));
 
                 const DB: IBook[] = await loadDB();
@@ -103,7 +106,7 @@ export default async function handler(
                     });
                 }
 
-                DB[searchedBookIndex].assets.image = true;
+                DB[searchedBookIndex].assets.text = true;
 
                 await writeFile(
                     "./public/data/library/books.json",
@@ -116,6 +119,7 @@ export default async function handler(
                     newBook: DB[searchedBookIndex]
                 });
             } catch (fileError) {
+                console.log(fileError);
                 return res.status(500).json({
                     success: false,
                     message: "Ошибка при работе с файлом"

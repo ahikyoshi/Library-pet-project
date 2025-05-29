@@ -17,7 +17,8 @@ const config: Config = {
                     secondary: "rgb(var(--text_secondary))",
                     contrast: "rgb(var(--text_contrast))"
                 },
-                notification: "rgb(var(--notification))"
+                notification: "rgb(var(--notification))",
+                success: "rgb(var(--success))"
             }
         }
     },

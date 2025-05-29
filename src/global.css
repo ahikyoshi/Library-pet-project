@@ -43,6 +43,7 @@ textarea{
     --text_secondary: 96, 96, 96;
     --text_contrast: 255, 255, 255;
     --notification: 255, 69, 0;
+    --success: 76, 175, 80;
 }
 
 .dark {
@@ -53,6 +54,7 @@ textarea{
     --text_secondary: 150, 150, 150;
     --text_contrast: 255, 255, 255;
     --notification: 255, 69, 0;
+    --success: 76, 175, 80;
 }
 
 /* Reader */
