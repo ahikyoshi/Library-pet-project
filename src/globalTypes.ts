@@ -66,3 +66,18 @@ export interface INewBook {
         number: number
     };
 }
+
+// Server types
+
+export interface IServerResponse<T = unknown> {
+    success: boolean;
+    message: string;
+    status: number;
+    body: T;
+}
+
+export type TMeta = {
+    name: string,
+    size: number,
+    modified: Date
+};

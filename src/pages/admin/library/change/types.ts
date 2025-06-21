@@ -22,11 +22,23 @@ export interface INewBook {
 export interface IHandleSubmitProps {
     event: FormEvent<HTMLFormElement>;
     content: IBook;
-    setIsStatus: Dispatch<SetStateAction<IResponse | null>>;
     setIsLoading: Dispatch<SetStateAction<boolean>>;
 }
 
 export interface IGetContentProps {
     id: string | string[];
     setContent: Dispatch<SetStateAction<IBook | null>>;
+}
+
+export type TMeta = {
+    modified: string,
+    size: string
+};
+
+export enum ModalType {
+    None = "none",
+    View = "view",
+    Upload = "upload",
+    Download = "download",
+    Delete = "Delete"
 }
