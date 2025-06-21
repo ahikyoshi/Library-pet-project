@@ -19,13 +19,7 @@ type TMeta = {
     size: string
 };
 
-export const FB2Form = ({
-    isAdded,
-    id
-}: {
-    isAdded: boolean,
-    id: string | string[]
-}) => {
+export const FB2Form = ({ isAdded, id }: { isAdded: boolean, id: string }) => {
     const [added, setAdded] = useState(isAdded);
     const [meta, setMeta] = useState<TMeta | null>(null);
 
@@ -75,6 +69,7 @@ export const FB2Form = ({
                 .catch((err) => console.log(err));
         }
     }, [isAdded]);
+
     return (
         <div className="flex">
             {/* Info */}
@@ -90,10 +85,10 @@ export const FB2Form = ({
                         {added ? "Добавлено" : "Отсутствует"}
                     </div>
                 </div>
-                {added && (
+                {added && meta != null && (
                     <div className="flex">
                         <div className="mr-2 text-xs">
-                            {dateTransform(meta?.modified)}
+                            {dateTransform(meta.modified)}
                         </div>
                         <div className="text-xs">
                             {sizeTransform(Number(meta?.size))}
@@ -135,11 +130,7 @@ export const FB2Form = ({
                         />
                     )}
                     {openModal === ModalType.Download && (
-                        <Download
-                            closeModal={closeModal}
-                            id={id}
-                            deleteText={deleteText}
-                        />
+                        <Download closeModal={closeModal} id={id} />
                     )}
                 </Modal>
             )}

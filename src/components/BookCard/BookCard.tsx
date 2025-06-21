@@ -63,7 +63,7 @@ const BookCard = ({ id }: { id: string }) => {
             style={
                 content.assets.image
                     ? {
-                          background: `center/cover no-repeat url("/api/library/book/assets/image/?id=${id}")`
+                          background: `center/cover no-repeat url("/api/image?id=${id}")`
                       }
                     : { background: "black" }
             }

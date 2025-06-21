@@ -5,10 +5,10 @@ import { upload } from "./utils";
 interface IComponentProps {
     id: string;
     closeModal: () => void;
-    addFB2: () => void;
+    addImage: () => void;
 }
 
-export const Upload = ({ id, closeModal, addFB2 }: IComponentProps) => {
+export const Upload = ({ id, closeModal, addImage }: IComponentProps) => {
     const [fileWarning, setFileWarning] = useState("");
 
     return (
@@ -21,7 +21,7 @@ export const Upload = ({ id, closeModal, addFB2 }: IComponentProps) => {
                         event,
                         id,
                         closeModal,
-                        addFB2,
+                        addImage,
                         setFileWarning
                     };
                     upload(props);

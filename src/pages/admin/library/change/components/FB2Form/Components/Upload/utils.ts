@@ -1,20 +1,13 @@
-import { Dispatch, FormEvent, SetStateAction } from "react";
+import { FormEvent } from "react";
 
 interface IUploadProps {
     event: FormEvent<HTMLInputElement>;
     id: string;
-    addImage: () => void;
+    addFB2: () => void;
     closeModal: () => void;
-    setFileWarning: Dispatch<SetStateAction<string>>;
 }
 
-export const upload = ({
-    event,
-    id,
-    addImage,
-    closeModal,
-    setFileWarning
-}: IUploadProps) => {
+export const upload = ({ event, id, addFB2, closeModal }: IUploadProps) => {
     event.preventDefault();
 
     const input = event.target as HTMLInputElement;
@@ -38,13 +31,11 @@ export const upload = ({
             .then((data: { success: boolean, message: string }) => {
                 if (data.success) {
                     closeModal();
-                    addImage();
-                } else {
-                    setFileWarning(data.message);
+                    addFB2();
                 }
             })
             .catch((error) => {
-                setFileWarning("Ошибка при отправке файла: " + error);
+                console.log(error);
             });
     }
 };

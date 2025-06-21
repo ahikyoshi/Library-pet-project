@@ -1,16 +1,13 @@
 import { Svg } from "@/components/Svg";
-import { useState } from "react";
 import { upload } from "./utils";
 
 interface IComponentProps {
     id: string;
     closeModal: () => void;
-    addImage: () => void;
+    addFB2: () => void;
 }
 
-export const Upload = ({ id, closeModal, addImage }: IComponentProps) => {
-    const [fileWarning, setFileWarning] = useState("");
-
+export const Upload = ({ id, closeModal, addFB2 }: IComponentProps) => {
     return (
         <>
             <input
@@ -21,8 +18,7 @@ export const Upload = ({ id, closeModal, addImage }: IComponentProps) => {
                         event,
                         id,
                         closeModal,
-                        addImage,
-                        setFileWarning
+                        addFB2
                     };
                     upload(props);
                 }}

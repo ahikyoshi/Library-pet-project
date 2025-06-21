@@ -5,16 +5,12 @@ import Link from "next/link";
 // utils
 import { getContent, handleSubmit } from "./utils";
 // components
-import { AudioForm } from "./components/AudioForm";
 import { FB2Form } from "./components/FB2Form";
-import { Button } from "./components/Button";
 // types
 import { IBook } from "@/globalTypes";
 import { IResponse } from "./types";
-import { Svg } from "@/components/Svg";
 import { ImageForm } from "./components/ImageForm";
 import { Input } from "./components/Input";
-import { GetServerSideProps } from "next";
 
 // Нужно сделать еще формы аудио фб2
 // Декомпонизировать все и почистить и можно выпускать обнову
@@ -33,7 +29,7 @@ const Page = () => {
         }
     }, [id]);
 
-    if (!content) {
+    if (!content || Array.isArray(id) || id === undefined) {
         return <div>Loading</div>;
     }
     return (
@@ -48,6 +44,7 @@ const Page = () => {
                 <h1 className="text-4xl text-center font-bold">
                     Редактирование книги
                 </h1>
+                <div>{isStatus != null && <div>{isStatus.message}</div>}</div>
                 {/* Text change */}
                 <div className="flex flex-col mt-6">
                     <Input

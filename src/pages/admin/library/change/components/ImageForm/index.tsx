@@ -27,7 +27,7 @@ export const ImageForm = ({
     id
 }: {
     isAdded: boolean,
-    id: string | string[]
+    id: string
 }) => {
     const [added, setAdded] = useState(isAdded);
     const [meta, setMeta] = useState<TMeta | null>(null);
@@ -98,7 +98,7 @@ export const ImageForm = ({
                         {added ? "Добавлено" : "Отсутствует"}
                     </div>
                 </div>
-                {added && (
+                {added && meta != null && (
                     <div className="flex">
                         <div className="mr-2 text-xs">
                             {dateTransform(meta?.modified)}
