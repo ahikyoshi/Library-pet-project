@@ -5,8 +5,9 @@ import { Modal } from "@/components/modal";
 import { Upload } from "./Components/Upload";
 import { Delete } from "./Components/Delete";
 import { Download } from "./Components/Download";
-import { ModalType, TMeta } from "../../types";
+import { ModalType } from "../../types";
 import { dateTransform, sizeTransform } from "@/globalUtils";
+import { TMeta } from "@/globalTypes";
 
 export const FB2Form = ({ isAdded, id }: { isAdded: boolean, id: string }) => {
     const [added, setAdded] = useState(isAdded);

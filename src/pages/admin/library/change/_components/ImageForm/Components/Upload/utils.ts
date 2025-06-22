@@ -3,11 +3,11 @@ import { FormEvent } from "react";
 interface IUploadProps {
     event: FormEvent<HTMLInputElement>;
     id: string;
-    addFB2: () => void;
+    addImage: () => void;
     closeModal: () => void;
 }
 
-export const upload = ({ event, id, addFB2, closeModal }: IUploadProps) => {
+export const upload = ({ event, id, addImage, closeModal }: IUploadProps) => {
     event.preventDefault();
 
     const input = event.target as HTMLInputElement;
@@ -32,7 +32,7 @@ export const upload = ({ event, id, addFB2, closeModal }: IUploadProps) => {
             .then((data: { success: boolean, message: string }) => {
                 if (data.success) {
                     closeModal();
-                    addFB2();
+                    addImage();
                 }
             })
             .catch((error) => {

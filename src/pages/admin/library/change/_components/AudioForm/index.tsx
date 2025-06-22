@@ -1,9 +1,11 @@
+"use client";
+
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { NavItem } from "../ImageForm/Components/NavItem";
 import { ModalType } from "../../types";
 import { Modal } from "@/components/modal";
-import { Upload } from "./_components/upload";
+import { Upload } from "./_components/Upload";
 import { IServerResponse, TMeta } from "@/globalTypes";
 import { dateTransform, sizeTransform } from "@/globalUtils";
 import { View } from "./_components/View";
@@ -15,7 +17,7 @@ export const AudioForm = ({
     isAdded: boolean,
     id: string
 }) => {
-    const [added] = useState(isAdded);
+    const [added, setIsAdded] = useState(isAdded);
     const [meta, setMeta] = useState<TMeta | null>(null);
 
     const [openModal, setOpenModal] = useState(ModalType.None);
@@ -24,7 +26,7 @@ export const AudioForm = ({
     };
 
     useEffect(() => {
-        if (isAdded) {
+        if (added) {
             const target = "total";
             fetch(
                 `/api/library/book/assets/audio/meta?id=${id}&target=${target}`
@@ -37,7 +39,7 @@ export const AudioForm = ({
                 })
                 .catch((err) => console.log(err));
         }
-    }, [isAdded]);
+    }, [added]);
 
     return (
         <div className="flex">
@@ -57,7 +59,7 @@ export const AudioForm = ({
                     {added && (
                         <div className="flex">
                             <div className="text-xs mr-2">
-                                {dateTransform(meta?.modified)}
+                                {meta?.modified && dateTransform(meta.modified)}
                             </div>
                             <div className="text-xs">
                                 {sizeTransform(Number(meta?.size))}
@@ -68,15 +70,28 @@ export const AudioForm = ({
             </div>
             <ul className="ml-2 flex border border-border rounded">
                 <NavItem type={ModalType.Upload} setOpenModal={setOpenModal} />
-                <NavItem type={ModalType.View} setOpenModal={setOpenModal} />
+                {added && (
+                    <NavItem
+                        type={ModalType.View}
+                        setOpenModal={setOpenModal}
+                    />
+                )}
             </ul>
             {openModal != ModalType.None && (
                 <Modal closeAction={closeModal}>
                     {openModal === ModalType.Upload && (
-                        <Upload closeAction={closeModal} id={id} />
+                        <Upload
+                            closeAction={closeModal}
+                            id={id}
+                            setIsAdded={setIsAdded}
+                        />
                     )}
                     {openModal === ModalType.View && (
-                        <View closeAction={closeModal} id={id} />
+                        <View
+                            closeAction={closeModal}
+                            id={id}
+                            setIsAdded={setIsAdded}
+                        />
                     )}
                 </Modal>
             )}

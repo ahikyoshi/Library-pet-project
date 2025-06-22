@@ -1,21 +1,26 @@
+// libs
+import React, {
+    Dispatch,
+    FormEvent,
+    SetStateAction,
+    useEffect,
+    useState
+} from "react";
+// components
 import { Button } from "@/components/Button";
-import { Svg } from "@/components/Svg";
+// utils
 import { getExtension, sizeTransform } from "@/globalUtils";
-import React, { FormEvent, useEffect, useState } from "react";
+// types
+import { Svg } from "@/components/Svg";
+import { IUploadedFiles } from "./types";
 
-interface IUploadedFiles {
-    name: string;
-    size: number;
-    id: number;
+export interface IComponentProps {
+    id: string;
+    closeAction: () => void;
+    setIsAdded: Dispatch<SetStateAction<boolean>>;
 }
 
-export const Upload = ({
-    closeAction,
-    id
-}: {
-    closeAction: () => void,
-    id: string
-}) => {
+export const Upload = ({ id, closeAction, setIsAdded }: IComponentProps) => {
     const [isUpload, setIsUpload] = useState(false);
     const [uploadedFiles, setUploadedFiles] = useState<IUploadedFiles[]>([]);
 
@@ -56,11 +61,9 @@ export const Upload = ({
         const arr = uploadedFiles;
 
         const files = Array.from(input.files);
-
-        // Достаём нужные файлы по индексам из arr
         const matchedFiles = arr
             .map(({ id }) => files[id])
-            .filter((file): file is File => file instanceof File); // защита от undefined
+            .filter((file): file is File => file instanceof File);
 
         const formData = new FormData();
         matchedFiles.forEach((file, index) => {
@@ -70,9 +73,14 @@ export const Upload = ({
         fetch(`/api/library/book/assets/audio/post?id=${id}`, {
             method: "POST",
             body: formData
-        }).catch((error) => {
-            console.log(error);
-        });
+        })
+            .then(() => {
+                setIsAdded(true);
+                closeAction();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
 
     return (

@@ -25,7 +25,7 @@ export const sizeTransform = (size: number): string => {
     }
 };
 
-export const dateTransform = (date: string) => {
+export const dateTransform = (date: Date) => {
     const dateform = new Date(date);
     const formatted = dateform
         .toLocaleString("ru-RU", {

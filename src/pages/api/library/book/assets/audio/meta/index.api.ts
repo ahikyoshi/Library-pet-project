@@ -1,7 +1,8 @@
-import { IServerResponse, TMeta } from "@/globalTypes";
+import { IBook, IServerResponse, TMeta } from "@/globalTypes";
 import path from "path";
 import { NextApiRequest, NextApiResponse } from "next";
-import { getFolderMeta } from "@/pages/api/library/utils";
+import { getFolderMeta, loadDB } from "@/pages/api/library/utils";
+import { writeFile } from "fs/promises";
 
 export default async function handler(
     req: NextApiRequest,
@@ -37,7 +38,23 @@ export default async function handler(
     );
 
     try {
-        response = await getFolderMeta(audioDir, target);
+        if (target !== "list" && target !== "total") {
+            response.status = 400;
+            response.message = "Некорректное значение параметра target";
+        } else {
+            response = await getFolderMeta(audioDir, target);
+        }
+
+        if (response.status === 404) {
+            const DB: IBook[] = await loadDB();
+            const searchedBookIndex = DB.findIndex((book) => book.id === id);
+            DB[searchedBookIndex].assets.audio = false;
+
+            await writeFile(
+                "./public/data/library/books.json",
+                JSON.stringify(DB)
+            );
+        }
     } catch (err) {
         const error = err as { status?: number, message?: string };
 

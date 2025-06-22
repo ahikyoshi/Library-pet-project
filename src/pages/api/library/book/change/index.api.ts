@@ -1,47 +1,40 @@
 // libs
 import { writeFile } from "fs/promises";
-import jwt from "jsonwebtoken";
 // utils
-import { loadDB } from "../../utils";
-// vars
-import { JWT_SECRET } from "@/globalVariables";
+import { loadDB, verifyAdminToken } from "../../utils";
 // types
 import { NextApiResponse } from "next";
-import { IBook } from "@/globalTypes";
+import { IBook, IServerResponse } from "@/globalTypes";
 import { IChangedBookRequest } from "./types";
 
-async function handler(req: IChangedBookRequest, res: NextApiResponse) {
+export default async function handler(
+    req: IChangedBookRequest,
+    res: NextApiResponse
+) {
+    let response: IServerResponse<null> = {
+        success: false,
+        status: 0,
+        message: "_blank_",
+        body: null
+    };
+
     if (req.method !== "POST") {
-        return res
-            .status(405)
-            .json({ success: false, message: "Method not allowed" });
+        return res.status(405).json({
+            ...response,
+            status: 405,
+            message: "Method not allowed"
+        });
     }
 
     const token = req.cookies.auth;
 
+    response = verifyAdminToken(response, token);
+
+    if (response.status != 0) {
+        return res.status(response.status).json(response);
+    }
+
     try {
-        if (!token) {
-            return res.status(401).json({
-                success: false,
-                message:
-                    "Пользован не авторизован или не имеет необходимых прав"
-            });
-        }
-
-        const decoded = jwt.verify(token, JWT_SECRET) as {
-            login: string,
-            id: string,
-            role: "user" | "admin"
-        };
-
-        if (decoded.role != "admin") {
-            return res.status(401).json({
-                success: false,
-                message:
-                    "Пользован не авторизован или не имеет необходимых прав"
-            });
-        }
-
         const { changedBook } = req.body;
 
         const DB: IBook[] = await loadDB();
@@ -51,27 +44,22 @@ async function handler(req: IChangedBookRequest, res: NextApiResponse) {
         );
 
         if (searchedBookIndex === -1) {
-            return res.status(404).json({
-                success: false,
-                message: "Книга не найдена"
-            });
+            throw { status: 404, message: "Книга с данным ID не найдена" };
         }
 
         DB[searchedBookIndex] = changedBook;
 
         await writeFile("./public/data/library/books.json", JSON.stringify(DB));
 
-        return res.status(200).json({
-            success: true,
-            message: "Книга успешна обновлена"
-        });
-    } catch (error) {
-        console.log("Ошибка сервера:", error);
-        return res.status(500).json({
-            success: false,
-            message: "Ошибка сервера"
-        });
-    }
-}
+        response.success = true;
+        response.status = 200;
+        response.message = "Файл успешно загружен";
+    } catch (err: unknown) {
+        const error = err as { status?: number, message?: string };
 
-export default handler;
+        response.status = error.status ?? 500;
+        response.message = error.message ?? "Непредвиденная ошибка на сервере";
+    }
+
+    return res.status(response.status).json(response);
+}

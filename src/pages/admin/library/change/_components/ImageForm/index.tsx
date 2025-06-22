@@ -11,8 +11,9 @@ import { Download } from "./Components/Download";
 // utils
 import { getMeta } from "./utils";
 import { dateTransform, sizeTransform } from "@/globalUtils";
-import { ModalType, TMeta } from "../../types";
 //types
+import { ModalType } from "../../types";
+import { TMeta } from "@/globalTypes";
 
 export const ImageForm = ({
     isAdded,
@@ -69,7 +70,7 @@ export const ImageForm = ({
                             {meta?.modified && dateTransform(meta?.modified)}
                         </div>
                         <div className="text-xs">
-                            {meta?.size && sizeTransform(Number(meta?.size))}
+                            {meta?.size && sizeTransform(meta?.size)}
                         </div>
                     </div>
                 )}

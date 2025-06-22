@@ -1,58 +1,58 @@
 // libs
 import { rm, writeFile } from "fs/promises";
-import jwt from "jsonwebtoken";
 // utils
-import { loadDB } from "../../utils";
-// vars
-import { JWT_SECRET } from "@/globalVariables";
+import { loadDB, verifyAdminToken } from "../../utils";
 // types
 import { NextApiResponse } from "next";
-import { IBook } from "@/globalTypes";
+import { IBook, IServerResponse } from "@/globalTypes";
 import { IDeleteBookRequest } from "./types";
 
-async function handler(req: IDeleteBookRequest, res: NextApiResponse) {
+export default async function handler(
+    req: IDeleteBookRequest,
+    res: NextApiResponse
+) {
+    let response: IServerResponse<null> = {
+        success: false,
+        status: 0,
+        message: "_blank_",
+        body: null
+    };
+
     if (req.method !== "POST") {
-        return res
-            .status(405)
-            .json({ success: false, message: "Method not allowed" });
+        return res.status(405).json({
+            ...response,
+            status: 405,
+            message: "Method not allowed"
+        });
     }
 
     const token = req.cookies.auth;
 
+    response = verifyAdminToken(response, token);
+
+    if (response.status != 0) {
+        return res.status(response.status).json(response);
+    }
+
     try {
-        if (!token) {
-            return res.status(401).json({
-                success: false,
-                message:
-                    "Пользован не авторизован или не имеет необходимых прав"
-            });
-        }
-
-        const decoded = jwt.verify(token, JWT_SECRET) as {
-            login: string,
-            id: string,
-            role: "user" | "admin"
-        };
-
-        if (decoded.role !== "admin") {
-            return res.status(401).json({
-                success: false,
-                message:
-                    "Пользован не авторизован или не имеет необходимых прав"
-            });
-        }
-
         const { id } = req.body;
+
+        if (typeof id !== "string") {
+            throw {
+                status: 404,
+                message: "ID не найден"
+            };
+        }
 
         const DB: IBook[] = await loadDB();
 
         const searchedBookIndex = DB.findIndex((book) => book.id === id);
 
         if (searchedBookIndex === -1) {
-            return res.status(404).json({
-                success: false,
+            throw {
+                status: 404,
                 message: "Книга не найдена"
-            });
+            };
         }
 
         DB.splice(searchedBookIndex, 1);
@@ -63,25 +63,19 @@ async function handler(req: IDeleteBookRequest, res: NextApiResponse) {
         try {
             await rm(directoryPath, { recursive: true, force: true });
         } catch (error) {
-            console.error("Ошибка при удалении директории:", error);
-            return res.status(500).json({
-                success: false,
-                message: "Ошибка при очистке файлов книги"
-            });
+            response.status = 500;
+            response.message = "Ошибка при удалении файлов книги";
         }
 
-        return res.status(200).json({
-            success: true,
-            message: "Книга успешно удалена",
-            catalog: DB
-        });
-    } catch (error) {
-        console.error("Ошибка сервера:", error);
-        return res.status(500).json({
-            success: false,
-            message: "Ошибка сервера"
-        });
-    }
-}
+        response.success = true;
+        response.status = 200;
+        response.message = "Книга успешно удалена";
+    } catch (err: unknown) {
+        const error = err as { status?: number, message?: string };
 
-export default handler;
+        response.status = error.status ?? 500;
+        response.message = error.message ?? "Непредвиденная ошибка на сервере";
+    }
+
+    return res.status(response.status).json(response);
+}

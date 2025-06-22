@@ -7,4 +7,3 @@ export interface IGetCatalogProps {
     setList: Dispatch<SetStateAction<IBook[]>>;
     setPages: Dispatch<SetStateAction<number>>;
 }
-

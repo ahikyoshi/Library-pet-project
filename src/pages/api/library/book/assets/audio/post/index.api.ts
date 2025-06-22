@@ -1,14 +1,11 @@
 // libs
 import { IncomingForm, File } from "formidable";
-import jwt from "jsonwebtoken";
 import { writeFile, readFile, mkdir, access } from "fs/promises";
 // utils
-// vars
-import { JWT_SECRET } from "@/globalVariables";
+import { loadDB, verifyAdminToken } from "@/pages/api/library/utils";
 // types
 import { NextApiRequest, NextApiResponse } from "next";
 import { IBook, IServerResponse } from "@/globalTypes";
-import { loadDB, verifyAdminToken } from "@/pages/api/library/utils";
 
 export const config = {
     api: {
@@ -44,7 +41,7 @@ export default async function handler(
     }
 
     const { id } = req.query;
-    if (id === undefined) {
+    if (id === undefined || Array.isArray(id)) {
         return res.status(405).json({
             ...response,
             status: 404,

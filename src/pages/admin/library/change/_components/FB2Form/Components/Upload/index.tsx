@@ -1,5 +1,6 @@
 import { Svg } from "@/components/Svg";
 import { upload } from "./utils";
+import { useState } from "react";
 
 interface IComponentProps {
     id: string;

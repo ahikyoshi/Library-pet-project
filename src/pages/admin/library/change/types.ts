@@ -30,11 +30,6 @@ export interface IGetContentProps {
     setContent: Dispatch<SetStateAction<IBook | null>>;
 }
 
-export type TMeta = {
-    modified: string,
-    size: string
-};
-
 export enum ModalType {
     None = "none",
     View = "view",

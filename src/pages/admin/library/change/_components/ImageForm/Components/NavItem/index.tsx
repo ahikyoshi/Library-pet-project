@@ -1,6 +1,6 @@
 import { Svg } from "@/components/Svg";
-import { ModalType } from "../..";
 import { Dispatch, SetStateAction } from "react";
+import { ModalType } from "../../../../types";
 
 export const NavItem = ({
     type,

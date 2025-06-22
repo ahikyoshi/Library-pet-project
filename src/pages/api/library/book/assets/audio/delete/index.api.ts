@@ -1,6 +1,6 @@
-import { IServerResponse } from "@/globalTypes";
-import { verifyAdminToken } from "@/pages/api/library/utils";
-import { rm } from "fs/promises";
+import { IBook, IServerResponse } from "@/globalTypes";
+import { loadDB, verifyAdminToken } from "@/pages/api/library/utils";
+import { rm, writeFile } from "fs/promises";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -46,9 +46,25 @@ export default async function handler(
     }
 
     try {
-        const audioPath = `./public/assets/library/${id}/audio/${target}`;
+        const audioDir = `./public/assets/library/${id}/audio`;
+        const audioPath = `${audioDir}/${target}`;
 
         await rm(audioPath);
+
+        // Проверяем, остались ли файлы в папке
+        const { readdir } = await import("fs/promises");
+        const files = await readdir(audioDir);
+
+        if (files.length === 0) {
+            const DB: IBook[] = await loadDB();
+            const searchedBookIndex = DB.findIndex((book) => book.id === id);
+            DB[searchedBookIndex].assets.audio = false;
+
+            await writeFile(
+                "./public/data/library/books.json",
+                JSON.stringify(DB)
+            );
+        }
 
         response.success = true;
         response.message = "Успешно удалено";

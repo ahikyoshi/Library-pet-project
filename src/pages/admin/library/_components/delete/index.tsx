@@ -23,7 +23,7 @@ export const Delete = ({
 
                 <div className="flex justify-between items-center">
                     <button
-                        className=" text-text-secondaryLight"
+                        className="text-text-secondaryLight"
                         onClick={() => {
                             setIsOpen(false);
                             setCurrentTarget(null);

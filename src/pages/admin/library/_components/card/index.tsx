@@ -1,9 +1,10 @@
 // libs
 import Link from "next/link";
+import { useEffect, useState } from "react";
+// components
+import { Svg } from "@/components/Svg";
 // types
 import { ICardComponentProps } from "./types";
-import { Svg } from "@/components/Svg";
-import { useEffect, useState } from "react";
 
 export const Card = ({
     book,
@@ -40,16 +41,17 @@ export const Card = ({
                     </div>
                 </div>
                 <div className="flex">
-                    {!book.assets.image && (
+                    {(!book.assets.text || !book.assets.audio) && (
                         <div
                             className="w-4 h-4 mr-2 bg-orange-500 rounded-full flex items-center justify-center"
-                            title={
-                                !book?.assets?.text && !book?.assets?.audio
-                                    ? "Не добавлены текстовая и аудио версия книги"
-                                    : !book?.assets?.text
-                                      ? "Не добавлена Текстовая версия книги"
-                                      : "Не добавлена аудио версия книги"
-                            }
+                            title={[
+                                !book.assets.text &&
+                                    "Не добавлена текстовая версия книги",
+                                !book.assets.audio &&
+                                    "Не добавлена аудио версия книги"
+                            ]
+                                .filter(Boolean)
+                                .join(" и ")}
                         >
                             !
                         </div>
@@ -64,7 +66,7 @@ export const Card = ({
                     )}
                 </div>
             </div>
-            <div className="flex border border-border">
+            <div className="flex border border-border rounded">
                 <div
                     className="px-2 rounded flex items-center cursor-pointer hover:bg-border"
                     onClick={() => {

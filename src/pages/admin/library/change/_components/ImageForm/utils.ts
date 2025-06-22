@@ -1,6 +1,5 @@
+import { TMeta } from "@/globalTypes";
 import { Dispatch, SetStateAction } from "react";
-import { TMeta } from "../../types";
-
 export const getMeta = (
     id: string,
     setMeta: Dispatch<SetStateAction<TMeta | null>>,

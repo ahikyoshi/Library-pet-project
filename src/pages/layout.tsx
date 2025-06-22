@@ -87,10 +87,7 @@ export default function Layout({
             >
                 <Link href={"/catalog"}>
                     <div className="flex font-mono font-bold text-xl">
-                        <Svg
-                            src="/assets/icons/books/theme/book.svg"
-                            size={24}
-                        />
+                        <Svg src="/favicon.svg" size={24} />
                         <div className="mr-2 text-text-light">
                             Aurora.<span className="text-primary">lib</span>
                         </div>

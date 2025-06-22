@@ -7,9 +7,11 @@ import { useEffect, useState } from "react";
 
 export const View = ({
     closeAction,
+    setIsAdded,
     id
 }: {
     closeAction: () => void,
+    setIsAdded: (value: boolean) => void,
     id: string
 }) => {
     const [metaList, setMetaList] = useState<TMeta[]>([]);
@@ -46,12 +48,12 @@ export const View = ({
                 setIsSuccess(data.success);
                 setStatus(data.message);
 
-                if (data.status) {
+                if (data.success) {
                     setMetaList((prev) =>
                         prev.filter((file) => file.name !== fileName)
                     );
-                    console.log(metaList.length);
-                    if (metaList.length === 0) {
+                    if (metaList.length === 1) {
+                        setIsAdded(false);
                         closeAction();
                     }
                 }

@@ -3,6 +3,8 @@ import { useEffect, useState, useRef } from "react";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
+// components
+import { Button } from "@/components/Button";
 // types
 import { IBookCard } from "@/globalTypes";
 
@@ -31,7 +33,7 @@ const BookCard = ({ id }: { id: string }) => {
                 }
             })
             .catch((error) => console.log(error));
-    }, []);
+    }, [id]);
 
     const isTouchDevice = () => {
         return "ontouchstart" in window || navigator.maxTouchPoints > 0;
@@ -121,11 +123,12 @@ const BookCard = ({ id }: { id: string }) => {
                     <div className="text-xs overflow-hidden">
                         {content.cycle.title} #{content.cycle.number}
                     </div>
-                    <Link
-                        href={`/catalog/${content.id}`}
-                        className="mt-2 py-1 px-2 bg-primary text-text-contrast text-center font-bold rounded-md"
-                    >
-                        Читать
+                    <Link href={`/catalog/${content.id}`}>
+                        <Button
+                            variant="primary"
+                            text="Читать"
+                            className="py-1 mt-1"
+                        />
                     </Link>
                 </div>
             </div>
