@@ -2,10 +2,12 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 // components
-import { Delete } from "./components/delete";
-import { Card } from "./components/card";
+import { Card } from "./_components/card";
 import { Pages } from "@/components/Pages";
 import { Search } from "@/components/search";
+import { Delete } from "./_components/delete";
+// utils
+import { getCatalog } from "./utils";
 // types
 import { IBook } from "@/globalTypes";
 
@@ -25,45 +27,7 @@ const Page = () => {
             return;
         }
 
-        const adminListHeight =
-            document.getElementById("admin_list")?.offsetHeight;
-
-        const settings = {
-            currentPage: currentPage,
-            limit: adminListHeight ? adminListHeight / 24 : 10,
-            searchedValue: searchedValue
-        };
-
-        fetch("/api/library/catalog/get", {
-            method: "POST",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ settings: settings })
-        })
-            .then((res) => res.json())
-            .then(
-                ({
-                    success,
-                    catalog,
-                    pages,
-                    message
-                }: {
-                    success: boolean,
-                    catalog: IBook[],
-                    pages: number,
-                    message: string
-                }) => {
-                    if (success) {
-                        setList(catalog);
-                        setPages(pages);
-                    } else {
-                        alert(message);
-                    }
-                }
-            )
-            .catch(() => console.log("Something went wrong"));
+        getCatalog({ currentPage, searchedValue, setList, setPages });
     }, [currentPage, searchedValue, isDeleteOpen]);
 
     return (

@@ -1,14 +1,38 @@
+// libs
 import { NextApiRequest, NextApiResponse } from "next";
-import fs from "fs";
+import { writeFile } from "fs/promises";
 import path from "path";
+// utils
+import { getFileMeta, loadDB } from "@/pages/api/library/utils";
+// types
+import { IBook, IServerResponse, TMeta } from "@/globalTypes";
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+    req: NextApiRequest,
+    res: NextApiResponse
+) {
+    let response: IServerResponse<TMeta | null> = {
+        success: false,
+        status: 0,
+        message: "_blank_",
+        body: null
+    };
+
+    if (req.method !== "GET") {
+        return res.status(405).json({
+            ...response,
+            status: 405,
+            message: "Method not allowed"
+        });
+    }
+
     const { id } = req.query;
-
     if (!id || Array.isArray(id)) {
-        return res
-            .status(400)
-            .json({ success: false, message: "Неправильный query запрос" });
+        return res.status(400).json({
+            ...response,
+            status: 400,
+            message: "Неправильный query запрос"
+        });
     }
 
     const imagePath = path.join(
@@ -16,20 +40,25 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         `public/assets/library/${id}/${id}.webp`
     );
 
-    fs.stat(imagePath, (err, stats) => {
-        if (err) {
-            res.status(500).json({
-                success: false,
-                message: "Ошибка на сервере"
-            });
-            console.log(`Error from upload image meta: `, err);
+    try {
+        response = await getFileMeta(imagePath);
+
+        if (response.status === 404) {
+            const DB: IBook[] = await loadDB();
+            const searchedBookIndex = DB.findIndex((book) => book.id === id);
+            DB[searchedBookIndex].assets.image = false;
+
+            await writeFile(
+                "./public/data/library/books.json",
+                JSON.stringify(DB)
+            );
         }
+    } catch (err) {
+        const error = err as { status?: number, message?: string };
 
-        const meta = {
-            size: stats.size,
-            modified: stats.mtime
-        };
+        response.status = error.status ?? 500;
+        response.message = error.message ?? "Непредвиденная ошибка на сервере";
+    }
 
-        res.status(200).json({ success: true, body: meta });
-    });
+    return res.status(response.status).json(response);
 }

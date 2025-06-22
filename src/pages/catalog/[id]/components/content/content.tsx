@@ -1,7 +1,7 @@
 "use client";
 
 // libs
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 // utils
 import { timeTransform } from "../player/utils";
 // components
@@ -17,7 +17,7 @@ export const Content = ({
     isPlayerOpen,
     setIsPlayerOpen
 }: IContentComponentProps) => {
-    const router = useRouter();
+    // const router = useRouter();
 
     const showTime = () => {
         if (!isAuth || !userMeta) {
@@ -57,7 +57,8 @@ export const Content = ({
                         className="w-48 border border-primary py-2 mt-2"
                         onClick={() => {
                             if (isAuth) {
-                                router.push(`/reader/${content.id}`);
+                                alert("Данный раздел находится в разработке");
+                                // router.push(`/reader/${content.id}`);
                             } else {
                                 alert("Для прочтения требуется авторизация");
                             }

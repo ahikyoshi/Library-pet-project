@@ -1,11 +1,10 @@
 // types
 import { IBook } from "@/globalTypes";
-import { IGetContentProps, IHandleSubmitProps } from "./types";
+import { IHandleSubmitProps } from "./types";
 
 export const handleSubmit = ({
     event,
     content,
-    setIsStatus,
     setIsLoading
 }: IHandleSubmitProps): void => {
     event.preventDefault();
@@ -53,51 +52,15 @@ export const handleSubmit = ({
         body: JSON.stringify({ changedBook: newBook })
     })
         .then((res) => res.json())
-        .then(({ success, message }: { success: boolean, message: string }) => {
+        .then(({ success }: { success: boolean }) => {
             if (success) {
                 window.location.pathname = "/admin/library";
             } else {
-                setIsStatus({ success, message: message });
                 setIsLoading(false);
             }
         })
         .catch(() => {
             console.log("something went wrong");
-            setIsStatus({
-                success: false,
-                message: "Ошибка соединения с сервером"
-            });
             setIsLoading(false);
         });
-};
-export const getContent = ({ id, setContent }: IGetContentProps) => {
-    fetch("/api/library/book/get", {
-        method: "POST",
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ id: id, typeOfResponse: "page" })
-    })
-        .then((res) => res.json())
-        .then(
-            ({
-                success,
-                message,
-                body
-            }: {
-                success: boolean,
-                message: string,
-                body: {
-                    book: IBook
-                }
-            }) => {
-                if (success) {
-                    setContent(body.book);
-                } else {
-                    alert(message);
-                }
-            }
-        )
-        .catch(() => console.log("Something went wrong"));
 };

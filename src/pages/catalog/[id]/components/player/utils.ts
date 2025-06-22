@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { IPlayerState, TPlayerAction } from "./types";
 import { IBookPageContent } from "../../types";
-import { IUserBook } from "@/globalTypes";
+import { IServerResponse, IUserBook, TMeta } from "@/globalTypes";
 
 export const getTracks = ({
     id,
@@ -10,22 +10,21 @@ export const getTracks = ({
     id: string,
     playerDispatch: Dispatch<TPlayerAction>
 }) => {
-    fetch("/api/library/player", {
-        method: "POST",
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ id: id })
+    const target = "list";
+    fetch(`/api/library/book/assets/audio/meta?id=${id}&target=${target}`, {
+        method: "GET"
     })
         .then((res) => res.json())
-        .then((data: { body: string[] }) => {
-            playerDispatch({
-                type: "SET_TRACKS",
-                payload: data.body.sort((a, b) => {
-                    return parseInt(a) - parseInt(b);
-                })
-            });
+        .then((data: IServerResponse<TMeta[] | null>) => {
+            if (data.success && data.body !== null) {
+                const list = data.body.map((meta) => meta.name);
+                playerDispatch({
+                    type: "SET_TRACKS",
+                    payload: list.sort((a, b) => {
+                        return parseInt(a) - parseInt(b);
+                    })
+                });
+            }
         })
         .catch((e) => console.log(e));
 };

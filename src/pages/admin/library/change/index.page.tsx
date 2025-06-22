@@ -1,103 +1,134 @@
 // libs
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useState } from "react";
+import { GetServerSideProps } from "next";
 import Link from "next/link";
 // utils
-import { getContent, handleSubmit } from "./utils";
+import { handleSubmit } from "./utils";
 // components
-import { FB2Form } from "./components/FB2Form";
+import { Button } from "@/components/Button";
+import { Input } from "@/components/Input";
+import { FB2Form } from "./_components/FB2Form";
+import { ImageForm } from "./_components/ImageForm";
 // types
 import { IBook } from "@/globalTypes";
-import { IResponse } from "./types";
-import { ImageForm } from "./components/ImageForm";
-import { Input } from "./components/Input";
+import { baseURL } from "@/globalVariables";
+import { AudioForm } from "./_components/AudioForm";
 
-// Нужно сделать еще формы аудио фб2
-// Декомпонизировать все и почистить и можно выпускать обнову
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const { id } = context.query;
 
-const Page = () => {
-    const router = useRouter();
-    const { id } = router.query;
+    if (!id || Array.isArray(id)) {
+        throw new Error("ID не найден или передан не правильно");
+    }
 
-    const [content, setContent] = useState<IBook | null>(null);
-    const [isStatus, setIsStatus] = useState<null | IResponse>(null);
+    try {
+        const res = await fetch(`${baseURL}/api/library/book/get`, {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ id: id, typeOfResponse: "page" })
+        });
+
+        if (!res.ok) throw new Error("Запрос вернул ошибку");
+
+        const data = (await res.json()) as {
+            success: boolean,
+            message: string,
+            body: {
+                book: IBook
+            }
+        };
+
+        if (!data.success)
+            throw new Error(`Запрос выполнен с ошибкой: ${data.message}`);
+
+        return {
+            props: {
+                content: data.body.book,
+                id
+            }
+        };
+    } catch (error) {
+        throw new Error(`Запрос выполнен с ошибкой`);
+    }
+};
+
+const Page = ({ content, id }: { content: IBook, id: string }) => {
     const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
-        if (id != undefined) {
-            getContent({ id, setContent });
-        }
-    }, [id]);
-
-    if (!content || Array.isArray(id) || id === undefined) {
-        return <div>Loading</div>;
-    }
     return (
         <main className="w-3/4 mx-auto h-[calc(100vh-48px)] flex items-center justify-center">
             <form
                 onSubmit={(event) =>
-                    handleSubmit({ event, content, setIsStatus, setIsLoading })
+                    handleSubmit({ event, content, setIsLoading })
                 }
-                className="w-full px-2 text-text-light flex flex-col"
+                className="w-full px-2 text-text-light grid gap-4"
             >
-                {/* Title */}
                 <h1 className="text-4xl text-center font-bold">
                     Редактирование книги
                 </h1>
-                <div>{isStatus != null && <div>{isStatus.message}</div>}</div>
-                {/* Text change */}
-                <div className="flex flex-col mt-6">
+                <div className="grid gap-2">
                     <Input
                         name="title"
+                        border={true}
                         placeholder="Название произведения"
                         defaultValue={content.title}
+                        required
                     />
                     <Input
                         name="author"
+                        border={true}
                         placeholder="Автор произведения"
                         defaultValue={content.author}
+                        required
                     />
                     <Input
                         name="cycle_name"
+                        border={true}
                         placeholder="Название цикла"
                         defaultValue={content.cycle.title}
+                        required
                     />
-                    <input
-                        className="mb-3 py-2 border border-secondary rounded indent-2"
-                        type="number"
+                    <Input
                         name="cycle_number"
+                        border={true}
                         placeholder="Номер"
                         defaultValue={content.cycle.number}
+                        type="number"
                         required
                     />
                     <Input
                         name="description"
+                        border={true}
                         placeholder="Описание"
                         defaultValue={content.description}
+                        required
                     />
                     <Input
                         name="writtingDate"
+                        border={true}
                         placeholder="Дата написания (Указывать только цифры)"
                         defaultValue={content.meta.writtingDate}
+                        required
                     />
                 </div>
-                {/* Files change */}
-                <div className="mt-4">
+                <div className="grid gap-2">
                     <ImageForm isAdded={content.assets.image} id={id} />
                     <FB2Form isAdded={content.assets.text} id={id} />
+                    <AudioForm isAdded={content.assets.audio} id={id} />
                 </div>
-                {/* Buttons */}
-                <div className="mt-4 flex flex-col items-center">
-                    <button
-                        className="w-full mt-2 p-2 bg-primary text-text-contrast rounded"
+                <div className="grid gap-2">
+                    <Button
+                        variant="primary"
+                        text={isLoading ? "Загрузка..." : "Сохранить"}
                         type="submit"
                         disabled={isLoading}
-                    >
-                        {isLoading ? "Загрузка..." : "Сохранить"}
-                    </button>
+                    />
                     <Link
                         href={"/admin/library"}
-                        className="w-full mt-2 text-center text-text-secondaryLight"
+                        className="w-full text-center text-text-secondaryLight"
                     >
                         Назад
                     </Link>

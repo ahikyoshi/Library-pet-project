@@ -56,7 +56,7 @@ export default function Catalog() {
                 </nav>
                 <Search setSearchedValue={setSearchedValue} />
             </div>
-            <div className="w-full flex flex-1 flex-wrap justify-between items-center">
+            <div className="flex flex-wrap justify-between">
                 {isEmpty ? (
                     <div className="w-full text-center text-xl">
                         К сожалению мы ничего не нашли

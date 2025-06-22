@@ -1,14 +1,11 @@
 // libs
 import { IncomingForm, File } from "formidable";
-import jwt from "jsonwebtoken";
-import { writeFile, readFile, mkdir } from "fs/promises";
+import { writeFile, readFile, mkdir, access } from "fs/promises";
 // utils
-import { loadDB } from "../../../../utils";
-// vars
-import { JWT_SECRET } from "@/globalVariables";
+import { loadDB, verifyAdminToken } from "../../../../utils";
 // types
 import { NextApiRequest, NextApiResponse } from "next";
-import { IBook } from "@/globalTypes";
+import { IBook, IServerResponse } from "@/globalTypes";
 
 export const config = {
     api: {
@@ -20,116 +17,90 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
+    let response: IServerResponse<null> = {
+        success: false,
+        status: 0,
+        message: "_blank_",
+        body: null
+    };
+
     if (req.method !== "POST") {
-        return res
-            .status(405)
-            .json({ success: false, message: "Method not allowed" });
+        return res.status(405).json({
+            ...response,
+            status: 405,
+            message: "Method not allowed"
+        });
     }
 
     const token = req.cookies.auth;
 
-    if (!token) {
-        return res
-            .status(401)
-            .json({ success: false, message: "Пользователь не авторизован" });
+    response = verifyAdminToken(response, token);
+
+    if (response.status != 0) {
+        return res.status(response.status).json(response);
     }
 
     const targetDirectory = `${process.cwd()}/public/assets/library/`;
 
     try {
-        const decoded = jwt.verify(token, JWT_SECRET) as {
-            login: string,
-            role: "user" | "admin"
-        };
-
-        if (decoded.role != "admin") {
-            return res
-                .status(403)
-                .json({ success: false, message: "Не достаточно прав" });
-        }
-
         const form = new IncomingForm();
-
         const { files } = await new Promise<{
             files: Record<string, File[] | undefined>
         }>((resolve, reject) => {
             form.parse(req, (err, fields, files) => {
-                if (err) reject(err);
+                if (err)
+                    reject({ status: 400, message: "Ошибка разбора формы" });
                 else resolve({ files });
             });
         });
 
-        if (!files || !files.image) {
-            return res
-                .status(500)
-                .json({ success: false, message: "Файлы не найдены" });
-        }
-
         const uploadedFiles = files.image;
-
-        for (const uploadedFile of uploadedFiles) {
-            const fileExtension = uploadedFile.originalFilename
-                ?.split(".")
-                .pop();
-            const baseName = uploadedFile.originalFilename?.replace(
-                /\.[^/.]+$/,
-                ""
-            );
-
-            if (fileExtension != "fb2") {
-                res.status(502).json({
-                    success: false,
-                    message: "Неправильный формат текстового файла"
-                });
-                return;
-            }
-
-            const newFilePath = `${targetDirectory}/${baseName}/text/${baseName}.${fileExtension}`;
-
-            try {
-                const fileData: Buffer = await readFile(uploadedFile.filepath);
-                await mkdir(`${targetDirectory}/${baseName}/text`, {
-                    recursive: true
-                });
-                await writeFile(newFilePath, Buffer.from(fileData));
-
-                const DB: IBook[] = await loadDB();
-
-                const searchedBookIndex = DB.findIndex(
-                    (book) => book.id === baseName
-                );
-
-                if (searchedBookIndex === -1) {
-                    res.status(404).json({
-                        success: false,
-                        message: "Книга не найдена"
-                    });
-                }
-
-                DB[searchedBookIndex].assets.text = true;
-
-                await writeFile(
-                    "./public/data/library/books.json",
-                    JSON.stringify(DB)
-                );
-
-                return res.status(200).json({
-                    success: true,
-                    message: "Файл успешно загружен",
-                    newBook: DB[searchedBookIndex]
-                });
-            } catch (fileError) {
-                console.log(fileError);
-                return res.status(500).json({
-                    success: false,
-                    message: "Ошибка при работе с файлом"
-                });
-            }
+        if (!uploadedFiles || uploadedFiles.length === 0) {
+            throw { status: 400, message: "Файл не был отправлен" };
         }
-    } catch (err) {
-        console.error("Ошибка при обработке файла:", err);
-        return res
-            .status(500)
-            .json({ success: false, message: "Ошибка при обработке файла" });
+
+        const uploadedFile = uploadedFiles[0];
+        const fileExtension = uploadedFile.originalFilename?.split(".").pop();
+        const baseName = uploadedFile.originalFilename?.replace(
+            /\.[^/.]+$/,
+            ""
+        );
+
+        if (fileExtension !== "fb2") {
+            throw { status: 415, message: "Неверный формат файлов" };
+        }
+
+        try {
+            await access(`${targetDirectory}/${baseName}/text`);
+        } catch {
+            await mkdir(`${targetDirectory}/${baseName}/text`, {
+                recursive: true
+            });
+        }
+
+        const newFilePath = `${targetDirectory}/${baseName}/text/${baseName}.${fileExtension}`;
+        const fileData: Buffer = await readFile(uploadedFile.filepath);
+        await writeFile(newFilePath, Buffer.from(fileData));
+
+        const DB: IBook[] = await loadDB();
+        const book = DB.find((book) => book.id === baseName);
+
+        if (!book) {
+            throw { status: 404, message: "Книга с данным ID не найдена" };
+        }
+
+        book.assets.text = true;
+        await writeFile("./public/data/library/books.json", JSON.stringify(DB));
+
+        response.status = 200;
+        response.success = true;
+        response.message = "Файл успешно загружен";
+    } catch (err: unknown) {
+        const error = err as { status?: number, message?: string };
+
+        response.status = error.status ?? 500;
+        response.message = error.message ?? "Непредвиденная ошибка на сервере";
     }
+
+    return res.status(response.status).json(response);
 }

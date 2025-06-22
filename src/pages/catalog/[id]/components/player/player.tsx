@@ -53,7 +53,7 @@ export const Player = ({
 
     const getDuration = () => {
         fetch(
-            `/api/audio/meta?id=${id}&fileName=${player.tracks.list[player.tracks.current]}`
+            `/api/library/book/assets/audio/duration?id=${id}&fileName=${player.tracks.list[player.tracks.current]}`
         )
             .then((res) => res.json())
             .then((data: { success: boolean, message: string }) => {
@@ -139,7 +139,11 @@ export const Player = ({
             </div>
             {/* Audio */}
             <audio
-                src={`/api/audio/file?id=${id}&fileName=${player.tracks.list[player.tracks.current]}`}
+                src={
+                    player.tracks.list[player.tracks.current] != undefined
+                        ? `/api/library/book/assets/audio/get?id=${id}&fileName=${player.tracks.list[player.tracks.current]}`
+                        : ""
+                }
                 ref={audioRef}
                 onTimeUpdate={() => {
                     playerDispatch({

@@ -8,7 +8,11 @@ export const Pages = ({
 }: IPagesComponentProps) => {
     return (
         <li
-            className={clsx(currentPage === number && "underline", "mx-1")}
+            className={clsx(
+                currentPage === number && "underline",
+                "mx-1",
+                "cursor-pointer hover:underline"
+            )}
             onClick={() => setCurrentPage(number)}
             key={number}
         >

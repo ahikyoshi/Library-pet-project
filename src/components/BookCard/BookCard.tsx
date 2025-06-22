@@ -1,10 +1,12 @@
 // libs
 import { useEffect, useState, useRef } from "react";
+import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
+// components
+import { Button } from "@/components/Button";
 // types
 import { IBookCard } from "@/globalTypes";
-import clsx from "clsx";
 
 const BookCard = ({ id }: { id: string }) => {
     const [content, setContent] = useState<IBookCard | null>(null);
@@ -24,9 +26,14 @@ const BookCard = ({ id }: { id: string }) => {
             })
         })
             .then((response) => response.json())
-            .then((data: { body: IBookCard }) => setContent(data.body))
+            .then((data: { body: IBookCard }) => {
+                setContent(data.body);
+                if (!data.body.assets.image) {
+                    setIsContentHide(false);
+                }
+            })
             .catch((error) => console.log(error));
-    }, []);
+    }, [id]);
 
     const isTouchDevice = () => {
         return "ontouchstart" in window || navigator.maxTouchPoints > 0;
@@ -59,34 +66,28 @@ const BookCard = ({ id }: { id: string }) => {
     }
     return (
         <div
-            className="w-44 h-72 mt-2"
+            className={clsx(
+                "w-44 h-72 mt-2",
+                isContentHide && "flex items-center justify-center"
+            )}
             style={
                 content.assets.image
                     ? {
-                          background: `center/cover no-repeat url("/api/image?id=${id}")`
+                          background: `center/cover no-repeat url("/api/library/book/assets/image/get?id=${id}")`
                       }
                     : { background: "black" }
             }
             ref={cardRef}
+            onMouseEnter={() =>
+                setIsContentHide(!content.assets.image && false)
+            }
+            onMouseLeave={() => setIsContentHide(content.assets.image)}
         >
-            {!content.assets.image && !isContentHide && (
-                <div className="bg-border h-full text-center flex flex-col items-center justify-center">
-                    <div className="whitespace-pre-wrap font-bold">
-                        {content.title}
-                    </div>
-                    <div className="whitespace-pre-wrap">
-                        Изображение скоро будет ;3
-                    </div>
-                </div>
-            )}
             <div
                 className={clsx(
-                    "w-full h-full bg-black/80 p-2 flex flex-col items-center justify-between",
-                    isContentHide ? "opacity-0" : "opacity-100"
+                    "w-full h-full p-2 bg-black/80 text-text-contrast flex-col items-center justify-between",
+                    isContentHide ? "hidden" : "flex"
                 )}
-                onMouseEnter={() => setIsContentHide(false)}
-                onMouseLeave={() => setIsContentHide(true)}
-                onTouchStart={() => setIsContentHide(false)}
             >
                 <div className="flex flex-col w-full">
                     <div className="flex justify-end w-full">
@@ -122,11 +123,12 @@ const BookCard = ({ id }: { id: string }) => {
                     <div className="text-xs overflow-hidden">
                         {content.cycle.title} #{content.cycle.number}
                     </div>
-                    <Link
-                        href={`/catalog/${content.id}`}
-                        className="mt-2 py-1 px-2 bg-primary text-text-contrast text-center font-bold rounded-md"
-                    >
-                        Читать
+                    <Link href={`/catalog/${content.id}`}>
+                        <Button
+                            variant="primary"
+                            text="Читать"
+                            className="py-1 mt-1"
+                        />
                     </Link>
                 </div>
             </div>
