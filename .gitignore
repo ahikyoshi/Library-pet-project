@@ -12,6 +12,7 @@
 
 # production
 /public/assets/library/*
+/public/data
 /build
 
 # misc

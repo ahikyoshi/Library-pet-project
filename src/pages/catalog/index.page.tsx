@@ -11,7 +11,6 @@ import { Pages } from "@/components/Pages";
 // types
 import { IBook } from "@/globalTypes";
 import { Search } from "@/components/search";
-import Link from "next/link";
 
 export default function Catalog() {
     const [books, setBooks] = useState<IBook[]>([]);
@@ -44,37 +43,28 @@ export default function Catalog() {
     }, [limit]);
 
     return (
-        <main className="px-2 w-full min-h-[calc(100vh-48px)] flex flex-col">
-            <div className="w-full">
-                <nav className="py-2 flex items-center justify-between">
-                    <h1 className="text-2xl font-bold">Каталог</h1>
-                    <Link href={"/catalog/offer"}>
-                        <div className="bg-primary px-1 py-2 rounded">
-                            Предложить книгу
-                        </div>
-                    </Link>
-                </nav>
+        <main className="p-2 min-h-[calc(100vh-48px)] flex flex-col gap-4">
+            <div className="grid gap-2 flex-shrink-0">
+                <h1 className="text-2xl font-bold">Каталог</h1>
                 <Search setSearchedValue={setSearchedValue} />
             </div>
-            <div className="flex flex-wrap justify-between">
+
+            <div className="flex flex-1">
                 {isEmpty ? (
-                    <div className="w-full text-center text-xl">
+                    <div className="w-full flex items-center justify-center text-center text-xl">
                         К сожалению мы ничего не нашли
                     </div>
                 ) : (
-                    <>
+                    <div className="flex flex-wrap justify-between self-start w-full">
                         {books.map(({ id }: { id: string }) => {
-                            return (
-                                <div key={id}>
-                                    <BookCard id={id} />
-                                </div>
-                            );
+                            return <BookCard id={id} key={id} />;
                         })}
-                    </>
+                    </div>
                 )}
             </div>
+
             {/* Books on Page limit and pages */}
-            <div className="my-4 flex flex-col items-center justify-between">
+            <div className="flex flex-col items-center justify-between">
                 <div className="flex w-full">
                     <div>Страницы: </div>
                     <ul className="flex">

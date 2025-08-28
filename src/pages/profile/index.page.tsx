@@ -36,7 +36,7 @@ const Page = () => {
         return <div>Loading</div>;
     }
     return (
-        <main className="w-screen min-h-screen flex flex-col items-center text-text-light">
+        <main className="flex flex-col">
             <UserInfo user={user} setUser={setUser} />
 
             <Books user={user} />

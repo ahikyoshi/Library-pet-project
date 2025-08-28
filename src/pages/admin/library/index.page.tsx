@@ -31,16 +31,16 @@ const Page = () => {
     }, [currentPage, searchedValue, isDeleteOpen]);
 
     return (
-        <main className="px-2 w-full min-h-[calc(100vh-48px)] flex flex-col">
-            <div className="w-full">
-                <nav className=" py-2 flex items-center justify-between">
-                    <h1 className="text-2xl font-bold">Каталог</h1>
-                </nav>
+        <main className="p-2 min-h-[calc(100vh-48px)] flex flex-col gap-4 h-full box-border">
+            {/* Верхний блок: Титул и поиск */}
+            <div className="grid gap-2 flex-shrink-0">
+                <h1 className="text-2xl font-bold">Каталог</h1>
                 <Search setSearchedValue={setSearchedValue} />
             </div>
 
+            {/* Центральный блок: Список книг, занимает всё оставшееся пространство */}
             <div
-                className="w-full mt-2 flex flex-col flex-1 flex-wrap"
+                className="flex-1 min-h-0 flex flex-col gap-1 self-stretch overflow-auto"
                 id="admin_list"
             >
                 {list.map((book: IBook, index) => (
@@ -54,7 +54,9 @@ const Page = () => {
                     />
                 ))}
             </div>
-            <div className="w-full my-2 flex flex-col">
+
+            {/* Нижний блок: Пагинация и кнопка */}
+            <div className="grid gap-1 flex-shrink-0">
                 <div className="flex w-full">
                     <div>Страницы: </div>
                     <ul className="flex">
