@@ -11,8 +11,6 @@ import { Pages } from "@/components/Pages";
 // types
 import { IBook } from "@/globalTypes";
 import { Search } from "@/components/search";
-import Link from "next/link";
-import { Button } from "@/components/Button";
 
 export default function Catalog() {
     const [books, setBooks] = useState<IBook[]>([]);
