@@ -19,15 +19,19 @@ export const Card = ({
     useEffect(() => {
         const adminListHeight =
             document.getElementById("admin_list")?.offsetHeight;
-        setPageLimit(Math.floor(adminListHeight ? adminListHeight / 24 : 10));
+        setPageLimit(
+            Math.floor(adminListHeight ? Math.floor(adminListHeight / 44) : 1)
+        );
     }, []);
+
     return (
         <div
             key={book.id}
-            className="w-full h-10 mb-2 flex text-xs md:text-base text-text-light"
+            className="w-full h-10 flex text-xs md:text-base text-text-light"
         >
             <div className="w-10 border border-border rounded flex items-center justify-center">
                 {index + (currentPage - 1) * pageLimit + 1}
+                {/* {index} */}
             </div>
             <div className="w-full h-10 mx-2 px-2 border border-border rounded flex items-center justify-between overflow-hidden">
                 <div className="flex">

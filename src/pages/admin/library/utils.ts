@@ -18,7 +18,7 @@ export const getCatalog = ({
 
     const settings = {
         currentPage: currentPage,
-        limit: (adminListHeight ? adminListHeight / 40 : 10) - 3,
+        limit: adminListHeight ? Math.floor(adminListHeight / 44) : 10,
         searchedValue: searchedValue
     };
 

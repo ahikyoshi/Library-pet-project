@@ -20,12 +20,12 @@ export const Search = ({
     return (
         <form
             onSubmit={handleSubmit}
-            className="w-full flex border border-secondary rounded-md"
+            className="flex border border-secondary rounded-md"
         >
             <input
                 type="text"
                 name="searchedValue"
-                className=" pl-2 placeholder:text-text-secondary w-full"
+                className="w-full indent-2 placeholder:text-text-secondary"
                 placeholder="Поиск"
             />
             <button className="px-2 py-2 rounded-r" type="submit">
