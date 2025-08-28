@@ -52,6 +52,9 @@ export default function Layout({
             case "/catalog":
                 setCurrentPage("catalog");
                 break;
+            case "/authors":
+                setCurrentPage("authors");
+                break;
             case "/admin/library":
                 setCurrentPage("admin");
                 break;
@@ -102,6 +105,15 @@ export default function Layout({
                         )}
                     >
                         <Link href={"/catalog"}>Каталог</Link>
+                    </li>
+                    <li
+                        className={clsx(
+                            "px-2 cursor-pointer flex items-center",
+                            currentPage === "authors" &&
+                                "border-b-2 border-primary"
+                        )}
+                    >
+                        <Link href={"/authors"}>Авторы</Link>
                     </li>
                     {isAuth && user && (
                         <li

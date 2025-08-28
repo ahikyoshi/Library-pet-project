@@ -9,6 +9,7 @@ import { LocalImage } from "@/components/LocalImage";
 import { Status } from "./componetns/status";
 // types
 import { IContentComponentProps } from "./types";
+import Link from "next/link";
 
 export const Content = ({
     content,
@@ -17,8 +18,6 @@ export const Content = ({
     isPlayerOpen,
     setIsPlayerOpen
 }: IContentComponentProps) => {
-    // const router = useRouter();
-
     const showTime = () => {
         if (!isAuth || !userMeta) {
             return;
@@ -95,7 +94,12 @@ export const Content = ({
                     <div>{content.cycle.title}</div>
                     <div className="ml-2">{content.cycle.number}</div>
                 </div>
-                <div className="mb-2">{content.author}</div>
+                <Link
+                    href={`/authors/${content.author.replaceAll(" ", "-")}`}
+                    className="mb-2 border-primary hover:border-b transition-all"
+                >
+                    {content.author}
+                </Link>
                 <div className="mt-5 text-xl font-bold">Описание</div>
                 <div className="mt-2 w-full">{content.description}</div>
             </div>
