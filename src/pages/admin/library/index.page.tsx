@@ -10,6 +10,7 @@ import { Delete } from "./_components/delete";
 import { getCatalog } from "./utils";
 // types
 import { IBook } from "@/globalTypes";
+import { Svg } from "@/components/Svg";
 
 const Page = () => {
     const [list, setList] = useState<IBook[]>([]);
@@ -34,7 +35,19 @@ const Page = () => {
         <main className="p-2 min-h-[calc(100vh-48px)] flex flex-col gap-4 h-full box-border">
             {/* Верхний блок: Титул и поиск */}
             <div className="grid gap-2 flex-shrink-0">
-                <h1 className="text-2xl font-bold">Каталог</h1>
+                <div className="flex items-center justify-between">
+                    <h1 className="text-2xl font-bold">Каталог</h1>
+                    <Link
+                        href={"/api/library/db"}
+                        download={true}
+                        className="border border-border rounded-md hover:bg-border transition-all cursor-pointer"
+                    >
+                        <Svg
+                            src="/assets/icons/admin/theme/database_upload.svg"
+                            size={24}
+                        />
+                    </Link>
+                </div>
                 <Search setSearchedValue={setSearchedValue} />
             </div>
 
