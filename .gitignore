@@ -12,7 +12,8 @@ package-lock.json
 /out/
 
 # production
-/public/assets/library/*
+public/data/library/books.json
+public/data/users/users.json
 /public/data
 /build
 
